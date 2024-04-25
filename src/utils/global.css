@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "Product-Sans";
+    src: url("../utils/fonts/Product\ Sans\ Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Product-Sans-bold";
+    src: url("../utils/fonts/Product\ Sans\ Bold.ttf") format("truetype");
+}
+html,
+body{
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 00;
+    color: black;
+    font-family: "Product-Sans-bold", sans-serif;
+    background-color: rgb(241, 239, 233);
+    height: 100%;
+    overflow: hidden;
+}

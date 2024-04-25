@@ -1,0 +1,76 @@
+nav{
+    top: 2%;
+    left: 0;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    max-height: 12vh;
+    min-height: 8vh;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+}
+
+.logo{
+    position: absolute;
+    height: 77%;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 7%;
+}
+
+.img-logo{
+    height: inherit;
+}
+
+.menu{
+    position: absolute;
+    width: 38%;
+    height: 100%;
+    border-radius: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #f9f8f558;
+}
+
+.menu span{
+    cursor: pointer;
+}
+.menu span img{
+    height: 30%;
+}
+
+.perfil{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: fit-content;
+    right: 7%;
+}
+
+.foto-perfil{
+    height: 100%;
+    width: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.oficina{
+    font-family: "Product-sans";
+    white-space: nowrap;
+}
+.nome{
+    white-space: nowrap;
+}
