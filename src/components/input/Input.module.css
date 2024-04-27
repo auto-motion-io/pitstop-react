@@ -1,0 +1,28 @@
+#backgroundInput{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    font-family: "Product-Sans-Bold";
+    color: #474747;
+    gap: 1vh;
+
+
+}
+
+#input{
+    height: 25px;
+    padding: 10px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 35px;
+    margin-bottom: 20px;
+    background-color: #F1EFE9;
+    outline: none;
+    font-family: "Product-sans";
+}
+
+#span{
+    font-size: 1.9vh;
+    align-self: start;
+}

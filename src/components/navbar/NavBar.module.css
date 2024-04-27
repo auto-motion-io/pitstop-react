@@ -38,9 +38,10 @@ nav{
 
 .menu span{
     cursor: pointer;
-}
-.menu span img{
-    height: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .perfil{
@@ -60,6 +61,9 @@ nav{
     align-items: center;
     justify-content: center;
 }
+.foto-perfil img{
+    height: 75%;
+}
 
 .infos{
     display: flex;
@@ -73,4 +77,21 @@ nav{
 }
 .nome{
     white-space: nowrap;
+}
+
+
+.menu span img{
+    height: 29%;
+    /* filter: grayscale(100%); */
+    opacity: 0.7;
+}
+
+.active{
+    filter: grayscale(0%) !important;
+    /* background-color: magenta; */
+}
+
+.teste{
+    filter: grayscale(100%) !important;
+    /* background-color: magenta; */
 }

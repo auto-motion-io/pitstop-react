@@ -1,0 +1,41 @@
+#divTexto{
+display: flex;
+align-items: start;
+justify-content: center;
+width: 100%;
+flex-direction: column;
+margin-bottom: 5vh;
+}
+
+#textinho{
+    color: #474747;
+    font-size: 15px
+}
+
+#textao{
+    font-family: "Product-Sans-Bold";
+    color: #474747;
+    font-size: 45px
+}
+
+#backgroundModal{
+    width: 500px;
+    height: 280px;
+    background-color: #e9e7e2f1;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+
+}
+
+#backgroundLabels{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 9vh;
+
+}
