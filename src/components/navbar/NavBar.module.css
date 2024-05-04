@@ -1,18 +1,22 @@
+.container{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
 nav{
     top: 2%;
     left: 0;
     height: 10vh;
-    width: 100vw;
+    width: 90vw;
     display: flex;
     max-height: 12vh;
     min-height: 8vh;
     align-items: center;
-    justify-content: space-evenly;
-    position: absolute;
+    justify-content: space-between;
 }
 
 .logo{
-    position: absolute;
     height: 77%;
     width: fit-content;
     display: flex;
@@ -26,14 +30,13 @@ nav{
 }
 
 .menu{
-    position: absolute;
     width: 38%;
     height: 100%;
     border-radius: 70px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-color: #f9f8f558;
+    background-color: #f5f5f5;
 }
 
 .menu span{
@@ -45,12 +48,11 @@ nav{
 }
 
 .perfil{
-    position: absolute;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: end;
-    width: fit-content;
+    width: 10vw;
     right: 7%;
 }
 

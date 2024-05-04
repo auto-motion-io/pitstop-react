@@ -7,6 +7,13 @@
     font-family: "Product-Sans-bold";
     src: url("../utils/fonts/Product\ Sans\ Bold.ttf") format("truetype");
 }
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 html,
 body{
     margin: 0;
