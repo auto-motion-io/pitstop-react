@@ -4,7 +4,7 @@ import Titulo from "../../components/titulo/Titulo";
 import Input from "../input/Input";
 import Botao from "../botao/Botao";
 
-const BoxConfig = ({ qtdInput, nomeInput }) => {
+const BoxConfig = ({ qtdInput, nomeInput, titulo, nomeBotao }) => {
     var inputs = [];
     var nome = [];
     var tamanho = [];
@@ -16,11 +16,11 @@ const BoxConfig = ({ qtdInput, nomeInput }) => {
     }
     return (
         <div className={style["box"]}>
-            <h1>Novo</h1>
+            <h1>{titulo}</h1>
             <div className={style["container"]}>
                 {inputs}
                 <div className={style["button"]}>
-                    <a>Cadastrar</a>
+                    <a>{nomeBotao}</a>
                 </div>
             </div>
         </div>

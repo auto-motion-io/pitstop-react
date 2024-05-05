@@ -4,7 +4,7 @@ import NavBar from "../../components/navbar/NavBar";
 import BoxInfo from "../../components/boxInfo/BoxInfo";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 
-const Cliente = () => {
+const ClienteEditar = () => {
     return (
         <>
             <div>
@@ -12,10 +12,10 @@ const Cliente = () => {
             </div>
             <div className={style["container"]}>
                 <BoxInfo titulo="Clientes" resposta={["Nome", "Telefone", "E-mail", "Ações"]}/>
-                <BoxConfig titulo={"Nome"} nomeBotao={"Cadastrar"} qtdInput={4} nomeInput={["Nome*;100%", "Sobrenome*;100%", "Telefone*;80%", "E-mail*;100%"]}/>
+                <BoxConfig titulo={"Editar"} nomeBotao={"Salvar"} qtdInput={4} nomeInput={["Nome*;100%", "Sobrenome*;100%", "Telefone*;80%", "E-mail*;100%"]}/>
             </div>
         </>
     );
 };
 
-export default Cliente;
+export default ClienteEditar;
