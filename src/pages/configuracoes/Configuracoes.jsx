@@ -7,6 +7,7 @@ import botaoEditar from "./../../utils/assets/botao-editar.svg";
 import marcos from "./../../utils/assets/marcos.svg";
 import Input from '../../components/input/Input';
 import imgBuscar from "./../../utils/assets/logo buscar colorido.svg";
+import MenuConfig from '../../components/menuConfig/MenuConfig';
 
 function Configuracoes() {
     var tamanhoFundo = "100%";
@@ -16,18 +17,7 @@ function Configuracoes() {
                 <NavBar />
             </div>
             <div className={styles["container"]}>
-                <div className={styles["menu-left"]}>
-                    <a>
-                        <div className={styles["img-config"]} id={styles["active"]}>
-                            <img src={pneuConfig} alt="Configurações" />
-                        </div>
-                    </a>
-                    <a>
-                        <div className={styles["img-config"]}>
-                            <img src={engrenagemConfig} alt="Configurações" />
-                        </div>
-                    </a>
-                </div>
+                <MenuConfig ativo={1}/>
                 <div className={styles["info-principal"]}>
                     <div className={styles["botao-editar"]}><a><img src={botaoEditar} alt="Imagem Editar" /></a></div>
                     <div className={styles["imagem-perfil"]}><img src={marcos} alt="Imagem do Usuário" /></div>

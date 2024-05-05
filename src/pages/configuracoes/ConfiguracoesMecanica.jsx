@@ -10,6 +10,7 @@ import botaoCheck from "./../../utils/assets/botao-check.svg";
 import botaoCheckColorido from "./../../utils/assets/botao-check-colorido.svg";
 import relogioImg from "./../../utils/assets/relogio.svg";
 import lupaImg from "./../../utils/assets/lupa.svg";
+import MenuConfig from '../../components/menuConfig/MenuConfig';
 
 function ConfiguracoesMecanica() {
     return (
@@ -18,18 +19,7 @@ function ConfiguracoesMecanica() {
                 <NavBar />
             </div>
             <div className={styles["container"]}>
-                <div className={styles["menu-left"]}>
-                    <a>
-                        <div className={styles["img-config"]}>
-                            <img src={pneuConfig} alt="Configurações" />
-                        </div>
-                    </a>
-                    <a>
-                        <div className={styles["img-config"]} id={styles["active"]}>
-                            <img src={engrenagemConfig} alt="Configurações" />
-                        </div>
-                    </a>
-                </div>
+                <MenuConfig ativo={2}/>
                 <div className='container-coluna'>
                     <div className={styles["card-contato"]}>
                         <div className={styles["header"]}>

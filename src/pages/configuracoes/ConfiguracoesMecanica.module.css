@@ -5,44 +5,8 @@
     margin-top: 2vh;
 }
 
-#active{
-    background-color: #EDEBE6;
-}
-
-.menu-left{
-    height: 84vh;
-    width: 7vw;
-    background-color: #f5f5f5;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 4vh;
-}
-
-.img-config{
-    width: 4vw;
-    height: 4vw;
-    margin-bottom: 2vh;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.img-config:hover{
-    background-color: #EDEBE6;
-}
-
-.menu-left a{
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-}
-
 .card-contato{
-    width: 26vw;
+    width: 25vw;
     height: 22vh;
     background-color: #f5f5f5;
     border-radius: 2vw;
@@ -72,7 +36,7 @@ h1{
 }
 
 .card-horarios{
-    width: 26vw;
+    width: 25vw;
     height: 58vh;
     background-color: #f5f5f5;
     border-radius: 2vw;
