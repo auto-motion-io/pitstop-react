@@ -1,0 +1,208 @@
+.container{
+    display: flex;
+    width: 100vw;
+    padding: 0px 5vw;
+    margin-top: 2vh;
+}
+
+#active{
+    background-color: #EDEBE6;
+}
+
+.menu-left{
+    height: 84vh;
+    width: 7vw;
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 4vh;
+}
+
+.img-config{
+    width: 4vw;
+    height: 4vw;
+    margin-bottom: 2vh;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-config:hover{
+    background-color: #EDEBE6;
+}
+
+.menu-left a{
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.card-contato{
+    width: 26vw;
+    height: 22vh;
+    background-color: #f5f5f5;
+    border-radius: 2vw;
+    padding: 4vh 5vh;
+    margin-left: 2vw;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+h1{
+    font-size: 2vw;
+    color: #474747;
+}
+
+.whatsapp-input{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2vh;
+}
+
+.whatsapp-input img{
+    height: 3.75vh;
+    margin-top: 1.5vh;
+}
+
+.card-horarios{
+    width: 26vw;
+    height: 58vh;
+    background-color: #f5f5f5;
+    border-radius: 2vw;
+    padding: 6vh 5vh;
+    margin-left: 2vw;
+    margin-top: 4vh;
+}
+
+.card-horarios h4{
+    color: #474747;
+    margin-top: 1vh;
+    font-size: 0.9vw;
+}
+
+.semana-input{
+    display: flex;
+    justify-content: space-between;
+    gap: 1vw;
+}
+
+.semana-input img{
+    height: 3.75vh;
+    margin-top: 1.5vh;
+}
+
+.dias-semana{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 1.25vh;
+}
+
+.dia-semana{
+    text-align: center;
+}
+
+.dia-semana img{
+    margin-top: 1vh;
+}
+
+.card-servicos{
+    width: 26vw;
+    height: 45vh;
+    background-color: #f5f5f5;
+    border-radius: 2vw;
+    padding: 4vh 4vh;
+    margin-left: 2vw;
+}
+
+.input-pesquisa{
+    display: flex;
+    margin-top: 2vh;
+}
+
+h5{
+    font-size: 1.75vh;
+    color: #474747;
+    margin-top: 1vh;
+    width: 100%;
+}
+
+.input-pesquisa .img-lupa{
+    height: 5vh;
+    background-color: #EDEBE6;
+    padding-left: 1.5vh;
+    border-top-left-radius: 2.5vh;
+    border-bottom-left-radius: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-lupa img{
+    height: 3vh;
+}
+
+.input-pesquisa input{
+    height: 5vh;
+    width: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 2.5vh;
+    border-bottom-right-radius: 2.5vh;
+    background-color: #EDEBE6;
+    padding: 1vh;
+    border: none;
+    outline: none;
+}
+
+.box{
+    width: 100%;
+    height: 21vh;
+    background-color: #EDEBE6;
+    margin-top: 2vh;
+    border-radius: 2vh;
+}
+
+.card-veiculos{
+    width: 26vw;
+    height: 37vh;
+    background-color: #f5f5f5;
+    border-radius: 2vw;
+    padding: 4vh 4vh;
+    margin-left: 2vw;
+    margin-top: 2vh;
+}
+
+.card-veiculos .box{
+    height: 12vh;
+}
+
+.card-marcas{
+    width: 26vw;
+    height: 45vh;
+    background-color: #f5f5f5;
+    border-radius: 2vw;
+    padding: 4vh 4vh;
+    margin-left: 2vw;
+}
+
+.card-tipo-propulsao{
+    width: 26vw;
+    height: 37vh;
+    background-color: #f5f5f5;
+    border-radius: 2vw;
+    padding: 4vh 4vh;
+    margin-left: 2vw;
+    margin-top: 2vh;
+}
+
+.card-tipo-propulsao .box{
+    height: 12vh;
+}
