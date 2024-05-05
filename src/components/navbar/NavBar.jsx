@@ -9,18 +9,14 @@ import imgFinanceiro from "../../utils/assets/cifrao.svg";
 import imgConfig from "../../utils/assets/engrenagem.svg";
 import logo from "../../utils/assets/logo.png";
 import gerente from "../../utils/assets/gerente.svg";
+import { useNavigate } from "react-router-dom";
 
-const NavBar = (props) => {
-  const { page } = props;
-  console.log(props.page)
+const NavBar = ({currentPage}) => {
+  var navigate = useNavigate();
 
-  const receberValor = (valor) => {
-    if (valor === "home") {
-      return true;
-    }
+  function mudarPagina(pagina) {
+    navigate(pagina);
   }
-
-  var currentPage = "configuracoes"
 
   return (
     <div className={styles["container"]}>
@@ -29,25 +25,25 @@ const NavBar = (props) => {
           <img src={logo} alt="Logo" style={{ height: "75%" }} />
         </div>
         <div className={styles["menu"]}>
-          <span className={currentPage === "home" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/home")}} className={currentPage === "home" ? styles["active"] : styles["teste"]}>
             <img src={imgHome} alt="Home" />
           </span>
-          <span id="clientes" className={currentPage === "clientes" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/clientes")}} id="clientes" className={currentPage === "clientes" ? styles["active"] : styles["teste"]}>
             <img src={imgCliente} alt="Clientes" />
           </span>
-          <span id="servicos" className={currentPage === "servicos" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/servicos")}} id="servicos" className={currentPage === "servicos" ? styles["active"] : styles["teste"]}>
             <img src={imgServico} alt="Serviços" />
           </span>
-          <span id="estoque" className={currentPage === "estoque" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/estoque")}} id="estoque" className={currentPage === "estoque" ? styles["active"] : styles["teste"]}>
             <img src={imgEstoque} alt="Estoque" />
           </span>
-          <span id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/ordem")}} id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>
             <img src={imgOS} alt="Ordem de serviço" />
           </span>
-          <span id="financeiro" className={currentPage === "financeiro" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/financeiro")}} id="financeiro" className={currentPage === "financeiro" ? styles["active"] : styles["teste"]}>
             <img src={imgFinanceiro} alt="Financeiro" />
           </span>
-          <span id="configuracoes" className={currentPage === "configuracoes" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/configuracoes")}} id="configuracoes" className={currentPage === "configuracoes" ? styles["active"] : styles["teste"]}>
             <img src={imgConfig} alt="Configurações" />
           </span>
         </div>

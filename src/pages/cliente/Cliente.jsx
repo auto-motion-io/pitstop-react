@@ -8,7 +8,7 @@ const Cliente = () => {
     return (
         <>
             <div>
-                <NavBar />
+                <NavBar currentPage={"clientes"}/>
             </div>
             <div className={style["container"]}>
                 <BoxInfo titulo="Clientes" resposta={["Nome", "Telefone", "E-mail", "Ações"]}/>

@@ -14,7 +14,7 @@ function Configuracoes() {
     return (
         <div>
             <div>
-                <NavBar />
+                <NavBar currentPage={"configuracoes"}/>
             </div>
             <div className={styles["container"]}>
                 <MenuConfig ativo={1}/>

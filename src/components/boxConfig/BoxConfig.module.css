@@ -11,6 +11,9 @@
     margin-top: 4vh;
     border-radius: 4vh;
     padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .container span{
@@ -19,7 +22,6 @@
 }
 
 .button{
-    height: 20vh;
     width: 100%;
     display: flex;
     justify-content: center;
