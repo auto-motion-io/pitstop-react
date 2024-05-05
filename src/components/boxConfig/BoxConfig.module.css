@@ -1,0 +1,35 @@
+.box{
+    display: flex;
+    flex-direction: column;
+    margin-left: 4vh;
+}
+
+.container{
+    width: 26vw;
+    height: 74vh;
+    background-color: #f5f5f5;
+    margin-top: 4vh;
+    border-radius: 4vh;
+    padding: 5vh;
+}
+
+.container span{
+    font-size: 2vh;
+    color: #474747;
+}
+
+.button{
+    height: 20vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.button a{
+    padding: 2vh 2vw;
+    background: #C66D2C;
+    font-size: 2vh;
+    color: #fefefe;
+    border-radius: 5vh;
+}
