@@ -12,7 +12,7 @@ const Cliente = () => {
             </div>
             <div className={style["container"]}>
                 <BoxInfo titulo="Clientes" resposta={["Nome", "Telefone", "E-mail", "Ações"]}/>
-                <BoxConfig titulo={"Nome"} nomeBotao={"Cadastrar"} qtdInput={4} nomeInput={["Nome*;100%", "Sobrenome*;100%", "Telefone*;80%", "E-mail*;100%"]}/>
+                <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} qtdInput={4} nomeInput={["Nome*;100%", "Sobrenome*;100%", "Telefone*;80%", "E-mail*;100%"]}/>
             </div>
         </>
     );
