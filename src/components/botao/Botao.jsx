@@ -2,9 +2,9 @@
 import React from "react";
 import style from "./Botao.module.css"
 
-const Botao = ({nome, cor}) => {
+const Botao = ({nome, cor, onClick = null}) => {
   return (
-    <button id={style.botao} style={{backgroundColor: cor}}>{nome}</button>
+    <button id={style.botao} onClick={onClick} style={{backgroundColor: cor}}>{nome}</button>
   );
 };
 
