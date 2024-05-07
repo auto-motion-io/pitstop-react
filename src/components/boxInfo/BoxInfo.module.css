@@ -44,3 +44,7 @@
     width: 4vh;
     cursor: pointer;
 }
+
+.inputs-row{
+    display: flex;
+}

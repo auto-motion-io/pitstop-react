@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ConfiguracoesMecanica.module.css';
 import NavBar from '../../components/navbar/NavBar';
-import pneuConfig from "./../../utils/assets/pneu-config.svg";
-import engrenagemConfig from "./../../utils/assets/engrenagem-lupa.svg";
 import botaoEditar from "./../../utils/assets/botao-editar.svg";
 import Input from '../../components/input/Input';
 import whatsappImg from "./../../utils/assets/whatsapp.svg";
@@ -11,8 +9,20 @@ import botaoCheckColorido from "./../../utils/assets/botao-check-colorido.svg";
 import relogioImg from "./../../utils/assets/relogio.svg";
 import lupaImg from "./../../utils/assets/lupa.svg";
 import MenuConfig from '../../components/menuConfig/MenuConfig';
+import { inputMascaraTelefoneCelular } from '../../utils/global';
 
 function ConfiguracoesMecanica() {
+    const [whatsapp, setWhatsapp] = useState("");
+    const [horarioSEntrada, setHorarioSEntrada] = useState("");
+    const [horarioSSaida, setHorarioSSaida] = useState("");
+    const [horarioFSEntrada, setHorarioFSEntrada] = useState("");
+    const [horarioFSSaida, setHorarioFSSaida] = useState("");
+    const [diasSemana, setDiasSemana] = useState("");
+    const [servicos, setServicos] = useState("");
+    const [veiculos, setVeiculos] = useState("");
+    const [marcas, setMarcas] = useState("");
+    const [tipoPropulsao, setTipoPropulsao] = useState("");
+
     return (
         <div>
             <div>
@@ -28,7 +38,7 @@ function ConfiguracoesMecanica() {
                         </div>
                         <div className={styles["whatsapp-input"]}>
                             <img src={whatsappImg} alt="Imagem WhatsApp" />
-                            <Input tamanho={"100%"} tamanhoFundo={"85%"} />
+                            <Input tamanho={"100%"} tamanhoFundo={"85%"} value={whatsapp} maxLength={15} onInput={inputMascaraTelefoneCelular} onChange={(e) => setWhatsapp(e.target.value)} />
                         </div>
                     </div>
                     <div className={styles["card-horarios"]}>
@@ -39,14 +49,14 @@ function ConfiguracoesMecanica() {
                         <h4>Semana</h4>
                         <div className={styles["semana-input"]}>
                             <img src={relogioImg} alt="Imagem WhatsApp" />
-                            <Input tamanho={"100%"} tamanhoFundo={"85%"} />
-                            <Input tamanho={"100%"} tamanhoFundo={"85%"} />
+                            <Input tamanho={"100%"} tamanhoFundo={"85%"} value={horarioSEntrada} onChange={(e) => setHorarioSEntrada(e.target.value)} />
+                            <Input tamanho={"100%"} tamanhoFundo={"85%"} value={horarioSSaida} onChange={(e) => setHorarioSSaida(e.target.value)} />
                         </div>
                         <h4>Fim de Semana</h4>
                         <div className={styles["semana-input"]}>
                             <img src={relogioImg} alt="Imagem WhatsApp" />
-                            <Input tamanho={"100%"} tamanhoFundo={"85%"} />
-                            <Input tamanho={"100%"} tamanhoFundo={"85%"} />
+                            <Input tamanho={"100%"} tamanhoFundo={"85%"} value={horarioFSEntrada} onChange={(e) => setHorarioFSEntrada(e.target.value)} />
+                            <Input tamanho={"100%"} tamanhoFundo={"85%"} value={horarioFSSaida} onChange={(e) => setHorarioFSSaida(e.target.value)} />
                         </div>
                         <h1>Dias da Semana</h1>
                         <div className={styles["dias-semana"]}>
@@ -87,7 +97,7 @@ function ConfiguracoesMecanica() {
                         <h5>Insira os serviços que sua oficina oferece</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" />
+                            <input type="text" value={servicos} onChange={(e) => setServicos(e.target.value)} />
                         </div>
                         <div className={styles["box"]}></div>
                     </div>
@@ -96,7 +106,7 @@ function ConfiguracoesMecanica() {
                         <h5>Selecione o(s) tipo(s) de veículo(s) que atende</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" />
+                            <input type="text" value={veiculos} onChange={(e) => setVeiculos(e.target.value)} />
                         </div>
                         <div className={styles["box"]}></div>
                     </div>
@@ -107,7 +117,7 @@ function ConfiguracoesMecanica() {
                         <h5>Insira as marcas nas quais sua oficina tem especialidade</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" />
+                            <input type="text" value={marcas} onChange={(e) => setMarcas(e.target.value)} />
                         </div>
                         <div className={styles["box"]}></div>
                     </div>
@@ -116,7 +126,7 @@ function ConfiguracoesMecanica() {
                         <h5>Selecione o(s) tipo(s) de propulsão dos veículos que atende</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" />
+                            <input type="text" value={tipoPropulsao} onChange={(e) => setTipoPropulsao(e.target.value)} />
                         </div>
                         <div className={styles["box"]}></div>
                     </div>

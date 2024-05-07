@@ -10,12 +10,25 @@ import imgConfig from "../../utils/assets/engrenagem.svg";
 import logo from "../../utils/assets/logo.png";
 import gerente from "../../utils/assets/gerente.svg";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 
 const NavBar = ({currentPage}) => {
   var navigate = useNavigate();
 
   function mudarPagina(pagina) {
     navigate(pagina);
+  }
+
+  async function getUsuario() {
+    try {
+      await api.get(`/gerentes/`).then((response) => {
+        console.log(response.data)
+        return response.data;
+      });
+    } catch (error) {
+      console.error("Erro ao buscar usuário:", error);
+      return false;
+    }
   }
 
   return (

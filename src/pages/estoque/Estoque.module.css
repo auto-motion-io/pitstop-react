@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    padding: 0px 5vw;
+    margin-top: 2vh;
+}
+
+.input-row{
+    display: flex;
+    gap: 2vh;
+}

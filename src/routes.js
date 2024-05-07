@@ -9,6 +9,8 @@ import ClienteEditar from "./pages/cliente/ClienteEditar";
 import Excluir from "./pages/cliente/Excluir";
 import Servicos from "./pages/servicos/Servicos";
 import ServicosEditar from "./pages/servicos/ServicosEditar";
+import Estoque from "./pages/estoque/Estoque";
+import EstoqueEditar from "./pages/estoque/EstoqueEditar";
 
 function Rotas() {
     return (
@@ -24,6 +26,10 @@ function Rotas() {
                         <Route path="/servicos" element={<Servicos />} />
                         <Route path="/servicos/editar" element={<ServicosEditar />} />
                         <Route path="/servicos/excluir" element={<Excluir />} />
+
+                        <Route path="/estoque" element={<Estoque />} />
+                        <Route path="/estoque/editar" element={<EstoqueEditar />} />
+                        <Route path="/estoque/excluir" element={<Excluir />} />
 
                         <Route path="/configuracoes" element={<Configuracoes />} />
                         <Route path="/configuracoes/mecanica" element={<ConfiguracoesMecanica />} />
