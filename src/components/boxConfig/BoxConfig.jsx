@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./BoxConfig.module.css";
-import Titulo from "../../components/titulo/Titulo";
+// import Titulo from "../../components/titulo/Titulo";
 import Input from "../input/Input";
 import Botao from "../botao/Botao";
 
@@ -23,8 +23,8 @@ const BoxConfig = ({ qtdInput, nomeInput, titulo, nomeBotao }) => {
                 <div className={style["inputs"]}>
                     {inputs}
                 </div>
-                <div className={style["button"]}>
-                    <a>{nomeBotao}</a>
+                <div className={style["botao"]}>
+                <Botao nome={"Cadastrar"} cor={"#C66D2C"} />
                 </div>
             </div>
         </div>

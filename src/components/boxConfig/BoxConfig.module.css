@@ -21,18 +21,9 @@
     color: #474747;
 }
 
-.button{
+.botao{
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-}
-
-.button a{
-    padding: 2vh 2vw;
-    background: #C66D2C;
-    font-size: 2vh;
-    color: #fefefe;
-    border-radius: 5vh;
-    cursor: pointer;
+    align-items: center;
 }
