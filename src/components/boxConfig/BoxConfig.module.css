@@ -1,7 +1,6 @@
 .box{
     display: flex;
     flex-direction: column;
-    margin-left: 4.5vh;
 }
 
 .container{
@@ -35,4 +34,5 @@
     font-size: 2vh;
     color: #fefefe;
     border-radius: 5vh;
+    cursor: pointer;
 }
