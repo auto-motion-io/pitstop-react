@@ -34,6 +34,9 @@ function Rotas() {
                         <Route path="/configuracoes" element={<Configuracoes />} />
                         <Route path="/configuracoes/mecanica" element={<ConfiguracoesMecanica />} />
                         <Route path="/configuracoes/galeria" element={<Galeria/>} />
+
+                        <Route path="/estoque" element={<Estoque />} />
+
                     </Routes>
             </BrowserRouter>
         </>

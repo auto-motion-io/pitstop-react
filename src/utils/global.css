@@ -27,3 +27,12 @@ body{
     overflow: hidden;
     box-sizing: border-box;
 }
+
+.container{
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    margin-top: 2vh;
+    padding: 0 5vw;
+    justify-content: space-between; 
+}

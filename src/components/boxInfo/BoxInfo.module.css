@@ -1,14 +1,15 @@
 .box{
     display: flex;
     flex-direction: column;
-    gap: 4vh;
+
 }
 
 .container{
     width: 62vw;
-    height: 74vh;
+    height: 76vh;
     background-color: #ECEAE5;
     border-radius: 4vh;
+    margin-top: 3vh;
 }
 
 .header-coluna{
@@ -18,7 +19,7 @@
 .coluna{
     flex: 1;
     text-align: center;
-    margin-top: 2vh;
+    margin-top: 2.5vh;
 }
 
 .coluna h3{
