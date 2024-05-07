@@ -1,17 +1,18 @@
 .box{
     display: flex;
     flex-direction: column;
-    margin-left: 4vh;
+    margin-left: 4.5vh;
 }
 
 .container{
     width: 26vw;
-    height: 74vh;
+    height: 76vh;
     background-color: #f5f5f5;
-    margin-top: 4vh;
+    margin-top: 3vh;
     border-radius: 4vh;
-    padding: 5vh;
+    padding: 3.5vh 5vh 3.5vh 5vh;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-between;
 }

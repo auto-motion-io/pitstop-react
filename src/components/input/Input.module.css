@@ -5,7 +5,7 @@
     flex-direction: column;
     font-family: "Product-Sans-Bold";
     color: #474747;
-    gap: 1vh;
+    gap: 0.9vh;
 
 
 }
@@ -15,7 +15,7 @@
     padding-left: 15px;
     border: none;
     border-radius: 35px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     background-color: #ECEAE5;
     outline: none;
     font-family: "Product-sans";

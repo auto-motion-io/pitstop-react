@@ -9,6 +9,7 @@ import ClienteEditar from "./pages/cliente/ClienteEditar";
 import Excluir from "./pages/cliente/Excluir";
 import Servicos from "./pages/servicos/Servicos";
 import ServicosEditar from "./pages/servicos/ServicosEditar";
+import Estoque from "./pages/estoque/Estoque";
 
 function Rotas() {
     return (
@@ -28,6 +29,9 @@ function Rotas() {
                         <Route path="/configuracoes" element={<Configuracoes />} />
                         <Route path="/configuracoes/mecanica" element={<ConfiguracoesMecanica />} />
                         <Route path="/configuracoes/galeria" element={<Galeria/>} />
+
+                        <Route path="/estoque" element={<Estoque />} />
+
                     </Routes>
             </BrowserRouter>
         </>
