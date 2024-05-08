@@ -14,7 +14,6 @@
     padding: 0;
 }
 
-html,
 body{
     margin: 0;
     padding: 0;
@@ -23,7 +22,6 @@ body{
     color: black;
     font-family: "Product-Sans-bold", sans-serif;
     background-color: #f1efe9;
-    height: 100%;
     overflow: hidden;
     box-sizing: border-box;
 }

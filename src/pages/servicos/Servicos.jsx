@@ -12,7 +12,7 @@ const Servicos = () => {
 
     const inputs = (
         <div>
-            <Input nome={"Nome do serviço*"} tipo={"text"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Nome do Serviço*"} tipo={"text"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} tamanho={"100%"} />
             <Input nome={"Valor*"} tipo={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} tamanho={"50%"} />
             <Input nome={"Descrição"} tipo={"text"} value={descricao} onChange={(e) => setDescricao(e.target.value)} tamanho={"100%"} altura ={"130px"} />
         </div>
