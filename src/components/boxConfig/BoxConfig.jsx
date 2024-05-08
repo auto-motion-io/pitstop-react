@@ -2,7 +2,7 @@ import React from "react";
 import style from "./BoxConfig.module.css";
 import Botao from "../botao/Botao"
 
-const BoxConfig = ({ titulo, nomeBotao, inputs, cor }) => {
+const BoxConfig = ({ titulo, nomeBotao, inputs, cor = "#C66D2C" }) => {
 
     return (
         <div className={style["box"]}>

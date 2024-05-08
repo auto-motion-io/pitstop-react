@@ -6,7 +6,7 @@
 
 .container{
     width: 62vw;
-    height: 76vh;
+    height: 72vh;
     background-color: #ECEAE5;
     border-radius: 4vh;
     margin-top: 3vh;
@@ -42,7 +42,7 @@
 }
 
 .mudar-pagina img{
-    width: 4vh;
+    width: 3vh;
     cursor: pointer;
 }
 
