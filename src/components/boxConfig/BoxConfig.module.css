@@ -4,13 +4,13 @@
 }
 
 .container{
-    height: 72vh;
-    background-color: #f5f5f5;
+    width: 26vw;
+    height: 73vh;
+    background-color: #f9f8f5af;
     margin-top: 3vh;
     border-radius: 4vh;
     padding: 3.5vh 5vh 3.5vh 5vh;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-between;
 }
