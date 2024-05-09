@@ -87,19 +87,14 @@ nav{
 }
 
 
-.menu span img{
+.menu span img {
     height: 37%;
-    /* filter: grayscale(100%); */
-  
+    filter: grayscale(100%);
+    opacity: 0.6;
 }
 
-.active{
-    filter: grayscale(0%) !important;
-    /* background-color: magenta; */
+.menu span.active img {
+    filter: grayscale(0%);
+    opacity: 1;
 }
 
-.teste{
-    filter: grayscale(100%) !important;
-    /* background-color: magenta; */
-    opacity: 0.7;
-}
