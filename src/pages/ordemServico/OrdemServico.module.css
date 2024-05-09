@@ -11,6 +11,20 @@
     border-radius: 4vh;
     margin-top: 3vh;
     padding: 2.5vw;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar{
+    width: 0.5vw;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #F9F8F5;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #C66D2C;
+    border-radius: 2vw;
 }
 
 .header-coluna{
@@ -52,6 +66,12 @@
     justify-content: space-between;
 }
 
+.box-header h1{
+    font-size: 5.5vh;
+    margin-bottom: 1.2vh;
+    color: #C66D2C;
+}
+
 .box-header-inputs{
     display: flex;
     gap: 1vw;
@@ -64,4 +84,27 @@
     font-family: 'Product-Sans';
     font-weight: normal;
     padding: 1vh 1vw;
+}
+
+.box-veiculo{
+    padding-right: 2vw;
+}
+
+.box-veiculo h1, .box-cliente h1{
+    font-size: 4.2vh;
+    margin-bottom: 1.2vh;
+}
+
+.box-veiculo-inputs{
+    display: flex;
+    gap: 1vw;
+    padding-right: 2vw;
+    padding: 2.5vh 0 1vh 0;
+}
+.box-cliente-inputs{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 2vw;
+    padding: 2.5vh 0;
 }

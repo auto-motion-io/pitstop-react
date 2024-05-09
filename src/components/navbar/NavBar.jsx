@@ -10,7 +10,6 @@ import imgConfig from "../../utils/assets/engrenagem.svg";
 import logo from "../../utils/assets/logo.png";
 import gerente from "../../utils/assets/gerente.svg";
 import { useNavigate } from "react-router-dom";
-import api from "../../api";
 
 const NavBar = ({ currentPage }) => {
   var navigate = useNavigate();

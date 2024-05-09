@@ -25,3 +25,34 @@
     font-size: 1.9vh;
     align-self: start;
 }
+
+.input-lupa{
+    display: flex;
+}
+
+.input-lupa .lupa{
+    height: 5vh;
+    background-color: #DFDEDB;
+    border: none;
+    border-top-left-radius: 5vh;
+    border-bottom-left-radius: 5vh;
+    padding-top: 1.1vh;
+    padding-left: 1.5vh;
+}
+
+.input-lupa{
+    width: 100%;
+}
+
+.input-lupa input{
+    height: 5vh;
+    border: none;
+    border-top-left-radius: none;
+    border-bottom-left-radius: none;
+    border-top-right-radius: 5vh;
+    border-bottom-right-radius: 5vh;
+    padding: 1vh;
+    background-color: #DFDEDB;
+    outline: none;
+    font-family: "Product-Sans";
+}
