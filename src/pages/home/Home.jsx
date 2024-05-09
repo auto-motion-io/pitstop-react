@@ -1,10 +1,16 @@
 import React from 'react';
+import NavBar from '../../components/navbar/NavBar';
+
 
 const Home = () => {
     return (
         <div>
-            <h1>Welcome to the Home Page</h1>
-            <p>This is a generic home page.</p>
+            <div>
+                <NavBar currentPage={"home"}/>
+            </div>
+
+           
+
         </div>
     );
 };

@@ -11,6 +11,7 @@ import Servicos from "./pages/servicos/Servicos";
 import ServicosEditar from "./pages/servicos/ServicosEditar";
 import Estoque from "./pages/estoque/Estoque";
 import EstoqueEditar from "./pages/estoque/EstoqueEditar";
+import Home from "./pages/home/Home";
 
 function Rotas() {
     return (
@@ -18,7 +19,7 @@ function Rotas() {
             <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LoginPitstop />} />
-
+                        <Route path="/home" element={<Home />} />
                         <Route path="/clientes" element={<Cliente />} />
                         <Route path="/clientes/editar" element={<ClienteEditar />} />
                         <Route path="/clientes/excluir" element={<Excluir />} />
