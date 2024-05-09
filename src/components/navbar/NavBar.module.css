@@ -37,7 +37,7 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-color: #f5f5f5;
+    background-color: #f9f8f5a4;
 }
 
 .menu span{
@@ -90,7 +90,7 @@ nav{
 .menu span img{
     height: 37%;
     /* filter: grayscale(100%); */
-    opacity: 0.7;
+  
 }
 
 .active{
@@ -101,4 +101,5 @@ nav{
 .teste{
     filter: grayscale(100%) !important;
     /* background-color: magenta; */
+    opacity: 0.7;
 }
