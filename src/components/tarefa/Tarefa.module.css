@@ -1,0 +1,37 @@
+.container{
+    width: 100%;
+    height: 170px;
+    background-color: #F7F5F2;
+    border-radius: 30px;
+    margin-top: 2vh;
+    padding: 3vh 2vw;
+    color: #474747;
+}
+
+.lixeira{
+    width: 100%;
+    height: 45%;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+
+.calendario{
+    height: 20%;
+}
+
+.data{
+    display: flex;
+    font-family: "Product-Sans";
+    gap: 5px;
+    font-size: 14px;
+
+}
+
+.nome_check{
+    display: flex;
+    font-family: "Product-Sans";
+    justify-content: space-between;
+    font-size: 14px;
+
+}
