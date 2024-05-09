@@ -50,7 +50,7 @@ const NavBar = ({currentPage}) => {
           <span onClick={() => {mudarPagina("/estoque")}} id="estoque" className={currentPage === "estoque" ? styles["active"] : styles["teste"]}>
             <img src={imgEstoque} alt="Estoque" />
           </span>
-          <span onClick={() => {mudarPagina("/ordem")}} id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => {mudarPagina("/ordem-servico")}} id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>
             <img src={imgOS} alt="Ordem de serviço" />
           </span>
           <span onClick={() => {mudarPagina("/financeiro")}} id="financeiro" className={currentPage === "financeiro" ? styles["active"] : styles["teste"]}>

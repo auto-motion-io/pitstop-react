@@ -12,6 +12,17 @@
     margin-top: 3vh;
 }
 
+.container-ordem{
+    width: 62vw;
+    height: 72vh;
+    background-color: #ECEAE5;
+    border-radius: 4vh;
+    margin-top: 3vh;
+    padding: 2vh 1.5vw;
+    display: flex;
+    flex-direction: column;
+}
+
 .header-coluna{
     display: flex;
 }
@@ -48,4 +59,36 @@
 
 .inputs-row{
     display: flex;
+}
+
+.inputs-row, .input-lupa, .input-calendario{
+    display: flex;
+}
+
+.inputs-row{
+    gap: 1vw;
+}
+
+.input-lupa .lupa, .input-calendario .calendario{
+    height: 5vh;
+    background-color: #DFDEDB;
+    border: none;
+    border-top-left-radius: 5vh;
+    border-bottom-left-radius: 5vh;
+    padding-top: 1.1vh;
+    padding-left: 1.5vh;
+}
+
+.input-lupa input, .input-calendario input{
+    width: 100%;
+    height: 5vh;
+    border: none;
+    border-top-left-radius: none;
+    border-bottom-left-radius: none;
+    border-top-right-radius: 5vh;
+    border-bottom-right-radius: 5vh;
+    padding: 1vh;
+    background-color: #DFDEDB;
+    outline: none;
+    font-family: "Product-Sans";
 }

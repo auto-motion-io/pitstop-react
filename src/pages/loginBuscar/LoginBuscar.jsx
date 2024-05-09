@@ -5,8 +5,8 @@ import logoBuscar from "../../utils/assets/logo buscar colorido.svg";
 import ferramentas from "../../utils/assets/ferramentas buscar.svg";
 const LoginBuscar = () => {
   return (
-    <div style={{ display: "flex", width: "100%", margin: "0", padding: "0"}}>
-      <div style={{width: "60%", display: "flex", alignItems: "center", flexDirection: "column", marginTop: "7vh"}}>
+    <div style={{ display: "flex", width: "100%", margin: "0", padding: "0" }}>
+      <div style={{ width: "60%", display: "flex", alignItems: "center", flexDirection: "column", marginTop: "7vh" }}>
         <div>
           <ModalLogin
             logo={logoBuscar}
@@ -40,8 +40,8 @@ const LoginBuscar = () => {
           src={ferramentas}
           alt=""
         />
-        <div style={{width: "80%", marginTop: "10vh", marginLeft: "-5vw" }}>
-        <span id={style.textao}>Onde a busca ganha velocidade.</span>
+        <div style={{ width: "80%", marginTop: "10vh", marginLeft: "-5vw" }}>
+          <span id={style.textao}>Onde a busca ganha velocidade.</span>
         </div>
       </div>
     </div>
