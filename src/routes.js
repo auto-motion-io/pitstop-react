@@ -13,36 +13,37 @@ import Estoque from "./pages/estoque/Estoque";
 import EstoqueEditar from "./pages/estoque/EstoqueEditar";
 import Home from "./pages/home/Home";
 import OrdemServico from "./pages/ordemServico/OrdemServico";
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 
 function Rotas() {
     return (
         <>
-            <BrowserRouter>
+            <AuthProvider>
+                <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LoginPitstop />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/clientes" element={<Cliente />} />
-                        <Route path="/clientes/editar" element={<ClienteEditar />} />
-                        <Route path="/clientes/excluir" element={<Excluir />} />
+                        <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+                        <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
+                        <Route path="/clientes/editar" element={<PrivateRoute element={<ClienteEditar />} />} />
+                        <Route path="/clientes/excluir" element={<PrivateRoute element={<Excluir />} />} />
 
-                        <Route path="/servicos" element={<Servicos />} />
-                        <Route path="/servicos/editar" element={<ServicosEditar />} />
-                        <Route path="/servicos/excluir" element={<Excluir />} />
+                        <Route path="/servicos" element={<PrivateRoute element={<Servicos />} />} />
+                        <Route path="/servicos/editar" element={<PrivateRoute element={<ServicosEditar />} />} />
+                        <Route path="/servicos/excluir" element={<PrivateRoute element={<Excluir />} />} />
 
-                        <Route path="/estoque" element={<Estoque />} />
-                        <Route path="/estoque/editar" element={<EstoqueEditar />} />
-                        <Route path="/estoque/excluir" element={<Excluir />} />
+                        <Route path="/estoque" element={<PrivateRoute element={<Estoque />} />} />
+                        <Route path="/estoque/editar" element={<PrivateRoute element={<EstoqueEditar />} />} />
+                        <Route path="/estoque/excluir" element={<PrivateRoute element={<Excluir />} />} />
 
-                        <Route path="/ordem-servico" element={<OrdemServico />} />
+                        <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
 
-                        <Route path="/configuracoes" element={<Configuracoes />} />
-                        <Route path="/configuracoes/mecanica" element={<ConfiguracoesMecanica />} />
-                        <Route path="/configuracoes/galeria" element={<Galeria/>} />
-
-                        <Route path="/estoque" element={<Estoque />} />
-
+                        <Route path="/configuracoes" element={<PrivateRoute element={<Configuracoes />} />} />
+                        <Route path="/configuracoes/mecanica" element={<PrivateRoute element={<ConfiguracoesMecanica />} />} />
+                        <Route path="/configuracoes/galeria" element={<PrivateRoute element={<Galeria />} />} />
                     </Routes>
-            </BrowserRouter>
+                </BrowserRouter>
+            </AuthProvider>
         </>
     )
 }

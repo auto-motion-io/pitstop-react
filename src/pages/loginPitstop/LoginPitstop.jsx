@@ -14,7 +14,7 @@ const LoginPitstop = () => {
         <ModalLogin logo={logoPitstop} nome1={"E-mail*"} nome2={"Senha"} tamanho1={"97%"} tamanho2={"97%"} tamanhoFundo1={"80%"} tamanhoFundo2={"80%"} cor={"#C66D2C"} />
 
         <div style={{ marginTop: "3vh" }}>
-          <a id={style.textinho} style={{ marginLeft: "10vw" }} href="#">Ainda não tem login? Cadastre-se no PitStop </a>
+          <a id={style.textinho} style={{ marginLeft: "10vw" }}>Ainda não tem login? Cadastre-se no PitStop </a>
         </div>
 
 

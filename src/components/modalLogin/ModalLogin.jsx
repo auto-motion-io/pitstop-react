@@ -5,20 +5,22 @@ import Botao from "../botao/Botao";
 import api from "../../api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const ModalLogin = ({ logo, nome1, tamanho1, tamanhoFundo1, nome2, tamanho2, tamanhoFundo2, cor }) => {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   async function logar() {
-    const login = {
+    const valorLogin = {
       email: email,
       senha: senha
     }
     try {
-      await api.post(`/gerentes/login`, login).then((response) => {
-        console.log(response.status)
+      await api.post(`/gerentes/login`, valorLogin).then((response) => {
+        login(response.data.token);
         toast.success("Logado com sucesso!", { autoClose: 3000 });
         return {
           email: email,
@@ -26,20 +28,30 @@ const ModalLogin = ({ logo, nome1, tamanho1, tamanhoFundo1, nome2, tamanho2, tam
         };
       });
     } catch (error) {
-      console.log(error.response)
-      console.error("Erro ao fazer login:", error);
-      toast.error("Ocorreu um erro ao fazer login por favor, tente novamente.", { autoClose: 3000 });
+      console.log("Erro foi esse aqui: " + error)
+      handleLoginError(error);
       return false;
     }
     return true;
   }
 
   async function verificarLogin() {
-    debugger
     let logado = await logar();
     if (logado) {
-      navigate("/clientes");
+      navigate("/home");
     }
+  }
+
+  function handleLoginError(error){
+    if(error == null || error.response == null){
+      toast.error("Ocorreu um erro ao fazer login por favor, tente novamente.", { autoClose: 3000 });
+      return;
+    }
+    if(error.response.status === 401 || error.response.status === 403){
+      toast.error("Email ou senha inválidos", { autoClose: 3000 });
+      return;
+    }
+    toast.error("Ocorreu um erro ao fazer login por favor, tente novamente.", { autoClose: 3000 });
   }
 
   return (
