@@ -5,6 +5,8 @@ import BoxInfo from "../../components/boxInfo/BoxInfo";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Input from "../../components/input/Input";
 import Alignner from "../../components/alignner/Alignner";
+import api from "../../api";
+import { toast } from "react-toastify";
 
 const Estoque = () => {
     const [nomeProduto, setNomeProduto] = useState("");
@@ -34,6 +36,26 @@ const Estoque = () => {
             </div>
         </div>
     );
+
+    function handleCadastro() {
+        api.post("/estoque", {
+            nomeProduto: nomeProduto,
+            modeloVeiculo: modeloVeiculo,
+            quantidade: quantidade,
+            localizacao: localizacao,
+            valorCompra: valorCompra,
+            valorVenda: valorVenda,
+            valorServico: valorServico,
+            garantia: garantia
+        }).then((response) => {
+            console.log(response.data);
+            toast.success('Produto cadastrado com sucesso!');
+        }).catch((error) => {
+            console.log("Erro foi esse aqui - Produto: ", error);
+            toast.error('Erro ao cadastrar produto!');
+        });
+    }
+
     return (
         <>
             <div>

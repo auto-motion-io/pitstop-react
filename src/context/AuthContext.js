@@ -6,9 +6,10 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!sessionStorage.getItem('token'));
 
-  const login = (token) => {
-    if (token) {
+  const login = (token, idOficina) => {
+    if (token && idOficina) {
       setAuthToken(token);
+      setAuthIdOficina(idOficina);
       setIsAuthenticated(true);
     }
   };
@@ -36,6 +37,16 @@ export const setAuthToken = (token) => {
   } else {
     sessionStorage.removeItem('token');
     delete api.defaults.headers.common['Authorization'];
+  }
+};
+
+export const setAuthIdOficina = (idOficina) => {
+  if (idOficina) {
+    sessionStorage.setItem('idOficina', idOficina);
+    api.defaults.headers.common['idOficina'] = idOficina;
+  } else {
+    sessionStorage.removeItem('idOficina');
+    delete api.defaults.headers.common['idOficina'];
   }
 };
 

@@ -1,28 +1,43 @@
 import React from "react";
 import style from "./LinhaRegistro.module.css";
+import editar from "../../utils/assets/editar.svg";
+import excluir from "../../utils/assets/lixeira.svg";
+import { useNavigate } from "react-router-dom";
 
-const LinhaRegistro = ( registro ) => {
-    console.log("Teste registro: " + registro);
-    return (
-        <>
-            <div className={style["container"]}>
-                <div className={style["linha"]}>
-                    <div className={style["coluna"]}>
-                        <span>{registro.nome}</span>
+const LinhaRegistro = ({ endpoint, registros }) => {
+
+    const navigate = useNavigate();
+
+    const handleEditar = (id) => {
+        navigate(`${endpoint}/editar/${id}`);
+    }
+
+    const handleExcluir = (id) => {
+        navigate(`${endpoint}/excluir/${id}`);
+    }
+
+    const linhas = registros.map((registro, index) => (
+        <div className={style["container"]} key={index}>
+            <div className={style["linha"]}>
+                {Object.entries(registro).slice(1).map(([key, value]) => (
+                    <div className={style["coluna"]} key={key}>
+                        <span>{value}</span>
                     </div>
-                    <div className={style["coluna"]}>
-                        <span>{registro.telefone}</span>
-                    </div>
-                    <div className={style["coluna"]}>
-                        <span>{registro.email}</span>
-                    </div>
-                    <div className={style["coluna"]}>
-                        <span>Editar</span>
-                        <span>Excluir</span>
+                ))}
+                <div className={style["coluna"]}>
+                    <div className={style["botoes"]}>
+                        <a onClick={() => handleEditar(registro.id)}><img src={editar} alt="Botão Editar" /></a>
+                        <a onClick={() => handleExcluir(registro.id)}><img src={excluir} alt="Botão Excluir" /></a>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
+    ));
+
+    return (
+        <div className={style["box"]}>
+            {linhas}
+        </div>
     );
 };
 

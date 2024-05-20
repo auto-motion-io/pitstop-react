@@ -35,6 +35,11 @@
     margin-top: 2.5vh;
 }
 
+.coluna:nth-last-child(1) h3{
+    text-align: right;
+    padding-right: 7vw;
+}
+
 .coluna h3{
     font-size: 2vh;
     margin: 0;

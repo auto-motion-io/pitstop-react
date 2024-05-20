@@ -25,16 +25,16 @@ function Rotas() {
                         <Route path="/" element={<LoginPitstop />} />
                         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
                         <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
-                        <Route path="/clientes/editar" element={<PrivateRoute element={<ClienteEditar />} />} />
-                        <Route path="/clientes/excluir" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/clientes/editar/:idCliente" element={<PrivateRoute element={<ClienteEditar />} />} />
+                        <Route path="/clientes/excluir/:idCliente" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/servicos" element={<PrivateRoute element={<Servicos />} />} />
-                        <Route path="/servicos/editar" element={<PrivateRoute element={<ServicosEditar />} />} />
-                        <Route path="/servicos/excluir" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/servicos/editar/:idServico" element={<PrivateRoute element={<ServicosEditar />} />} />
+                        <Route path="/servicos/excluir/:idServico" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/estoque" element={<PrivateRoute element={<Estoque />} />} />
-                        <Route path="/estoque/editar" element={<PrivateRoute element={<EstoqueEditar />} />} />
-                        <Route path="/estoque/excluir" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/estoque/editar/:idProduto" element={<PrivateRoute element={<EstoqueEditar />} />} />
+                        <Route path="/estoque/excluir/:idProduto" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
 
