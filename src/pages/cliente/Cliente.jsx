@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import NavBar from "../../components/navbar/NavBar";
 import BoxInfo from "../../components/boxInfo/BoxInfo";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Alignner from "../../components/alignner/Alignner";
 import Input from "../../components/input/Input";
 import { inputMascaraTelefoneCelular, verificaEmail } from "../../utils/global";
-import api from "../../api";
+import api from "../../services/api";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import style from "./Cliente.module.css";
 
 const Cliente = () => {
     const [nome, setNome] = useState();
     const [telefone, setTelefone] = useState();
     const [email, setEmail] = useState();
-    const [opcao, setOpcao] = useState();
-    const [oficinas, setOficinas] = useState([]);
-    const navigate = useNavigate();
 
     const inputs =
         <div>
@@ -25,19 +20,7 @@ const Cliente = () => {
             <Input nome={"E-mail*"} tipo={"email"} value={email} onChange={(e) => setEmail(e.target.value)} onInput={verificaEmail} tamanho={"100%"} />
         </div>
 
-    async function handleOficinas() {
-        try {
-            const response = await api.get("/oficinas");
-            console.log("Response: ", response.data);
-            setOficinas(response.data);
-        } catch (error) {
-            console.log("Erro foi esse aqui: ", error);
-        }
-    }
-
-    useEffect(() => {
-        handleOficinas();
-    }, []);
+    
 
     function handleCadastro() {
         api.post("/clientes", {

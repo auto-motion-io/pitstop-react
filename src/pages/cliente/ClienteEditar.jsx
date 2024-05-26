@@ -5,10 +5,9 @@ import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Alignner from "../../components/alignner/Alignner";
 import Input from "../../components/input/Input";
 import { inputMascaraTelefoneCelular } from "../../utils/global";
-import api from "../../api";
+import api from "../../services/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import style from "./Cliente.module.css";
 
 const ClienteEditar = () => {
     const [nome, setNome] = useState();
@@ -56,7 +55,7 @@ const ClienteEditar = () => {
     return (
         <>
             <div>
-                <NavBar />
+                <NavBar currentPage={"clientes"}/>
             </div>
             <Alignner>
                 <BoxInfo titulo="Clientes" resposta={["Nome", "Telefone", "E-mail", "Ações"]} endpoint={"/clientes"}/>

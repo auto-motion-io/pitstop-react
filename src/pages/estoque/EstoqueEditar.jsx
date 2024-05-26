@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Estoque.module.css";
 import NavBar from "../../components/navbar/NavBar";
 import BoxInfo from "../../components/boxInfo/BoxInfo";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Input from "../../components/input/Input";
+import api from "../../services/api";
+import { toast } from "react-toastify";
 
 const EstoqueEditar = () => {
     const [nomeProduto, setNomeProduto] = useState("");
@@ -14,6 +16,41 @@ const EstoqueEditar = () => {
     const [valorVenda, setValorVenda] = useState("");
     const [valorServico, setValorServico] = useState("");
     const [garantia, setGarantia] = useState("");
+
+    // async function handleEditar() {
+    //     try{
+    //         await api.put(`/estoque/${idCliente}`, {
+    //             nome: nome,
+    //             telefone: telefone,
+    //             email: email,
+    //         });
+    //         toast.success('Dados editados com sucesso!');
+    //         navigate("/clientes");
+    //     } catch (error) {
+    //         toast.error('Erro ao editar dados!');
+    //     }
+    // }
+
+    // function handleValorEditar() {
+    //     api.get(`/estoque/${idCliente}`)
+    //     .then((response) => {
+    //         setNomeProduto(response.data.nome);
+    //         setModeloVeiculo(response.data.telefone);
+    //         setQuantidade(response.data.email);
+    //         setLocalizacao(response.data.email);
+    //         setvalorCompra(response.data.email);
+    //         setValorVenda(response.data.email);
+    //         setValorServico(response.data.email);
+    //         setGarantia(response.data.email);
+    //     })
+    //     .catch((error) => {
+    //         console.log("Erro foi esse aqui: ", error);
+    //     });
+    // }
+
+    // useEffect(() => {
+    //     handleValorEditar();
+    // }, []);
 
     const inputs = (
         <div className={style["inputs"]}>

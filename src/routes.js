@@ -15,6 +15,7 @@ import Home from "./pages/home/Home";
 import OrdemServico from "./pages/ordemServico/OrdemServico";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import RecuperarSenhaPitstop from "./pages/recuperarSenhaPitstop/RecuperarSenhaPitstop";
 
 function Rotas() {
     return (
@@ -41,6 +42,8 @@ function Rotas() {
                         <Route path="/configuracoes" element={<PrivateRoute element={<Configuracoes />} />} />
                         <Route path="/configuracoes/mecanica" element={<PrivateRoute element={<ConfiguracoesMecanica />} />} />
                         <Route path="/configuracoes/galeria" element={<PrivateRoute element={<Galeria />} />} />
+
+                        <Route path="/recuperar-senha" element={<PrivateRoute element={<RecuperarSenhaPitstop />} />} />
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

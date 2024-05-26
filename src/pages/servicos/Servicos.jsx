@@ -4,7 +4,7 @@ import BoxInfo from "../../components/boxInfo/BoxInfo";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Alignner from "../../components/alignner/Alignner";
 import Input from "../../components/input/Input";
-import api from "../../api";
+import api from "../../services/api";
 import { toast } from "react-toastify";
 
 const Servicos = () => {

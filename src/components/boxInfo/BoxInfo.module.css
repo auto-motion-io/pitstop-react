@@ -11,7 +11,6 @@
     border-radius: 4vh;
     margin-top: 3vh;
     padding-left: 5vw;
-
 }
 
 .container-ordem{
@@ -27,6 +26,7 @@
 
 .header-coluna{
     display: flex;
+    width: 97%;
 }
 
 .coluna{
@@ -47,9 +47,10 @@
 }
 
 .linhas{
-    width: 100%;
+    width: 98%;
     height: 83%;
     margin-top: 2vh;
+    overflow-y: auto;
 }
 
 .mudar-pagina{

@@ -1,4 +1,4 @@
-import { retornaCep } from "../api";
+import { retornaCep } from "../services/api";
 
 export const inputMascaraCep = (e, setValores) => {
     if (!e.target.value) return "";

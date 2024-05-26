@@ -1,20 +1,25 @@
 import React from "react";
 import style from "./Excluir.module.css";
-import { useNavigate, useParams } from "react-router-dom";
-import api from "../../api";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import api from "../../services/api";
 
-const Excluir = (endpoint) => {
+const Excluir = () => {
     const navigate = useNavigate();
     const { idCliente } = useParams();
+    const location = useLocation();
+    const endpoint = location.state.endpointExcluir;
+
 
     const handleVoltar = () => {
-        navigate("/clientes");
+        navigate(`${endpoint}`);
     }
 
     const handleExcluir = () => {
         try{
-            api.delete(`/${endpoint}/${idCliente}`);
-            navigate(`/${endpoint}`);
+            api.delete(`${endpoint}/${idCliente}`);
+            setTimeout(() => {
+                navigate(`${endpoint}`);
+            }, 500);
         } catch (error) {
             console.log("Erro foi esse aqui: ", error);
         }
@@ -26,7 +31,7 @@ const Excluir = (endpoint) => {
                 <h1>Excluir</h1>
                 <h4>Tem certeza que deseja excluir?</h4>
                 <div className={style["botao"]}>
-                    <a onClick={() => handleExcluir()}>Sim</a>
+                    <a onClick={handleExcluir}>Sim</a>
                     <a onClick={handleVoltar}>Não</a>
                 </div>
             </div>

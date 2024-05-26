@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./ModalLogin.module.css";
 import Input from "../input/Input";
 import Botao from "../botao/Botao";
-import api from "../../api";
+import api from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";

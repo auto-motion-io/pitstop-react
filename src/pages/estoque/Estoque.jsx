@@ -5,7 +5,7 @@ import BoxInfo from "../../components/boxInfo/BoxInfo";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Input from "../../components/input/Input";
 import Alignner from "../../components/alignner/Alignner";
-import api from "../../api";
+import api from "../../services/api";
 import { toast } from "react-toastify";
 
 const Estoque = () => {
@@ -38,7 +38,7 @@ const Estoque = () => {
     );
 
     function handleCadastro() {
-        api.post("/estoque", {
+        api.post("/produtoEstoque", {
             nomeProduto: nomeProduto,
             modeloVeiculo: modeloVeiculo,
             quantidade: quantidade,
@@ -62,8 +62,8 @@ const Estoque = () => {
                 <NavBar currentPage={"estoque"} />
             </div>
             <Alignner >
-                <BoxInfo titulo="Estoque" resposta={["Nome", "Quantidade", "Localização", "Valor Venda", "Garantia", "Ações"]} />
-                <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} inputs={inputs} cor={"#C66D2C"} />
+                <BoxInfo titulo="Estoque" endpoint={"/produtoEstoque"} resposta={["Nome", "Quantidade", "Localização", "Valor Venda", "Garantia", "Ações"]} />
+                <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} inputs={inputs} cor={"#C66D2C"} onClick={handleCadastro} />
             </Alignner>
         </>
     );
