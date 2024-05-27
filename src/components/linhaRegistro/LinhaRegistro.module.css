@@ -20,12 +20,10 @@
 }
 
 .coluna .botoes{
-    height: 1vh;
-    padding-right: 6.9vw;
     display: flex;
-    justify-content: end;
     gap: 1vw;
     padding-top: 1vh;
+    padding-left: 2.5vw;
 }
 
 .coluna .botoes img{

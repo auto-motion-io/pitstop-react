@@ -5,7 +5,7 @@ import api from "../../services/api";
 
 const Excluir = () => {
     const navigate = useNavigate();
-    const { idCliente } = useParams();
+    const { id } = useParams();
     const location = useLocation();
     const endpoint = location.state.endpointExcluir;
 
@@ -16,7 +16,7 @@ const Excluir = () => {
 
     const handleExcluir = () => {
         try{
-            api.delete(`${endpoint}/${idCliente}`);
+            api.delete(`${endpoint}/${id}`);
             setTimeout(() => {
                 navigate(`${endpoint}`);
             }, 500);

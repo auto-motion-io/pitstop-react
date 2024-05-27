@@ -39,14 +39,15 @@ const Estoque = () => {
 
     function handleCadastro() {
         api.post("/produtoEstoque", {
-            nomeProduto: nomeProduto,
+            nome: nomeProduto,
             modeloVeiculo: modeloVeiculo,
             quantidade: quantidade,
             localizacao: localizacao,
             valorCompra: valorCompra,
             valorVenda: valorVenda,
-            valorServico: valorServico,
-            garantia: garantia
+            valorComMaoObra: valorServico,
+            garantia: garantia,
+            fkOficina: sessionStorage.getItem("idOficina")
         }).then((response) => {
             console.log(response.data);
             toast.success('Produto cadastrado com sucesso!');

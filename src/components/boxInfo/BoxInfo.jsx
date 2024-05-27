@@ -21,7 +21,6 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
             const response = await api.get(endpoint);
             console.log("Response: ", response.data);
             setDataRegistro(response.data);
-            console.log(response.data)
         } catch (error) {
             switch (error.response.status) {
                 case 401:
@@ -32,6 +31,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                     break;
                 default:
                     toast.error("Erro ao buscar registros!")
+                    break;
             }
         }
     }

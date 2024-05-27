@@ -61,6 +61,10 @@
     cursor: pointer;
 }
 
+.box-container{
+    
+}
+
 .box-header{
     display: flex;
     justify-content: space-between;

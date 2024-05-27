@@ -16,6 +16,7 @@ import OrdemServico from "./pages/ordemServico/OrdemServico";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import RecuperarSenhaPitstop from "./pages/recuperarSenhaPitstop/RecuperarSenhaPitstop";
+import EsqueciSenha from "./pages/loginPitstop/EsqueciSenha";
 
 function Rotas() {
     return (
@@ -24,18 +25,20 @@ function Rotas() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LoginPitstop />} />
+                        <Route path="/esqueci-senha/:op" element={<EsqueciSenha />} />
+
                         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
                         <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
-                        <Route path="/clientes/editar/:idCliente" element={<PrivateRoute element={<ClienteEditar />} />} />
-                        <Route path="/clientes/excluir/:idCliente" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/clientes/editar/:id" element={<PrivateRoute element={<ClienteEditar />} />} />
+                        <Route path="/clientes/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/servicos" element={<PrivateRoute element={<Servicos />} />} />
-                        <Route path="/servicos/editar/:idServico" element={<PrivateRoute element={<ServicosEditar />} />} />
-                        <Route path="/servicos/excluir/:idServico" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/servicos/editar/:id" element={<PrivateRoute element={<ServicosEditar />} />} />
+                        <Route path="/servicos/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
-                        <Route path="/estoque" element={<PrivateRoute element={<Estoque />} />} />
-                        <Route path="/estoque/editar/:idProduto" element={<PrivateRoute element={<EstoqueEditar />} />} />
-                        <Route path="/estoque/excluir/:idProduto" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/produtoEstoque" element={<PrivateRoute element={<Estoque />} />} />
+                        <Route path="/produtoEstoque/editar/:id" element={<PrivateRoute element={<EstoqueEditar />} />} />
+                        <Route path="/produtoEstoque/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
 

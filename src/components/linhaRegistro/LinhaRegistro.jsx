@@ -3,7 +3,6 @@ import style from "./LinhaRegistro.module.css";
 import editar from "../../utils/assets/editar.svg";
 import excluir from "../../utils/assets/lixeira.svg";
 import { useNavigate } from "react-router-dom";
-import { redirect } from "react-router-dom";
 
 const LinhaRegistro = ({ endpoint, registros }) => {
 
@@ -12,7 +11,6 @@ const LinhaRegistro = ({ endpoint, registros }) => {
     const handleEditar = (id) => {
         navigate(`${endpoint}/editar/${id}`);
         window.location.reload();
-        
     }
 
     const handleExcluir = (id) => {
@@ -29,7 +27,25 @@ const LinhaRegistro = ({ endpoint, registros }) => {
                 ))}
                 <div className={style["coluna"]}>
                     <div className={style["botoes"]}>
-                        <a id={registro.id} onClick={() => handleEditar(registro.id)}><img src={editar} alt="Botão Editar" /></a>
+                        <a id={registro.idServico} onClick={() => handleEditar(registro.id)}><img src={editar} alt="Botão Editar" /></a>
+                        <a onClick={() => handleExcluir(registro.id)}><img src={excluir} alt="Botão Excluir" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ));
+
+    const linhasEstoque = registros.map((registro, index) => (
+        <div className={style["container"]} key={index}>
+            <div className={style["linha"]}>
+                <div className={style["coluna"]}><span>{registro.nome}</span></div>
+                <div className={style["coluna"]}><span>{registro.quantidade}</span></div>
+                <div className={style["coluna"]}><span>{registro.localizacao}</span></div>
+                <div className={style["coluna"]}><span>{registro.valorVenda}</span></div>
+                <div className={style["coluna"]}><span>{registro.garantia}</span></div>
+                <div className={style["coluna"]}>
+                    <div className={style["botoes"]}>
+                        <a id={registro.idServico} onClick={() => handleEditar(registro.id)}><img src={editar} alt="Botão Editar" /></a>
                         <a onClick={() => handleExcluir(registro.id)}><img src={excluir} alt="Botão Excluir" /></a>
                     </div>
                 </div>
@@ -39,7 +55,7 @@ const LinhaRegistro = ({ endpoint, registros }) => {
 
     return (
         <div className={style["box"]}>
-            {linhas}
+            {endpoint == "/produtoEstoque" ? linhasEstoque : linhas}
         </div>
     );
 };
