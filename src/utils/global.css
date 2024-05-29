@@ -26,3 +26,11 @@ body{
     overflow: hidden;
 }
 
+
+#combo-box-demo-label{
+font-family: "Product-Sans";
+}
+
+#lupaIcon{
+    padding-right: 1vw;
+}

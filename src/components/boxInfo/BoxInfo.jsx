@@ -5,6 +5,7 @@ import setaVoltarLaranja from "../../utils/assets/seta-voltar-laranja.svg";
 import setaAvancar from "../../utils/assets/seta-avancar.svg";
 import lupa from "../../utils/assets/lupa.svg";
 import calendario from "../../utils/assets/calendario.svg";
+import SelectInput from "../selectInput/SelectInput";
 
 const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = false }) => {
     const coluna = resposta.map((item, index) => (
@@ -38,8 +39,12 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                 <div className={style["inputs-row"]}>
                     <div className={style["input-lupa"]}>
                         <div className={style["lupa"]}><img src={lupa} alt="Imagem de Lupa" /></div>
-                        <input type="text" />
+                        <input type="text" /> 
+                      
                     </div>
+
+
+
                     <div className={style["input-calendario"]}>
                         <div className={style["calendario"]}><img src={calendario} alt="Imagem de Calendario" /></div>
                         <input type="text" />

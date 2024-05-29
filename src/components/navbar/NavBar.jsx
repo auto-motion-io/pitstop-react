@@ -62,8 +62,8 @@ const NavBar = ({ currentPage }) => {
             <img src={gerente} alt="Foto de perfil" className={styles["img-perfil"]} />
           </div>
           <div className={styles.infos}>
-            <span className={styles.nome}>Marcos Gonzales</span>
-            <span className={styles.oficina}>Auto Milton!</span>
+            <span className={styles.nome}>Boa Tarde!</span>
+            <span className={styles.oficina}>Marcos Gonzales</span>
           </div>
         </div>
       </nav>

@@ -103,7 +103,7 @@ function ConfiguracoesMecanica() {
                     </div>
                     <div className={styles["card-veiculos"]}>
                         <h1>Veículos</h1>
-                        <h5>Selecione o(s) tipo(s) de veículo(s) que atende</h5>
+                        <h5>Selecione o(s) tipo(s) de veículo(s)</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]}><img src={lupaImg} alt="Imagem de Lupa" /></div>
                             <input type="text" value={veiculos} onChange={(e) => setVeiculos(e.target.value)} />
@@ -123,7 +123,7 @@ function ConfiguracoesMecanica() {
                     </div>
                     <div className={styles["card-tipo-propulsao"]}>
                         <h1>Tipo de Propulsão</h1>
-                        <h5>Selecione o(s) tipo(s) de propulsão dos veículos que atende</h5>
+                        <h5>Selecione o(s) tipo(s) de propulsão dos veículo</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]}><img src={lupaImg} alt="Imagem de Lupa" /></div>
                             <input type="text" value={tipoPropulsao} onChange={(e) => setTipoPropulsao(e.target.value)} />
