@@ -1,0 +1,14 @@
+.select-oficina{
+    color: #474747;
+    font-size: 2vh;
+}
+
+.input-select{
+    width: 100%;
+    margin-top: 1vh;
+    border-radius: 2vw;
+    height: 5vh;
+    padding-left: 1vw;
+    outline: none;
+    border: none;
+}   

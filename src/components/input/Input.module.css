@@ -6,16 +6,15 @@
     font-family: "Product-Sans-Bold";
     color: #474747;
     gap: 0.9vh;
-
-
+    height: 10vh;
 }
 
 #input{
-    height: 36px;
-    padding: 0 15px;
+    height: 2vh;
+    padding: 0 1vw;
     border: none;
-    border-radius: 35px;
-    margin-bottom: 15px;
+    border-radius: 2.5vh;
+    margin-bottom: 1vh;
     background-color: #F1EFE9;
     outline: none;
     font-family: "Product-sans";
@@ -26,11 +25,11 @@
     align-self: start;
 }
 
-.input-lupa{
+.input-img{
     display: flex;
 }
 
-.input-lupa .lupa{
+.input-img .img{
     height: 5vh;
     background-color: #DFDEDB;
     border: none;
@@ -40,11 +39,11 @@
     padding-left: 1.5vh;
 }
 
-.input-lupa{
-    width: 100%;
+.input-img{
+    width: 2vw;
 }
 
-.input-lupa input{
+.input-img input{
     height: 5vh;
     border: none;
     border-top-left-radius: none;
@@ -55,4 +54,9 @@
     background-color: #DFDEDB;
     outline: none;
     font-family: "Product-Sans";
+}
+
+.img img{
+    height: 2vh;
+    width: 2vw;
 }

@@ -1,0 +1,44 @@
+.box{
+    display: flex;
+    flex-direction: column;
+}
+
+.container .linha{
+    display: flex;
+    margin-top: 1vh;
+}
+
+.coluna{
+    flex: 1;
+    text-align: left;
+}
+
+.coluna span{
+    font-size: 2vh;
+    margin: 0;
+    color: #474747;
+}
+
+.coluna .botoes{
+    display: flex;
+    gap: 1vw;
+    padding-top: 1vh;
+    padding-left: 2.5vw;
+}
+
+.coluna .botoes img{
+    width: 2vh;
+    cursor: pointer;
+}
+
+.coluna .botoes a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coluna .botoes a:hover{
+    transition: all 0.2s ease-in-out;
+    scale: 1.2;
+
+}

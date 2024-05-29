@@ -1,12 +1,12 @@
 import React from "react";
 import style from "./Input.module.css";
 
-const Input = ({ nome, type = "text", tamanho, tamanhoFundo, onInput = null, onChange, maxLength = 255, value = "", altura = "36px", imagem = null, corBackground = "#ECEAE5" }) => {
+const Input = ({ nome, type = "text", tamanho, tamanhoFundo, onInput = null, onChange, maxLength = 255, value = "", altura = "5vh", imagem = null, corBackground = "#DFDEDB" }) => {
   let inputImage = "";
   if (imagem != null) {
     inputImage =
-      <div className={style["input-lupa"]} style={{width: tamanhoFundo}}>
-        <div className={style["lupa"]} style={{backgroundColor : corBackground}}><img src={imagem} alt="Imagem de Lupa" /></div>
+      <div className={style["input-img"]} style={{width: tamanhoFundo}}>
+        <div className={style["img"]} style={{backgroundColor : corBackground}}><img src={imagem} alt="Imagem de Lupa" /></div>
         <input type="text" style={{backgroundColor : corBackground, width : tamanho}}  />
       </div>
   } else {

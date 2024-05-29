@@ -44,7 +44,7 @@ const NavBar = ({ currentPage }) => {
           <span onClick={() => mudarPagina("/servicos")} className={pageClasses.servicos}>
             <img src={imgServico} alt="Serviços" />
           </span>
-          <span onClick={() => mudarPagina("/estoque")} className={pageClasses.estoque}>
+          <span onClick={() => mudarPagina("/produtoEstoque")} className={pageClasses.estoque}>
             <img src={imgEstoque} alt="Estoque" />
           </span>
           <span onClick={() => {mudarPagina("/ordem-servico")}} id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>

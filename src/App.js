@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Rotas />
-      <ToastContainer />
+      <ToastContainer limit={1}/>
     </>
   );
 }
