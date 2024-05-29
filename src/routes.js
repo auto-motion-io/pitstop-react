@@ -26,10 +26,12 @@ function Rotas() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LoginPitstop />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/clientes" element={<Cliente />} />
-                        <Route path="/clientes/editar" element={<ClienteEditar />} />
-                        <Route path="/clientes/excluir" element={<Excluir />} />
+                        <Route path="/esqueci-senha" element={<EsqueciSenha />} />
+
+                        <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+                        <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
+                        <Route path="/clientes/editar/:id" element={<PrivateRoute element={<ClienteEditar />} />} />
+                        <Route path="/clientes/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/servicos" element={<PrivateRoute element={<Servicos />} />} />
                         <Route path="/servicos/editar/:id" element={<PrivateRoute element={<ServicosEditar />} />} />
