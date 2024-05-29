@@ -25,7 +25,7 @@ function Rotas() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LoginPitstop />} />
-                        <Route path="/esqueci-senha/:op" element={<EsqueciSenha />} />
+                        <Route path="/esqueci-senha" element={<EsqueciSenha />} />
 
                         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
                         <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
