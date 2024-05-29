@@ -9,7 +9,7 @@ const Tarefa = ({}) => {
     return (
      <div className={styles.container}>
         <div className={styles.lixeira}> 
-            <img src={Lixeira} alt="" width={"15px"} />
+            <a href=""><img src={Lixeira} alt="" width={"15px"} /></a>
         </div>
 
         <div className={styles.calendario}>
@@ -21,8 +21,8 @@ const Tarefa = ({}) => {
 
         <div className={styles.nome}>
         <div className={styles.nome_check}>
-            <h2 style={{fontSize:"30px"}}>Ligar Cliente</h2>
-            <img src={Check} alt="" width={"35px"} />
+            <h2 style={{fontSize:"25px"}}>Ligar Cliente</h2>
+            <a href=""><img src={Check} alt="" width={"30px"} /></a>
         </div>
 
         </div>

@@ -6,6 +6,7 @@ import calendario from "../../utils/assets/calendario.svg";
 import api from "../../services/api";
 import LinhaRegistro from "../linhaRegistro/LinhaRegistro";
 import { toast } from "react-toastify";
+import SelectInput from "../selectInput/SelectInput";
 
 const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = false, endpoint }) => {
     const coluna = resposta.map((item, index) => (
@@ -57,23 +58,18 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
             </div>
         );
     } else {
-        info = (
-            <div className={style["box"]}>
-                <Titulo nomeTitulo={titulo} hasInput={false} />
-                <div className={style["container-ordem"]} style={{ width: "28vw" }}>
-                    <div className={style["inputs-row"]}>
-                        <div className={style["input-lupa"]}>
-                            <div className={style["lupa"]}>
-                                <img src={lupa} alt="Imagem de Lupa" />
-                            </div>
-                            <input type="text" />
-                        </div>
-                        <div className={style["input-calendario"]}>
-                            <div className={style["calendario"]}>
-                                <img src={calendario} alt="Imagem de Calendario" />
-                            </div>
-                            <input type="text" />
-                        </div>
+        info=
+        <div className={style["box"]}>
+            <Titulo nomeTitulo={titulo} hasInput={false} />
+            <div className={style["container-ordem"]} style={{ width: "28vw" }}>
+                <div className={style["inputs-row"]}>
+                    <div className={style["input-lupa"]}>
+                        <div className={style["lupa"]}><img src={lupa} alt="Imagem de Lupa" /></div>
+                        <input type="text" />
+                    </div>
+                    <div className={style["input-calendario"]}>
+                        <div className={style["calendario"]}><img src={calendario} alt="Imagem de Calendario" /></div>
+                        <input type="text" />
                     </div>
                 </div>
             </div>

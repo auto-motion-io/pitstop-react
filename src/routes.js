@@ -17,6 +17,7 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import RecuperarSenhaPitstop from "./pages/recuperarSenhaPitstop/RecuperarSenhaPitstop";
 import EsqueciSenha from "./pages/loginPitstop/EsqueciSenha";
+import Financeiro from "./pages/financeiro/Financeiro"
 
 function Rotas() {
     return (
@@ -36,9 +37,9 @@ function Rotas() {
                         <Route path="/servicos/editar/:id" element={<PrivateRoute element={<ServicosEditar />} />} />
                         <Route path="/servicos/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
-                        <Route path="/produtoEstoque" element={<PrivateRoute element={<Estoque />} />} />
-                        <Route path="/produtoEstoque/editar/:id" element={<PrivateRoute element={<EstoqueEditar />} />} />
-                        <Route path="/produtoEstoque/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
+                        <Route path="/estoque" element={<Estoque />} />
+                        <Route path="/estoque/editar" element={<EstoqueEditar />} />
+                        <Route path="/estoque/excluir" element={<Excluir />} />
 
                         <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
 
