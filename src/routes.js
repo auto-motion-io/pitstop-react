@@ -39,6 +39,8 @@ function Rotas() {
                         <Route path="/estoque/editar" element={<EstoqueEditar />} />
                         <Route path="/estoque/excluir" element={<Excluir />} />
 
+                        <Route path="/financeiro" element={<Financeiro />} />
+
                         <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
 
                         <Route path="/configuracoes" element={<PrivateRoute element={<Configuracoes />} />} />

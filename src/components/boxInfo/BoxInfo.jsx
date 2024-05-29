@@ -73,10 +73,10 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                     </div>
                 </div>
             </div>
-        );
+        </div>
     }
 
-    return <>{info}</>;
+    return <>{info}</>
 };
 
-export default BoxInfo;
+export default BoxInfo
