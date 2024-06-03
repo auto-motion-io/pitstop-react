@@ -6,10 +6,11 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!sessionStorage.getItem('token'));
 
-  const login = (token, idOficina) => {
+  const login = (token, idOficina, email) => {
     if (token && idOficina) {
       setAuthToken(token);
       setAuthIdOficina(idOficina);
+      setAuthEmail(email);
       setIsAuthenticated(true);
     }
   };
@@ -47,6 +48,16 @@ export const setAuthIdOficina = (idOficina) => {
   } else {
     sessionStorage.removeItem('idOficina');
     delete api.defaults.headers.common['idOficina'];
+  }
+};
+
+export const setAuthEmail = (email) => {
+  if (email) {
+    sessionStorage.setItem('email', email);
+    api.defaults.headers.common['email'] = email;
+  } else {
+    sessionStorage.removeItem('email');
+    delete api.defaults.headers.common['email'];
   }
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./NavBar.module.css";
 import imgHome from "../../utils/assets/home.svg";
 import imgCliente from "../../utils/assets/perfil.svg";
@@ -10,13 +10,33 @@ import imgConfig from "../../utils/assets/engrenagem.svg";
 import logo from "../../utils/assets/logo.png";
 import gerente from "../../utils/assets/gerente.svg";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
 
 const NavBar = ({ currentPage }) => {
+  const [nomeUser, setNomeUser] = useState("");
   var navigate = useNavigate();
 
   function mudarPagina(pagina) {
     navigate(pagina);
   }
+
+  function handleUsuario() {
+    api.get("/gerentes").then((response) => {
+      for (let i = 0; i < response.data.length; i++) {
+        debugger
+        console.log(response.data[i].oficina.id);
+        console.log(sessionStorage.getItem("idOficina"));
+        if (response.data[i].oficina.id.toString() === sessionStorage.getItem("idOficina") && response.data[i].email === sessionStorage.getItem("email")) {
+          setNomeUser(response.data[i].nome + " " + response.data[i].sobrenome);
+          console.log(response.data[i].nome + " " + response.data[i].sobrenome);
+        }
+      }
+    });
+  }
+
+  useEffect(() => {
+    handleUsuario();
+  }, []);
 
   const pageClasses = {
     home: currentPage === "home" ? styles.active : "",
@@ -63,7 +83,7 @@ const NavBar = ({ currentPage }) => {
           </div>
           <div className={styles.infos}>
             <span className={styles.nome}>Boa Tarde!</span>
-            <span className={styles.oficina}>Marcos Gonzales</span>
+            <span className={styles.oficina}>{nomeUser}</span>
           </div>
         </div>
       </nav>
