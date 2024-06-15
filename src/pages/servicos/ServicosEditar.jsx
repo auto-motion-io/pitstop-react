@@ -13,7 +13,7 @@ const ServicosEditar = () => {
     const [valorServico, setValorServico] = useState("");
     const [descricao, setDescricao] = useState("");
     const [garantia, setGarantia] = useState("");
-    const { idCliente } = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
 
 
@@ -27,7 +27,7 @@ const ServicosEditar = () => {
 
     async function handleEditar() {
         try{
-            await api.put(`/servicos/${idCliente}`, {
+            await api.put(`/servicos/${id}`, {
                 nome: nomeServico,
                 descricao: descricao,
                 valorServico: valorServico,
@@ -42,7 +42,7 @@ const ServicosEditar = () => {
     }
 
     function handleValorEditar() {
-        api.get(`/servicos/${idCliente}`)
+        api.get(`/servicos/${id}`)
         .then((response) => {
             setNomeServico(response.data.nome);
             setDescricao(response.data.descricao);
@@ -61,10 +61,10 @@ const ServicosEditar = () => {
     return (
         <>
             <div>
-                <NavBar />
+                <NavBar currentPage="servicos" />
             </div>
             <Alignner>
-                <BoxInfo titulo="Serviços" resposta={["Nome", "Valor", "Garantia", "Ações"]}/>
+                <BoxInfo titulo="Serviços" resposta={["Nome", "Descrição", "Valor", "Garantia", "Ações"]} endpoint={"/servicos"}/>
                 <BoxConfig titulo={"Editar"} nomeBotao={"Salvar"} inputs={inputs} onClick={handleEditar}/>
             </Alignner>
         </>

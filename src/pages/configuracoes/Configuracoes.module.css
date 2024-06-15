@@ -10,14 +10,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: 36vw;
     height: 84vh;
     background-color: #f9f8f5af;
     border-radius: 30px;
-    padding: 2vh 0;
+    padding: 5vh 2vw;
     margin-left: 2vw;
-    padding-top: 4vh;
 }
 
 .botao-editar{
@@ -32,6 +30,7 @@
 
 .botao-editar img{
     height: 2.5vh;
+    filter:opacity(0.3);
 }
 
 .imagem-perfil img{
@@ -80,6 +79,7 @@
 
 .config-editar a{
     cursor: pointer;
+    filter:opacity(0.3);
 }
 
 .config-editar img{
@@ -128,7 +128,31 @@
     transform: translateX(1.75vw);
 }
 
-
 .buscar-check{
     display: none;
+}
+
+.box-salvar{
+    display: flex;
+    justify-content: flex-end;
+    height: 15vh;
+}
+
+.botao-salvar{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.botao-salvar a{
+    cursor: pointer;
+    color: #e3e2e1;
+    background-color: #d27c2c;
+    width: 5vw;
+    height: 4vh;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4vh;
 }

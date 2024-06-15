@@ -19,6 +19,17 @@
     justify-content: space-between;
 }
 
+.header .icon-save{
+    height: 2.7vh;
+    margin-top: 1.5vh;
+    filter:opacity(0.3);
+    transition: all 0.3s;
+}
+
+.header .icon-save:hover{
+    transform: scale(1.1);
+}
+
 h1{
     font-size: 2vw;
     color: #474747;
@@ -40,7 +51,7 @@ h1{
     height: 58vh;
     background-color: #f9f8f5af;
     border-radius: 2vw;
-    padding: 6vh 5vh;
+    padding: 4vh 5vh;
     margin-left: 2vw;
     margin-top: 4vh;
 }
@@ -60,6 +71,10 @@ h1{
 .semana-input img{
     height: 3.75vh;
     margin-top: 1.5vh;
+}
+
+.titulo-dias-semana{
+    margin-top: 1vh;
 }
 
 .dias-semana{
@@ -132,6 +147,17 @@ h5{
     background-color: #EDEBE6;
     margin-top: 2vh;
     border-radius: 2vh;
+    padding: 2vh;
+    outline: none;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.box-tag{
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
 }
 
 .card-veiculos{

@@ -16,8 +16,6 @@ const LoginPitstop = () => {
         <div style={{ marginTop: "3vh" }}>
           <a id={style.textinho} style={{ marginLeft: "10vw" }}>Ainda não tem login? Cadastre-se no PitStop </a>
         </div>
-
-
       </div>
 
     </div>

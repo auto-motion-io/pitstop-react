@@ -1,6 +1,6 @@
 import { retornaCep } from "../services/api";
 
-export const inputMascaraCep = (e, setValores) => {
+export const inputMascaraCep = (e, setValores = false) => {
     if (!e.target.value) return "";
 
     const valorFormatado = e.target.value.replace(/\D/g, '');
@@ -8,7 +8,8 @@ export const inputMascaraCep = (e, setValores) => {
     if (valorFormatado.length === 8) {
         e.target.value = valorFormatado.replace(/(\d{5})(\d{3})/, '$1-$2');
 
-        retornaCep(valorFormatado)
+        if(setValores){
+            retornaCep(valorFormatado)
             .then((response) => {
                 const endereco = response.data;
                 console.log(endereco);
@@ -18,13 +19,14 @@ export const inputMascaraCep = (e, setValores) => {
             .catch((error) => {
                 console.error('Erro ao obter dados do CEP:', error);
             });
+        }
     }
 }
 
 export const inputMascaraTelefoneCelular = (e) => {
     if (!e.target.value) return ""
     e.target.value = e.target.value.replace(/\D/g, '')
-    e.target.value = e.target.value.replace(/(\d{2})(\d)/, "($1) $2")
+    e.target.value = e.target.value.replace(/(\d{2})(\d)/, "($1)$2")
     e.target.value = e.target.value.replace(/(\d)(\d{4})$/, "$1-$2")
 }
 
