@@ -267,7 +267,7 @@ function ConfiguracoesMecanica() {
                     <div className={styles["card-contato"]}>
                         <div className={styles["header"]}>
                             <h1>Contato</h1>
-                            <a style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
+                            <a href style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
                         </div>
 
                         <div className={styles["whatsapp-input"]}>
@@ -278,7 +278,7 @@ function ConfiguracoesMecanica() {
                     <div className={styles["card-horarios"]}>
                         <div className={styles["header"]}>
                             <h1>Horários</h1>
-                            <a style={{ cursor: "pointer" }} title="Salvar" onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
+                            <a href style={{ cursor: "pointer" }} title="Salvar" onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
                         </div>
                         <h4>Semana</h4>
                         <div className={styles["semana-input"]}>
@@ -296,7 +296,7 @@ function ConfiguracoesMecanica() {
                         <div className={styles["dias-semana"]}>
                             <div className={styles["dia-semana"]}>
                                 <h4>S</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[0] = novoArray[0] ? false : true;
                                     return novoArray;
@@ -305,7 +305,7 @@ function ConfiguracoesMecanica() {
                             </div>
                             <div className={styles["dia-semana"]}>
                                 <h4>T</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[1] = novoArray[1] ? false : true;
                                     return novoArray;
@@ -314,7 +314,7 @@ function ConfiguracoesMecanica() {
                             </div>
                             <div className={styles["dia-semana"]}>
                                 <h4>Q</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[2] = novoArray[2] ? false : true;
                                     return novoArray;
@@ -323,7 +323,7 @@ function ConfiguracoesMecanica() {
                             </div>
                             <div className={styles["dia-semana"]}>
                                 <h4>Q</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[3] = novoArray[3] ? false : true;
                                     return novoArray;
@@ -332,7 +332,7 @@ function ConfiguracoesMecanica() {
                             </div>
                             <div className={styles["dia-semana"]}>
                                 <h4>S</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[4] = novoArray[4] ? false : true;
                                     return novoArray;
@@ -341,7 +341,7 @@ function ConfiguracoesMecanica() {
                             </div>
                             <div className={styles["dia-semana"]}>
                                 <h4>S</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[5] = novoArray[5] ? false : true;
                                     return novoArray;
@@ -350,7 +350,7 @@ function ConfiguracoesMecanica() {
                             </div>
                             <div className={styles["dia-semana"]}>
                                 <h4>D</h4>
-                                <a style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
+                                <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[6] = novoArray[6] ? false : true;
                                     return novoArray;
@@ -364,7 +364,7 @@ function ConfiguracoesMecanica() {
                     <div className={styles["card-servicos"]}>
                         <div className={styles["header"]}>
                             <h1>Serviços</h1>
-                            <a style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}>
+                            <a href style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}>
                                 <img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" />
                             </a>
                         </div>
@@ -395,7 +395,7 @@ function ConfiguracoesMecanica() {
                     <div className={styles["card-veiculos"]}>
                         <div className={styles["header"]}>
                             <h1>Veículos</h1>
-                            <a style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
+                            <a href style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
                         </div>
                         <h5>Selecione o(s) tipo(s) de veículo(s)</h5>
                         <div className={styles["input-pesquisa"]}>
@@ -426,7 +426,7 @@ function ConfiguracoesMecanica() {
                     <div className={styles["card-marcas"]}>
                         <div className={styles["header"]}>
                             <h1>Marcas</h1>
-                            <a style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
+                            <a href style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
                         </div>
                         <h5>Insira as marcas nas quais sua oficina tem especialidade</h5>
                         <div className={styles["input-pesquisa"]}>
@@ -455,7 +455,7 @@ function ConfiguracoesMecanica() {
                     <div className={styles["card-tipo-propulsao"]}>
                         <div className={styles["header"]}>
                             <h1>Tipo de Propulsão</h1>
-                            <a style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
+                            <a href style={{ cursor: "pointer" }} title="Salvar" className={styles["botao-salvar"]} onClick={salvarConfig}><img className={styles["icon-save"]} src={iconSave} alt="Botão de Salvar" /></a>
                         </div>
                         <h5>Selecione o(s) tipo(s) de propulsão dos veículo</h5>
                         <div className={styles["input-pesquisa"]}>

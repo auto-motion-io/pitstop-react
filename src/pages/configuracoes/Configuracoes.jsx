@@ -9,9 +9,11 @@ import MenuConfig from '../../components/menuConfig/MenuConfig';
 import iconSave from "./../../utils/assets/icon-save.png";
 import { inputMascaraCPF_CNPJ, inputMascaraCep, inputMascaraTelefoneCelular } from "./../../utils/global";
 import api, { retornaCep } from '../../services/api';
+import { toast } from 'react-toastify';
 
 
 function Configuracoes() {
+    const [idGerente, setIdGerente] = useState(0);
     const [nome, setNome] = useState("");
     const [sobrenome, setSobrenome] = useState("");
     const [telefone, setTelefone] = useState("");
@@ -46,6 +48,7 @@ function Configuracoes() {
         api.get(`/gerentes`).then((response) => {
             for (let i = 0; i < response.data.length; i++) {
                 if (response.data[i].email === sessionStorage.getItem("email")) {
+                    setIdGerente(response.data[i].id);
                     setNome(response.data[i].nome);
                     setSobrenome(response.data[i].sobrenome);
                     setTelefone(response.data[i].oficina.informacoesOficina.whatsapp);
@@ -74,6 +77,62 @@ function Configuracoes() {
         });
     }
 
+    function verificarCampos() {
+        if (nome === "" || sobrenome === "" || telefone === "" || email === "" || status === "" || nomeEmpresa === "" || cnpj === "" || cep === "" || numero === "") {
+            toast.error("Preencha todos os campos!");
+            return false;
+        } else if (cep.length < 9 || bairro === "" || cidade === "" || estado === "" || logradouro === "") {
+            toast.error("CEP inválido!");
+            return false;
+        }
+        return true;
+    }
+
+    function salvarConfig() {
+        if (verificarCampos()) {
+            api.put(`/gerentes/${idGerente}`, {
+                nome: nome,
+                sobrenome: sobrenome
+            }).then(() => {
+                if (senha !== "") {
+                    api.put(`/gerentes/atualiza-senha/${idGerente}`, {
+                        senha: senha
+                    }).then(() => {
+                        salvarOficina();
+                    }).catch((error) => {
+                        console.log("Erro ao salvar senha: ", error);
+                    });
+                } else {
+                    salvarOficina();
+                }
+            }).catch((error) => {
+                console.log("Erro ao salvar nome do Gerente: ", error);
+            });
+        }
+    }
+
+    function salvarOficina() {
+        api.put(`/oficinas/${sessionStorage.getItem("idOficina")}`, {
+            nome: nomeEmpresa,
+            cep: cep,
+            numero: numero,
+            complemento: complemento,
+            hasBuscar: buscar
+        }).then(() => {
+            console.log(numero)
+            api.put(`/infos-oficina/atualiza-zap/${sessionStorage.getItem("idOficina")}`, {
+                whatsapp: telefone
+            }).then(() => {
+                toast.success("Configurações salvas com sucesso!");
+            }).catch((error) => {
+                console.log("Erro ao salvar telefone: ", error);
+            });
+        }).catch((error) => {
+            console.log("Erro ao salvar configurações: ", error);
+        });
+    }
+
+
     useEffect(() => {
         getConfig();
     }, []);
@@ -86,7 +145,7 @@ function Configuracoes() {
             <div className={styles["container"]}>
                 <MenuConfig ativo={1} />
                 <div className={styles["info-principal"]}>
-                    <div className={styles["botao-editar"]}><a><img src={iconSave} alt="Imagem Editar" /></a></div>
+                    <div className={styles["botao-editar"]}><a onClick={salvarConfig}><img src={iconSave} alt="Imagem Editar" /></a></div>
                     <div className={styles["imagem-perfil"]}><img src={marcos} alt="Imagem do Usuário" /></div>
                     <h1>{nome + " " + sobrenome}</h1>
                     <div className={styles["linhas"]}>
@@ -97,17 +156,18 @@ function Configuracoes() {
                         <div className={styles["linha"]}><Input tamanho={"100%"} tamanhoFundo={tamanhoFundo} maxLength={14} onInput={inputMascaraTelefoneCelular} nome="Telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} /></div>
                         <div className={styles["linha"]}><Input tamanho={"100%"} tamanhoFundo={tamanhoFundo} nome="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
                         <div className={styles["linha"]}>
-                            <Input tamanho={"50%"} tamanhoFundo={tamanhoFundo} nome="Status" value={status} onChange={(e) => setStatus(e.target.value)} />
+                            <Input tamanho={"100%"} tamanhoFundo={tamanhoFundo} nome="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+                            <Input tamanho={"100%"} tamanhoFundo={tamanhoFundo} nome="Status" value={status} onChange={(e) => setStatus(e.target.value)} />
                         </div>
                     </div>
                 </div>
                 <div className={styles["info-secundario"]}>
-                    <div className={styles["config-editar"]}><a><img src={iconSave} alt="Botão de Editar" /></a></div>
-                    <div><h1>Auto Milton</h1></div>
+                    <div className={styles["config-editar"]}><a onClick={salvarConfig}><img src={iconSave} alt="Botão de Editar" /></a></div>
+                    <div><h1>{nomeEmpresa}</h1></div>
                     <div className={styles["linhas"]} style={{ marginTop: "5vh" }}>
                         <div className={styles["linha"]}>
                             <Input nome={"Nome"} tamanho={"100%"} tamanhoFundo={tamanhoFundo} value={nomeEmpresa} onChange={(e) => setNomeEmpresa(e.target.value)} />
-                            <Input nome={"CNPJ"} tamanho={"100%"} tamanhoFundo={tamanhoFundo} value={cnpj} onInput={inputMascaraCPF_CNPJ} onChange={(e) => setCnpj(e.target.value)} maxLength={18} />
+                            <Input nome={"CNPJ"} disabled tamanho={"100%"} tamanhoFundo={tamanhoFundo} value={cnpj} onInput={inputMascaraCPF_CNPJ} onChange={(e) => setCnpj(e.target.value)} maxLength={18} />
                         </div>
                         <div className={styles["linha"]}><Input nome={"CEP"} tamanho={"40%"} tamanhoFundo={tamanhoFundo} value={cep} onInput={(e) => inputMascaraCep(e, handleValores)} onChange={(e) => setCep(e.target.value.replace(regex, ""))} maxLength={9} /></div>
                         <div className={styles["linha"]}>
