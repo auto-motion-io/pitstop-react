@@ -16,8 +16,6 @@ const LoginPitstop = () => {
         <div style={{ marginTop: "3vh" }}>
           <a href="https://yellow-tree-0826b6c0f.5.azurestaticapps.net/" id={style.textinho} style={{ marginLeft: "10vw" }}>Ainda não tem login? Cadastre-se no PitStop </a>
         </div>
-
-
       </div>
 
     </div>

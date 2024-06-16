@@ -13,7 +13,7 @@
     margin: 0;
     padding: 0;
 }
-/* html NÃO PODE TER ISSO AQUI!!!!!!!!!!!!!!!!!!! */
+
 body{
     margin: 0;
     padding: 0;
@@ -22,7 +22,6 @@ body{
     color: black;
     font-family: "Product-Sans-bold", sans-serif;
     background-color: #f1efe9;
-    /* height: 100%; NÃO PODE TER ISSO AQUI!!!!!!!!!!!!!!!!!!! */
     overflow: hidden;
 }
 

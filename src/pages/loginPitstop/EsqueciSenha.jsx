@@ -20,7 +20,6 @@ const EsqueciSenha = () => {
       email: email
     }).then((response) => {
       setNext(true);
-      console.log(response.data);
       toast.success('E-mail enviado com sucesso!');
     }).catch((error) => {
       console.log("Erro foi esse aqui: ", error);
@@ -34,7 +33,6 @@ const EsqueciSenha = () => {
       token: token,
       senha: senha
     }).then((response) => {
-      console.log(response.data);
       sessionStorage.removeItem("email");
       toast.success('Senha alterada com sucesso!');
       navigate("/")
@@ -47,10 +45,11 @@ const EsqueciSenha = () => {
   return (
     <div className={styles["container"]}>
       <div className={styles["container-box"]}>
+        <div className={styles["titulo"]}>
+          <h1>Recuperar Senha</h1>
+          <h4>Informe seu e-mail e te enviaremos uma mensagem para recuperação</h4>
+        </div>
         <div className={styles["box"]}>
-          <div className={styles["logo"]}>
-            <img src={pitstopLogo} alt="Logo do PitStop" />
-          </div>
           {next ? (
             <div className={styles["box-inputs"]}>
               <Input nome={"Token*"} value={token} onChange={(e) => setToken(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"} />
@@ -58,13 +57,14 @@ const EsqueciSenha = () => {
             </div>
           ) : (
             <div className={styles["box-inputs"]}>
-              <Input nome={"E-mail*"} type={"e-mail"} value={email} onInput={() => {console.log(email)}} onChange={(e) => setEmail(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"} />
+              <Input nome={"E-mail*"} type={"e-mail"} value={email} onChange={(e) => setEmail(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"} />
             </div>
           )}
           <div className={styles["button"]}>
-            <Botao nome={"Enviar"} onClick={(next == false ? handleNext : handleEnviar)} tipo={"submit"} cor={"#C66D2C"} tamanho={"100%"} tamanhoFonte={"1.5rem"}/>
+            <Botao nome={"Enviar"} onClick={(next === false ? handleNext : handleEnviar)} tipo={"submit"} cor={"#C66D2C"} tamanho={"100%"} tamanhoFonte={"1.5rem"} />
           </div>
         </div>
+      <div className={styles["logo"]}><img src={pitstopLogo} alt="Logo do PitStop" /></div>
       </div>
     </div>
   );

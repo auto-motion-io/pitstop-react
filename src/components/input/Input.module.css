@@ -35,8 +35,8 @@
     border: none;
     border-top-left-radius: 5vh;
     border-bottom-left-radius: 5vh;
-    padding-top: 1.1vh;
-    padding-left: 1.5vh;
+    padding-top: 1.3vh;
+    padding-left: 0.8vh;
 }
 
 .input-img{
@@ -50,7 +50,7 @@
     border-bottom-left-radius: none;
     border-top-right-radius: 5vh;
     border-bottom-right-radius: 5vh;
-    padding: 1vh;
+    padding: 1vh 1vh 1vh 0;
     background-color: #DFDEDB;
     outline: none;
     font-family: "Product-Sans";

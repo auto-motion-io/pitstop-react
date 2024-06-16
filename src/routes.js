@@ -15,7 +15,6 @@ import Home from "./pages/home/Home";
 import OrdemServico from "./pages/ordemServico/OrdemServico";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
-import RecuperarSenhaPitstop from "./pages/recuperarSenhaPitstop/RecuperarSenhaPitstop";
 import EsqueciSenha from "./pages/loginPitstop/EsqueciSenha";
 import Financeiro from "./pages/financeiro/Financeiro"
 import AdicionarTarefa from "./pages/home/AdicionarTarefa";
@@ -45,8 +44,8 @@ function Rotas() {
                         <Route path="/servicos/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/produtoEstoque" element={<Estoque />} />
-                        <Route path="/produtoEstoque/editar" element={<EstoqueEditar />} />
-                        <Route path="/produtoEstoque/excluir" element={<Excluir />} />
+                        <Route path="/produtoEstoque/editar/:id" element={<EstoqueEditar />} />
+                        <Route path="/produtoEstoque/excluir/:id" element={<Excluir />} />
 
                         <Route path="/financeiro" element={<Financeiro />} />
 
@@ -55,8 +54,6 @@ function Rotas() {
                         <Route path="/configuracoes" element={<PrivateRoute element={<Configuracoes />} />} />
                         <Route path="/configuracoes/mecanica" element={<PrivateRoute element={<ConfiguracoesMecanica />} />} />
                         <Route path="/configuracoes/galeria" element={<PrivateRoute element={<Galeria />} />} />
-
-                        <Route path="/recuperar-senha" element={<PrivateRoute element={<RecuperarSenhaPitstop />} />} />
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

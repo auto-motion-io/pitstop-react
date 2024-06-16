@@ -35,6 +35,10 @@ const ModalLogin = ({ logo, nome1, tamanho1, tamanhoFundo1, nome2, tamanho2, tam
     return true;
   }
 
+  function handleNavigate() {
+    navigate("/esqueci-senha");
+  }
+
   async function verificarLogin() {
     let logado = await logar();
     if (logado) {
@@ -66,7 +70,7 @@ const ModalLogin = ({ logo, nome1, tamanho1, tamanhoFundo1, nome2, tamanho2, tam
           <Input nome={nome2} type={"password"} value={senha} onChange={(e) => setSenha(e.target.value)} tamanho={tamanho2} tamanhoFundo={tamanhoFundo2} />
         </div>
         <div>
-          <a id={style.textinho} style={{ width: "87%", display: "flex", alignItems: "end", justifyContent: "end" }} href="#">Esqueci minha senha</a>
+          <a onClick={handleNavigate} id={style.textinho} style={{ width: "87%", display: "flex", alignItems: "end", justifyContent: "end" }} href="#">Esqueci minha senha</a>
         </div>
         <div style={{ width: '100%', display: "flex", justifyContent: "center", marginTop: "5vh" }}>
           <Botao nome={"Entrar"} onClick={verificarLogin} cor={cor} />

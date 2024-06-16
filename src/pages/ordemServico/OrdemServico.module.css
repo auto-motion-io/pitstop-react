@@ -20,6 +20,8 @@
 
 ::-webkit-scrollbar-track{
     background-color: #F9F8F5;
+    border-radius: 2vw;
+    height: 2vh;
 }
 
 ::-webkit-scrollbar-thumb{
@@ -61,10 +63,6 @@
     cursor: pointer;
 }
 
-.box-container{
-    
-}
-
 .box-header{
     display: flex;
     justify-content: space-between;
@@ -94,7 +92,7 @@
     padding-right: 2vw;
 }
 
-.box-veiculo h1, .box-cliente h1{
+.box-veiculo h1, .box-cliente h1, .box-prazo-cliente h1, .box-produtos h1, .box-servicos h1, .box-observacoes h1, .box-valor h1, .box-salvar h1, .box-responsavel h1{
     font-size: 4.2vh;
     margin-bottom: 1.2vh;
 }
@@ -123,6 +121,11 @@
     margin-bottom: 2vh;
 }
 
+.responsavel-inputs{
+    display: flex;
+    gap: 1vw;
+}
+
 .box-prazo-cliente{
     display: flex;
     gap: 1vw;
@@ -133,6 +136,17 @@
 }
 
 .box-produtos{
+    margin-top: 2vh;
+}
+
+.titulo-desfazer{
+    display: flex;
+    gap: 4vw;
+    margin-top: 2vh;
+}
+
+.btn-excluir{
+    cursor: pointer;
     margin-top: 2vh;
 }
 

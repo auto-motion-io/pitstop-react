@@ -49,7 +49,6 @@ const Estoque = () => {
             garantia: garantia,
             fkOficina: sessionStorage.getItem("idOficina")
         }).then((response) => {
-            console.log(response.data);
             toast.success('Produto cadastrado com sucesso!');
         }).catch((error) => {
             console.log("Erro foi esse aqui - Produto: ", error);

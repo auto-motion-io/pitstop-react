@@ -13,7 +13,7 @@ const ClienteEditar = () => {
     const [nome, setNome] = useState();
     const [telefone, setTelefone] = useState();
     const [email, setEmail] = useState();
-    const { idCliente } = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const inputs =
         <div>
@@ -24,7 +24,7 @@ const ClienteEditar = () => {
 
     async function handleEditar() {
         try{
-            await api.put(`/clientes/${idCliente}`, {
+            await api.put(`/clientes/${id}`, {
                 nome: nome,
                 telefone: telefone,
                 email: email,
@@ -37,7 +37,7 @@ const ClienteEditar = () => {
     }
 
     function handleValorEditar() {
-        api.get(`/clientes/${idCliente}`)
+        api.get(`/clientes/${id}`)
         .then((response) => {
             setNome(response.data.nome);
             setTelefone(response.data.telefone);

@@ -15,12 +15,13 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
         </div>
     ));
 
+    const [mostrarMensagem, setMostrarMensagem] = useState(false);
+    let mensagemSemRegistro = <div className={style["mensagem-vazio"]}>"Nenhuma ordem de serviço encontrada!"</div>;
     const [dataRegistro, setDataRegistro] = useState(null);
 
     async function buscar() {
         try {
             const response = await api.get(endpoint);
-            console.log("Response: ", response.data);
             setDataRegistro(response.data);
         } catch (error) {
             switch (error.response.status) {
@@ -28,7 +29,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                     toast.error("Você não tem permissão para acessar esses dados!");
                     break;
                 case 404:
-                    toast.error("Nenhum registro encontrado!");
+                    setMostrarMensagem(true);
                     break;
                 default:
                     toast.error("Erro ao buscar registros!")
@@ -71,6 +72,9 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                         <div className={style["calendario"]}><img src={calendario} alt="Imagem de Calendario" /></div>
                         <input type="text" />
                     </div>
+                </div>
+                <div>
+                    {mostrarMensagem ? mensagemSemRegistro : linhas}
                 </div>
             </div>
         </div>

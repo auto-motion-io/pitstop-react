@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../../components/navbar/NavBar";
 import BoxInfo from "../../components/boxInfo/BoxInfo";
 import Alignner from "../../components/alignner/Alignner";
@@ -7,9 +7,93 @@ import style from "./OrdemServico.module.css";
 import lupa from "../../utils/assets/lupa.svg";
 import botaoAdicionar from "../../utils/assets/botao-add-laranja.svg";
 import Botao from "../../components/botao/Botao";
+import api from "../../services/api";
 
 const OrdemServico = () => {
     const corInput = "#ECEAE5";
+    const [status, setStatus] = useState("Em aberto");
+    const [garantia, setGarantia] = useState("");
+    const [token, setToken] = useState("");
+    const [idCliente, setIdCliente] = useState();
+    const [idVeiculo, setIdVeiculo] = useState();
+    const [idMecanico, setIdMecanico] = useState();
+    const [dataInicio, setDataInicio] = useState("");
+    const [dataFim, setDataFim] = useState("");
+    const [tipoOs, setTipoOs] = useState();
+    const [observacoes, setObservacoes] = useState();
+    const [produtos, setProdutos] = useState([
+        {
+            nome: "",
+            valorUnidade: "",
+            quantidade: "",
+            garantia: "",
+            valorTotal: ""
+        }
+    ]);
+    const [servicos, setServicos] = useState([
+        {
+            nome: "",
+            valor: ""
+        }
+    ]);
+
+    const adicionarProduto = () => {
+        setProdutos((prevProdutos) => [
+            ...prevProdutos,
+            {
+                nome: "",
+                valorUnidade: "",
+                quantidade: "",
+                garantia: "",
+                valorTotal: ""
+            }
+        ]);
+    };
+
+    const excluirProduto = () => {
+        if (produtos.length > 1) {
+            setProdutos((prevProdutos) => prevProdutos.slice(0, -1));
+        }
+    };
+
+    const adicionarServico = () => {
+        setServicos((prevServicos) => [
+            ...prevServicos,
+            {
+                nome: "",
+                valor: ""
+            }
+        ]);
+    };
+
+    const excluirServico = () => {
+        if (servicos.length > 1) {
+            setServicos((prevServicos) => prevServicos.slice(0, -1));
+        }
+    };
+
+    function salvarOS(){
+        api.post("/ordemDeServicos", {
+            fkOficina: sessionStorage.getItem("idOficina"),
+            status: status,
+            garantia: garantia,
+            token: token,
+            fkVeiculo: idVeiculo,
+            fkCliente: idCliente,
+            fkMecanico: idMecanico,
+            dataInicio: dataInicio,
+            dataFim: dataFim,
+            tipoOs: tipoOs,
+            produtos: produtos,
+            servicos: servicos,
+            observacoes: observacoes
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.error("Erro ao salvar a ordem de serviço:", error);
+        });
+    }
+
     return (
         <>
             <div>
@@ -41,7 +125,7 @@ const OrdemServico = () => {
                             </div>
                             <div className={style["box-cliente"]}>
                                 <h1>Cliente</h1>
-                                <Input nome={"Nome*"} imagem={lupa} corBackground={corInput} tamanho={"95%"} />
+                                <Input nome={"Nome*"} imagem={lupa} corBackground={corInput} tamanho={"94.5%"} tamanhoFundo={"100%"} />
                                 <div className={style["box-cliente-inputs"]}>
                                     <Input nome={"Telefone*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
                                     <Input nome={"E-mail*"} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
@@ -50,7 +134,10 @@ const OrdemServico = () => {
 
                             <div className={style["box-responsavel"]}>
                                 <h1>Responsável</h1>
-                                <Input nome={"Nome*"} imagem={lupa} corBackground={corInput} tamanho={"30%"} tamanhoFundo={"100%"} />
+                                <div className={style["responsavel-inputs"]}>
+                                    <Input nome={"Nome*"} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
+                                    <Input nome={"Telefone*"} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
+                                </div>
                             </div>
 
                             <div className={style["box-prazo-cliente"]}>
@@ -70,27 +157,49 @@ const OrdemServico = () => {
                             </div>
 
                             <div className={style["box-produtos"]}>
-                                <h1>Produtos</h1>
-                                <div className={style["box-cliente-inputs"]}>
-                                    <Input nome={"Telefone*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
-                                    <Input nome={"Valor Unidade*"} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
-                                    <Input nome={"Quantidade*"} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
-                                    <Input nome={"Garantia*"} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
-                                    <Input nome={"Valor Total*"} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
+                                <div className={style["titulo-com-excluir"]}>
+                                    <div className={style["titulo-desfazer"]}>
+                                        <h1>Produtos</h1>
+                                        {produtos.length > 1 && (
+                                            <a onClick={excluirProduto} className={style["btn-excluir"]}>
+                                                Desfazer
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
+                                {produtos.map((produto, index) => (
+                                    <div key={index} className={style["box-cliente-inputs"]}>
+                                        <Input nome={"Nome*"} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
+                                        <Input nome={"Valor Unidade*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Quantidade*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Garantia*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Valor Total*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                    </div>
+                                ))}
                                 <div className={style["box-add"]}>
-                                    <a ><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
+                                    <a onClick={adicionarProduto}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
                                 </div>
                             </div>
 
                             <div className={style["box-servicos"]}>
-                                <h1>Serviços</h1>
-                                <div className={style["box-servicos-inputs"]}>
-                                    <Input nome={"Nome*"} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"35%"} />
-                                    <Input nome={"Valor*"} corBackground={corInput} tamanho={"70%"} />
+                                <div className={style["titulo-com-excluir"]}>
+                                    <div className={style["titulo-desfazer"]}>
+                                        <h1>Serviços</h1>
+                                        {servicos.length > 1 && (
+                                            <a onClick={excluirServico} className={style["btn-excluir"]}>
+                                                Desfazer
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
+                                {servicos.map((servico, index) => (
+                                    <div key={index} className={style["box-servicos-inputs"]}>
+                                        <Input nome={"Nome*"} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
+                                        <Input nome={"Valor*"} corBackground={corInput} tamanho={"50%"} tamanhoFundo={"100%"} />
+                                    </div>
+                                ))}
                                 <div className={style["box-add"]}>
-                                    <a><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
+                                    <a onClick={adicionarServico}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
                                 </div>
                             </div>
 
@@ -110,7 +219,6 @@ const OrdemServico = () => {
                         </div>
                     </div>
                 </div>
-
             </Alignner>
         </>
     );

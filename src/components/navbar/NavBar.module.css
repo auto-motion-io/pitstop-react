@@ -58,6 +58,13 @@ nav{
     right: 7%;
     gap: 0.5vw;
 }
+.perfil-logout{
+    display: flex;
+}
+
+.logout{
+    padding-left: 1.5vw;
+}
 
 .foto-perfil{
     height: 100%;
@@ -97,5 +104,10 @@ nav{
 .menu span.active img {
     filter: grayscale(0%);
     opacity: 1;
+}
+
+.icon-logout{
+    height: 4vh;
+    cursor: pointer;
 }
 

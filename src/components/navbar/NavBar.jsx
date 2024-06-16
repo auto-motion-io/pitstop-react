@@ -11,6 +11,7 @@ import logo from "../../utils/assets/logo.png";
 import gerente from "../../utils/assets/gerente.svg";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import iconLogout from "../../utils/assets/icon-logout.svg";
 
 const NavBar = ({ currentPage }) => {
   const [nomeUser, setNomeUser] = useState("");
@@ -23,12 +24,8 @@ const NavBar = ({ currentPage }) => {
   function handleUsuario() {
     api.get("/gerentes").then((response) => {
       for (let i = 0; i < response.data.length; i++) {
-        debugger
-        console.log(response.data[i].oficina.id);
-        console.log(sessionStorage.getItem("idOficina"));
         if (response.data[i].oficina.id.toString() === sessionStorage.getItem("idOficina") && response.data[i].email === sessionStorage.getItem("email")) {
           setNomeUser(response.data[i].nome + " " + response.data[i].sobrenome);
-          console.log(response.data[i].nome + " " + response.data[i].sobrenome);
         }
       }
     });
@@ -67,7 +64,7 @@ const NavBar = ({ currentPage }) => {
           <span onClick={() => mudarPagina("/produtoEstoque")} className={pageClasses.estoque}>
             <img src={imgEstoque} alt="Estoque" />
           </span>
-          <span onClick={() => {mudarPagina("/ordem-servico")}} id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>
+          <span onClick={() => { mudarPagina("/ordem-servico") }} id="os" className={currentPage === "os" ? styles["active"] : styles["teste"]}>
             <img src={imgOS} alt="Ordem de serviço" />
           </span>
           <span onClick={() => mudarPagina("/financeiro")} className={pageClasses.financeiro}>
@@ -78,14 +75,23 @@ const NavBar = ({ currentPage }) => {
           </span>
         </div>
         <div className={styles.perfil}>
-          <div className={styles["foto-perfil"]}>
-            <img src={gerente} alt="Foto de perfil" className={styles["img-perfil"]} />
+          <div className={styles["perfil-logout"]}>
+            <div className={styles["foto-perfil"]}>
+              <img src={gerente} alt="Foto de perfil" className={styles["img-perfil"]} />
+            </div>
+            <div className={styles.infos}>
+              <span className={styles.nome}>Boa Tarde!</span>
+              <span className={styles.oficina}>{nomeUser}</span>
+            </div>
           </div>
-          <div className={styles.infos}>
-            <span className={styles.nome}>Boa Tarde!</span>
-            <span className={styles.oficina}>{nomeUser}</span>
+          <div className={styles["logout"]}>
+            <a className={styles.sair} onClick={() => {
+              sessionStorage.clear();
+              navigate("/");
+            }}><img className={styles["icon-logout"]} src={iconLogout} /></a>
           </div>
         </div>
+
       </nav>
     </div>
   );
