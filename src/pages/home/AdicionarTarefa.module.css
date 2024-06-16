@@ -1,0 +1,26 @@
+.body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1efe9;
+    width: 100vw;
+    height: 100vh;
+}
+
+.container{
+    width: 35vw;
+    height: 35vh;
+    background-color: #f7f5f1;
+    border-radius: 5vh;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}

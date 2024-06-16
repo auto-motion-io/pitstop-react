@@ -8,7 +8,13 @@ import Add from "../../utils/assets/botao-add-laranja.svg";
 import Tarefa from "../../components/tarefa/Tarefa";
 import GraficoOrdensPendentes from '../../components/graficoOrdensPendentes/GraficoOrdensPendentes';
 import GraficoClientesAtivos from '../../components/graficoClientesAtivos/GraficoClientesAtivos';
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
+  
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(`/adicionar-tarefa`);
+}
 
   return (
     <div>
@@ -98,7 +104,7 @@ const Home = () => {
             <div className={style["container_tarefas_botoes"]}>
               <Botao nome={"Hoje"} cor={"#C66D2C"} />
               <Botao style={{ fontColor: "#474747" }} nome={"Todas"} cor={"#DFDEDB"} corFont={"#474747"} />
-              <a href=""><img src={Add} alt="" style={{ width: "50px" }} /></a>
+              <a onClick={handleNavigate} style={{ cursor: "pointer" }}><img src={Add} alt="" style={{ width: "50px" }} /></a>
             </div>
 
             <div className={style["container_tarefas_modal"]}>

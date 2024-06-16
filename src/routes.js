@@ -18,6 +18,7 @@ import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import RecuperarSenhaPitstop from "./pages/recuperarSenhaPitstop/RecuperarSenhaPitstop";
 import EsqueciSenha from "./pages/loginPitstop/EsqueciSenha";
 import Financeiro from "./pages/financeiro/Financeiro"
+import AdicionarTarefa from "./pages/home/AdicionarTarefa";
 
 function Rotas() {
     return (
@@ -29,9 +30,15 @@ function Rotas() {
                         <Route path="/esqueci-senha" element={<EsqueciSenha />} />
 
                         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+                        <Route path="/adicionar-tarefa" element={<PrivateRoute element={<AdicionarTarefa />} />} />
+
+
+
                         <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
                         <Route path="/clientes/editar/:id" element={<PrivateRoute element={<ClienteEditar />} />} />
                         <Route path="/clientes/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
+
+
 
                         <Route path="/servicos" element={<PrivateRoute element={<Servicos />} />} />
                         <Route path="/servicos/editar/:id" element={<PrivateRoute element={<ServicosEditar />} />} />
