@@ -35,7 +35,6 @@ const ServicosEditar = () => {
                 fkOficina: sessionStorage.getItem("idOficina")
             });
             toast.success('Dados editados com sucesso!');
-            console.log(nomeServico)
             navigate("/servicos");
         } catch (error) {
             toast.error('Erro ao editar dados!');

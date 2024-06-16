@@ -70,7 +70,7 @@ function ConfiguracoesMecanica() {
                     setDiasSemana(response.data[i].oficina.informacoesOficina.diasSemanaAberto.split(";").map(item => item === 'true'));
                     setVeiculos(response.data[i].oficina.informacoesOficina.tipoVeiculosTrabalha.split(";"));
                     setMarcas(response.data[i].oficina.informacoesOficina.marcasVeiculosTrabalha.split(";"));
-                    setTipoPropulsao(response.data[i].oficina.informacoesOficina.tipoPropulsaoTrabalha.split(";")); 
+                    setTipoPropulsao(response.data[i].oficina.informacoesOficina.tipoPropulsaoTrabalha.split(";"));
                 }
             }
         }).catch((error) => {
@@ -91,7 +91,6 @@ function ConfiguracoesMecanica() {
             marcasVeiculosTrabalha: marcas.join(";")
         }).then((response) => {
             toast.success("Configurações salvas com sucesso!");
-            console.log("Configurações salvas com sucesso! " + response.data);
         }).catch((error) => {
             console.log("Erro foi esse aqui: ", error);
         });
@@ -112,7 +111,6 @@ function ConfiguracoesMecanica() {
         const marcasFiltradas = marcas.filter((marca) =>
             marca.toLowerCase().startsWith(filtro)
         );
-        console.log(marcasFiltradas);
         setMarcasFiltradas(marcasFiltradas);
     }
 
@@ -122,8 +120,8 @@ function ConfiguracoesMecanica() {
                 const novoArray = [...prevState];
                 novoArray.push(e.target.value);
                 e.target.value = "";
+                changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", marcaRef, lupaMarcaRef);
                 setMostrarDropdown(false);
-                changeBorderRadius("0 2vh 2vh 0", "3vh 0 0 3vh");
                 return novoArray;
             });
         } else if (select !== "") {
@@ -161,6 +159,8 @@ function ConfiguracoesMecanica() {
                 const novoArray = [...prevState];
                 novoArray.push(e.target.value);
                 e.target.value = "";
+                changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", servicoRef, lupaServicoRef);
+                setMostrarDropdown(false);
                 return novoArray;
             });
         } else if (select !== "") {
@@ -189,7 +189,6 @@ function ConfiguracoesMecanica() {
         const veiculosFiltrados = veiculos.filter((veiculos) =>
             veiculos.toLowerCase().startsWith(filtro)
         );
-        console.log(veiculosFiltrados);
         setVeiculosFiltrados(veiculosFiltrados);
     }
 
@@ -199,6 +198,8 @@ function ConfiguracoesMecanica() {
                 const novoArray = [...prevState];
                 novoArray.push(e.target.value);
                 e.target.value = "";
+                changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", veiculoRef, lupaVeiculoRef);
+                setMostrarDropdown(false);
                 return novoArray;
             });
         } else if (select !== "") {
@@ -227,7 +228,6 @@ function ConfiguracoesMecanica() {
         const tipoPropulsaoFiltrados = tipoPropulsao.filter((tipoPropulsao) =>
             tipoPropulsao.toLowerCase().startsWith(filtro)
         );
-        console.log(tipoPropulsaoFiltrados);
         setTipoPropulsaoFiltrados(tipoPropulsaoFiltrados);
     }
 
@@ -237,6 +237,8 @@ function ConfiguracoesMecanica() {
                 const novoArray = [...prevState];
                 novoArray.push(e.target.value);
                 e.target.value = "";
+                changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", tipoPropRef, lupaTipoPropRef);
+                setMostrarDropdown(false);
                 return novoArray;
             });
         } else if (select !== "") {
@@ -252,9 +254,6 @@ function ConfiguracoesMecanica() {
 
     useEffect(() => {
         getConfig();
-
-        console.log(marcas);
-
     }, []);
 
     return (

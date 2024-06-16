@@ -58,7 +58,6 @@ function Configuracoes() {
                     setComplemento(response.data[i].oficina.complemento);
                     setBuscar(response.data[i].oficina.hasBuscar);
                     retornaCep(response.data[i].oficina.cep).then((endereco) => {
-                        console.log("Endereço: ", endereco);
                         setCep(endereco.data.cep);
                         setBairro(endereco.data.bairro);
                         setLogradouro(endereco.data.logradouro);

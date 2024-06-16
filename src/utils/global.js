@@ -12,7 +12,6 @@ export const inputMascaraCep = (e, setValores = false) => {
             retornaCep(valorFormatado)
             .then((response) => {
                 const endereco = response.data;
-                console.log(endereco);
 
                 setValores(endereco);
             })
@@ -38,11 +37,8 @@ export const inputMascaraCPF_CNPJ = (e) => {
 
     e.target.value = e.target.value.replace(/\D/g, '');
 
-    console.log(valorFormatado)
-
     if (valorFormatado.length === 14) {
         e.target.value = valorFormatado.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-        console.log(e.target.value)
     } else if (valorFormatado.length === 18) {
         e.target.value = valorFormatado.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     }

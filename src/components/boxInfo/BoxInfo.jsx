@@ -20,7 +20,6 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
     async function buscar() {
         try {
             const response = await api.get(endpoint);
-            console.log("Response: ", response.data);
             setDataRegistro(response.data);
         } catch (error) {
             switch (error.response.status) {

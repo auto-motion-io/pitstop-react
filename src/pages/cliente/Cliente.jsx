@@ -30,7 +30,6 @@ const Cliente = () => {
             fkOficina: sessionStorage.getItem("idOficina")
         })
         .then((response) => {
-            console.log(response.data);
             toast.success('Cliente cadastrado com sucesso!');
             setTimeout(() => {
                 window.location.reload();
