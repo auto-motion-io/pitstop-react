@@ -21,7 +21,10 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
 
     async function buscar() {
         try {
-            const response = await api.get(endpoint);
+            const response = await api.get(endpoint + `/oficina/${sessionStorage.getItem("idOficina")}`);
+            if (response.data.length === 0) {
+                setMostrarMensagem(true);
+            }
             setDataRegistro(response.data);
         } catch (error) {
             switch (error.response.status) {

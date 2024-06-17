@@ -209,9 +209,8 @@ export const marcasDeVeiculos = [
 
 export const tiposDeVeiculos = [
     "Carros",
-    "Motocicletas",
-    "Caminhonetes",
-    "Vans",
+    "Motos",
+    "Ônibus",
     "Caminhões",
 ];
 
