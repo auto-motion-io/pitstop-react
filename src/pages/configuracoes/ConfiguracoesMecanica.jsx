@@ -400,7 +400,7 @@ function ConfiguracoesMecanica() {
                         <h5>Selecione o(s) tipo(s) de veículo(s)</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]} ref={lupaVeiculoRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" ref={veiculoRef} onChange={(e) => filtrarVeiculos(e)} onFocus={() => mostrarOpcoesDropdown(true, tiposDeVeiculos, veiculoRef, lupaVeiculoRef, "Veiculos")} onBlur={() => mostrarOpcoesDropdown(false, "", veiculoRef, lupaVeiculoRef, "")} onKeyDown={(e) => addVeiculo(e)} />
+                            <input type="text" ref={veiculoRef} onChange={(e) => filtrarVeiculos(e)} onFocus={() => mostrarOpcoesDropdown(true, tiposDeVeiculos, veiculoRef, lupaVeiculoRef, "Veiculos")} onBlur={() => mostrarOpcoesDropdown(false, "", veiculoRef, lupaVeiculoRef, "")} />
                         </div>
                         {mostrarDropdown && opcaoSelecionada === "Veiculos" && (
                             <div className={styles["dropdown"]} style={{ "height": "15vh" }}>
@@ -460,7 +460,7 @@ function ConfiguracoesMecanica() {
                         <h5>Selecione o(s) tipo(s) de propulsão dos veículo</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]} ref={lupaTipoPropRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" ref={tipoPropRef} onChange={(e) => filtrarTipoPropulsao(e)} onFocus={() => mostrarOpcoesDropdown(true, tiposPropulsaoComuns, tipoPropRef, lupaTipoPropRef, "Tipo Propulsão")} onBlur={() => mostrarOpcoesDropdown(false, "", tipoPropRef, lupaTipoPropRef, "")} onKeyDown={(e) => addTipoPropulsao(e)} />
+                            <input type="text" ref={tipoPropRef} onChange={(e) => filtrarTipoPropulsao(e)} onFocus={() => mostrarOpcoesDropdown(true, tiposPropulsaoComuns, tipoPropRef, lupaTipoPropRef, "Tipo Propulsão")} onBlur={() => mostrarOpcoesDropdown(false, "", tipoPropRef, lupaTipoPropRef, "")} />
                         </div>
                         {mostrarDropdown && opcaoSelecionada === "Tipo Propulsão" && (
                             <div className={styles["dropdown"]} style={{ "height": "15vh" }}>
