@@ -9,7 +9,7 @@ const Input = ({ nome, type = "text", tamanho, tamanhoFundo, onInput = null, onC
     inputImage =
       <div className={style["input-img"]} style={{width: tamanhoFundo}}>
         <div className={style["img"]} style={{backgroundColor : corBackground}}><img src={imagem} alt="Imagem de Lupa" /></div>
-        <input type="text" disabled={disabled} maxLength={maxLength} onInput={onInput} onChange={onChange} style={{backgroundColor : corBackground, width : tamanho}} onFocus={onFocus} onBlur={onBlur} onKeyDown={onKeyDown} ref={ref}/>
+        <input type="text" disabled={disabled} value={value} maxLength={maxLength} onInput={onInput} onChange={onChange} style={{backgroundColor : corBackground, width : tamanho}} onFocus={onFocus} onBlur={onBlur} onKeyDown={onKeyDown} ref={ref}/>
       </div>
   } else {
     inputImage =

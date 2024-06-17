@@ -126,6 +126,11 @@
     gap: 1vw;
 }
 
+.input-select{
+    display: flex;
+    flex-direction: column;
+}
+
 .box-prazo-cliente{
     display: flex;
     gap: 1vw;

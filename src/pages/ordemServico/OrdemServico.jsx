@@ -13,11 +13,10 @@ import lupaImg from "./../../utils/assets/lupa.svg";
 
 
 const OrdemServico = () => {
-    
+
     const corInput = "#ECEAE5";
 
     //#region Variáveis Cliente
-    
     const [idCliente, setIdCliente] = useState([]);
     const [nomeCliente, setNomeCliente] = useState([]);
     const [nomeClienteSelecionado, setNomeClienteSelecionado] = useState("");
@@ -26,11 +25,9 @@ const OrdemServico = () => {
     const [emailCliente, setEmailCliente] = useState("");
     const nomeClienteRef = useRef(null);
     const nomeClienteLupaRef = useRef(null);
-
     //#endregion
 
     //#region Variáveis Veículo
-
     const [placa, setPlaca] = useState([]);
     const [marca, setMarca] = useState("");
     const [modelo, setModelo] = useState("");
@@ -41,28 +38,32 @@ const OrdemServico = () => {
     const [placaSelecionada, setPlacaSelecionada] = useState("");
     const placaRef = useRef(null);
     const placaLupaRef = useRef(null);
-
     //#endregion
 
     //#region Váriaveis Produtos
-
     const [nomeProduto, setNomeProduto] = useState("");
     const [valorProduto, setValorProduto] = useState("");
     const [qtdProduto, setQtdProduto] = useState("");
     const [garantiaProduto, setGarantiaProduto] = useState("");
     const [valorTotalProduto, setValorTotalProduto] = useState("");
+    //#endregion
 
+    //#region Váriaveis Mecânico
+    const [idMecanico, setIdMecanico] = useState();
+    const [nomeMecanico, setNomeMecanico] = useState([]);
+    const [telMecanico, setTelMecanico] = useState("");
+    const [mecanicoSelecionado, setMecanicoSelecionado] = useState("");
+    const [infoMecanico, setInfoMecanico] = useState([]);
+    const mecanicoRef = useRef(null);
+    const mecanicoLupaRef = useRef(null);
     //#endregion
 
     const [status, setStatus] = useState("Em aberto");
     const [garantia, setGarantia] = useState("");
     const [token, setToken] = useState("");
-    const [idMecanico, setIdMecanico] = useState();
     const [dataInicio, setDataInicio] = useState("");
     const [dataFim, setDataFim] = useState("");
     const [tipoOs, setTipoOs] = useState();
-    const [nomeMecanico, setNomeMecanico] = useState("");
-    const [telMecanico, setTelMecanico] = useState("");
     const [nomeServico, setNomeServico] = useState("");
     const [valorServico, setValorServico] = useState("");
     const [observacoes, setObservacoes] = useState();
@@ -89,15 +90,21 @@ const OrdemServico = () => {
 
     const changeBorderRadius = (valor, valorLupa, ref, refLupa) => {
         ref.current.style.borderRadius = valor;
-        refLupa.current.style.borderRadius = valorLupa;
+        if (refLupa !== null) {
+            refLupa.current.style.borderRadius = valorLupa;
+        }
     }
 
     function mostrarOpcoesDropdown(dropdown, retorno, ref, refLupa, opcaoSelecionada = "") {
         setOpcaoSelecionada(opcaoSelecionada);
         if (dropdown) {
             changeBorderRadius("0 3vh 0vh 0", "3vh 0 0 0", ref, refLupa);
-        } else {
+        } else if (!dropdown) {
             changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", ref, refLupa);
+        } else if (dropdown && refLupa === null) {
+            changeBorderRadius("5vh", "3vh 0 0 0", ref, refLupa);
+        } else if (!dropdown && refLupa === null) {
+            changeBorderRadius("5vh", "3vh 0 0 3vh", ref, refLupa);
         }
         setOpcoesDropdown(retorno);
         setMostrarDropdown(dropdown);
@@ -155,7 +162,7 @@ const OrdemServico = () => {
         });
     }
 
-    function buscarInfoCliente(){
+    function buscarInfoCliente() {
         for (let i = 0; i < nomeCliente.length; i++) {
             if (nomeCliente[i] === nomeClienteSelecionado) {
                 setIdCliente(infoCliente[i].id);
@@ -181,7 +188,7 @@ const OrdemServico = () => {
     //#region Veículo
 
     function buscarVeiculo() {
-        console.log(idCliente); 
+        console.log(idCliente);
         api.get(`/veiculos/buscar-por-cliente/${idCliente}`).then((response) => {
             let infoVeiculo = [];
             let placaVeiculo = [];
@@ -189,8 +196,6 @@ const OrdemServico = () => {
                 infoVeiculo.push(response.data[i]);
                 placaVeiculo.push(response.data[i].placa);
             }
-            console.log(infoVeiculo);
-            console.log(placaVeiculo);
             setInfoVeiculo(infoVeiculo);
             setPlaca(placaVeiculo);
         }).catch((error) => {
@@ -213,13 +218,8 @@ const OrdemServico = () => {
 
     function addVeiculo(e, select) {
         if (e.key === "Enter") {
-            setPlacaSelecionada(prevState => {
-                const novoArray = [...prevState];
-                novoArray.push(e.target.value);
-                e.target.value = "";
-                setMostrarDropdown(false);
-                return novoArray;
-            });
+            setPlacaSelecionada(e.target.value);
+            setMostrarDropdown(false);
         }
         else if (select !== "") {
             setPlacaSelecionada(select);
@@ -228,7 +228,7 @@ const OrdemServico = () => {
 
     const mascaraPlaca = (e) => {
         let placaDigitada = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-        
+
         if (placaDigitada.length > 3) {
             placaDigitada = placaDigitada.replace(/([A-Z]{3})([0-9]{1,4})/, '$1-$2');
         }
@@ -248,22 +248,74 @@ const OrdemServico = () => {
             console.error("Erro ao buscar veículos", error);
         });
     }
-    
+
 
     useEffect(() => {
         buscarInfoVeiculo();
     }, [placaSelecionada]);
 
     useEffect(() => {
-        if(idCliente !== ""){
+        if (idCliente !== "") {
             buscarVeiculo();
         }
     }, [idCliente]);
 
     //#endregion
-    
+
+    //#region Mecânico
+
+    function buscarMecanico() {
+        api.get(`/mecanicos/oficina/${sessionStorage.getItem("idOficina")}`).then((response) => {
+            let nomeMecanico = [];
+            let infoMecanico = [];
+            for (let i = 0; i < response.data.length; i++) {
+                nomeMecanico.push(response.data[i].nome);
+                infoMecanico.push(response.data[i]);
+            }
+            setInfoMecanico(infoMecanico);
+            setNomeMecanico(nomeMecanico);
+        }).catch((error) => {
+            console.error("Erro ao buscar mecânicos", error);
+        });
+    }
+
+    function buscarInfoMecanico() {
+        for (let i = 0; i < nomeMecanico.length; i++) {
+            if (nomeMecanico[i] === mecanicoSelecionado) {
+                setIdMecanico(infoMecanico[i].id);
+                setTelMecanico(infoMecanico[i].telefone);
+                break;
+            }
+        }
+    }
+
+    function addMecanico(e, select) {
+        if (e.key === "Enter") {
+            setMecanicoSelecionado(e.target.value);
+            setMostrarDropdown(false);
+        } else if (select !== "") {
+            setMecanicoSelecionado(select);
+            for (let i = 0; i < infoMecanico.length; i++) {
+                if (infoMecanico[i].nome === select) {
+                    setTelMecanico(infoMecanico[i].telefone);
+                    break;
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        buscarInfoMecanico();
+    }, [mecanicoSelecionado]);
+
+    useEffect(() => {
+        buscarMecanico();
+    }, []);
+
+    //#endregion
+
     function salvarOS() {
-        if(existeVeiculo()){
+        if (existeVeiculo()) {
             api.post("/ordemDeServicos", {
                 idCliente: idCliente,
                 idVeiculo: idVeiculo,
@@ -282,7 +334,7 @@ const OrdemServico = () => {
             }).catch((error) => {
                 console.error("Erro ao cadastrar ordem de serviço", error);
             });
-        } else{
+        } else {
             api.post("/veiculos", {
                 fkCliente: idCliente,
                 placa: placaSelecionada,
@@ -299,7 +351,6 @@ const OrdemServico = () => {
             });
         }
     }
-
 
     useEffect(() => {
         buscarCliente();
@@ -329,10 +380,10 @@ const OrdemServico = () => {
                                 <span className={style["input-label"]}>Nome*</span>
                                 <div className={style["input-type"]}>
                                     <div className={style["img-lupa"]} ref={nomeClienteLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                                    <input type="text" value={nomeClienteSelecionado} ref={nomeClienteRef} onFocus={() => mostrarOpcoesDropdown(true, nomeCliente, nomeClienteRef, nomeClienteLupaRef, "NomeCliente")} onBlur={() => mostrarOpcoesDropdown(false, "", nomeClienteRef, nomeClienteLupaRef, "")} onChange={(e) => setNomeClienteSelecionado(e.target.value)} style={{width: "18.1vw"}} />
+                                    <input type="text" value={nomeClienteSelecionado} ref={nomeClienteRef} onFocus={() => mostrarOpcoesDropdown(true, nomeCliente, nomeClienteRef, nomeClienteLupaRef, "NomeCliente")} onBlur={() => mostrarOpcoesDropdown(false, "", nomeClienteRef, nomeClienteLupaRef, "")} onChange={(e) => setNomeClienteSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                 </div>
                                 {mostrarDropdown && opcaoSelecionada === "NomeCliente" && (
-                                    <div className={style["dropdown"]} style={{height: nomeCliente.length < 5 ? "fit-content" : "20vw", width: "20vw"}}>
+                                    <div className={style["dropdown"]} style={{ height: nomeCliente.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
                                         {opcoesDropdown.map((cliente, index) => (
                                             <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addCliente(e, cliente)}>
                                                 {cliente}
@@ -350,10 +401,10 @@ const OrdemServico = () => {
                                 <span className={style["input-label"]}>Placa*</span>
                                 <div className={style["input-type"]}>
                                     <div className={style["img-lupa"]} ref={placaLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                                    <input type="text" value={placaSelecionada} ref={placaRef} onFocus={() => mostrarOpcoesDropdown(true, placa, placaRef, placaLupaRef, "Placa")} onBlur={() => mostrarOpcoesDropdown(false, "", placaRef, placaLupaRef, "")} maxLength={8} onChange={mascaraPlaca} style={{width: "18.1vw"}} onKeyDown={(e) => addVeiculo(e)}/>
+                                    <input type="text" value={placaSelecionada} ref={placaRef} onFocus={() => mostrarOpcoesDropdown(true, placa, placaRef, placaLupaRef, "Placa")} onBlur={() => mostrarOpcoesDropdown(false, "", placaRef, placaLupaRef, "")} maxLength={8} onChange={mascaraPlaca} style={{ width: "18.1vw" }} onKeyDown={(e) => addVeiculo(e)} />
                                 </div>
                                 {mostrarDropdown && opcaoSelecionada === "Placa" && (
-                                    <div className={style["dropdown"]} style={{height: placa.length < 5 ? "fit-content" : "20vw", width: "20vw"}}>
+                                    <div className={style["dropdown"]} style={{ height: placa.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
                                         {opcoesDropdown.map((placa, index) => (
                                             <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addVeiculo(e, placa)}>
                                                 {placa}
@@ -371,7 +422,22 @@ const OrdemServico = () => {
                             <div className={style["box-responsavel"]}>
                                 <h1>Responsável</h1>
                                 <div className={style["responsavel-inputs"]}>
-                                    <Input nome={"Nome*"} value={nomeMecanico} onChange={(e) => setNomeMecanico(e.target.value)} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
+                                    <div className={style["input-select"]}>
+                                        <span className={style["input-label"]}>Nome*</span>
+                                        <div className={style["input-type"]}>
+                                            <div className={style["img-lupa"]} ref={mecanicoLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
+                                            <input type="text" value={mecanicoSelecionado} ref={mecanicoRef} onFocus={() => mostrarOpcoesDropdown(true, nomeMecanico, mecanicoRef, mecanicoLupaRef, "Mecanico")} onBlur={() => mostrarOpcoesDropdown(false, "", mecanicoRef, mecanicoLupaRef, "")} maxLength={8} onChange={(e) => setMecanicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} onKeyDown={(e) => addMecanico(e)} />
+                                        </div>
+                                        {mostrarDropdown && opcaoSelecionada === "Mecanico" && (
+                                            <div className={style["dropdown"]} style={{ height: nomeMecanico.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                                {opcoesDropdown.map((mecanico, index) => (
+                                                    <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addMecanico(e, mecanico)}>
+                                                        {mecanico}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
                                     <Input nome={"Telefone*"} value={telMecanico} onChange={(e) => setTelMecanico(e.target.value)} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
                                 </div>
                             </div>
