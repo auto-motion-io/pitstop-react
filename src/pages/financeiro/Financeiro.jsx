@@ -7,8 +7,15 @@ import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Input from "../../components/input/Input";
 import calendario from "../../utils/assets/calendario.svg";
 import GraficoEntradaSaida from "../../components/graficoEntradaSaida/GraficoEntradaSaida";
+import { useNavigate } from 'react-router-dom';
 
 const Financeiro = () => {
+
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(`/todos-financeiro`);
+}
+
   const inputs = (
     <div>
       <Input nome={"Transação*"} tipo={"text"} tamanho={"100%"} />
@@ -35,7 +42,7 @@ const Financeiro = () => {
         <div className={style["box"]}>
           <div className={style["titulo"]}>
             <h1>Finaceiro</h1>
-            <button className={style["botao_vertodos"]}>Ver Todos</button>
+            <button onClick={handleNavigate} className={style["botao_vertodos"]}>Ver Todos</button>
           </div>
 
           <div className={style["container"]}>

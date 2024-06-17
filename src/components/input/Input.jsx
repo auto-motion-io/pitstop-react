@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./Input.module.css";
 
-const Input = ({ nome, type = "text", tamanho, tamanhoFundo, onInput = null, onChange, maxLength = 255, value = "", altura = "5vh", imagem = null, corBackground = "#eceae5", disabled}) => {
+const Input = ({ nome, type, tamanho, tamanhoFundo, onInput = null, onChange, maxLength = 255, value = "", altura = "5vh", imagem = null, corBackground = "#eceae5", disabled}) => {
 
   let inputImage = "";
 

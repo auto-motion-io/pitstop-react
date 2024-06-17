@@ -18,7 +18,7 @@ import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import EsqueciSenha from "./pages/loginPitstop/EsqueciSenha";
 import Financeiro from "./pages/financeiro/Financeiro"
 import AdicionarTarefa from "./pages/home/AdicionarTarefa";
-
+import TodosFinanceiro from "./pages/financeiro/TodosFinanceiro";
 function Rotas() {
     return (
         <>
@@ -48,6 +48,7 @@ function Rotas() {
                         <Route path="/produtoEstoque/excluir/:id" element={<Excluir />} />
 
                         <Route path="/financeiro" element={<Financeiro />} />
+                        <Route path="/todos-financeiro" element={<TodosFinanceiro />} />
 
                         <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
 

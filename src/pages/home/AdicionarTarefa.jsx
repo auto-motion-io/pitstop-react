@@ -1,17 +1,30 @@
 import React from "react";
 import style from "./AdicionarTarefa.module.css";
+import Input from "../../components/input/Input";
+import Botao from "../../components/botao/Botao"
+import { useNavigate } from 'react-router-dom';
+
 
 const AdicionarTarefa = () => {
+    const navigate = useNavigate();
+    const handleNavigate = () => {
+      navigate(`/home`);
+  }
+
     return (
         <div className={style["body"]}>
         <div className={style["container"]}>
             <div className={style["titulo"]}>
-                <h1>Excluir</h1>
+                <h1>Nova Tarefa</h1>
             </div>
-            <h4>Tem certeza que deseja excluir?</h4>
+            <div className={style["inputs"]}>
+            <Input nome={"Nome da Tarefa*"} tipo={"text"} value={""} tamanho={"230%"} />
+            <Input nome={"Data*"} type={"date"} value={""} tamanho={"100%"} />
+            </div>
+
             <div className={style["botao"]}>
-                <a>Sim</a>
-                <a>Não</a>
+            <Botao onClick={handleNavigate} nome={"Voltar"} cor={"#DFDEDB"} corFont={"#474747"}/>
+            <Botao nome={"Cadastrar"} cor={"#C66D2C"} value={""} tamanho={"230%"}/>
             </div>
         </div>
     </div>
