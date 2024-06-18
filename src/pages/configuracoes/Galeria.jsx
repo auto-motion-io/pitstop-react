@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import api from "../../services/api";
 
 function Galeria() {
-  let imagem = sessionStorage.getItem("imagem") || "";
+  let imagem = atob(sessionStorage.getItem("imgOficina")) || "";
 
   const supabaseUrl = "https://jeyoqssrkcibrvhoobsk.supabase.co";
   const supabaseKey =
@@ -40,7 +40,7 @@ function Galeria() {
       })
       .then((response) => {
         console.log(response);
-        sessionStorage.setItem('imagem',publicUrl);
+        sessionStorage.setItem('imgOficina',btoa(publicUrl));
         toast.success(
           "Imagem alterada com sucesso, atualizando em 2 segundos",
           {
