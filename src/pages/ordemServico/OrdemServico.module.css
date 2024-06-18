@@ -153,6 +153,7 @@
 .btn-excluir{
     cursor: pointer;
     margin-top: 2vh;
+    color: #474747;
 }
 
 .box-add{

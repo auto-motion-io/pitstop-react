@@ -225,4 +225,9 @@ export const tiposPropulsaoComuns = [
     "Veículo movido a gás natural"
 ];
 
+export const tiposDeOs = [
+    "Orçamento",
+    "Serviço"
+]
+
 export const regexPlacas = /[A-z]{3}-\d[A-j0-9]\d{2}/;

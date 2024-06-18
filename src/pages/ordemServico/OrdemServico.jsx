@@ -8,7 +8,7 @@ import lupa from "../../utils/assets/lupa.svg";
 import botaoAdicionar from "../../utils/assets/botao-add-laranja.svg";
 import Botao from "../../components/botao/Botao";
 import api from "../../services/api";
-import { regexPlacas } from "../../utils/global"
+import { inputMascaraTelefoneCelular, regexPlacas, tiposDeOs } from "../../utils/global"
 import lupaImg from "./../../utils/assets/lupa.svg";
 
 
@@ -41,11 +41,24 @@ const OrdemServico = () => {
     //#endregion
 
     //#region Váriaveis Produtos
-    const [nomeProduto, setNomeProduto] = useState("");
-    const [valorProduto, setValorProduto] = useState("");
-    const [qtdProduto, setQtdProduto] = useState("");
-    const [garantiaProduto, setGarantiaProduto] = useState("");
-    const [valorTotalProduto, setValorTotalProduto] = useState("");
+    const [valorUnidadeAtual, setValorUnidadeAtual] = useState([]);
+    const [qtdProdutoAtual, setQtdProdutoAtual] = useState([]);
+    const [garantiaProdutoAtual, setGarantiaProdutoAtual] = useState([]);
+    const [valorTotalProdutoAtual, setValorTotalProdutoAtual] = useState([]);
+    const produtoRef = useRef([]);
+    const produtoLupaRef = useRef([]);
+    const [produtoSelecionado, setProdutoSelecionado] = useState("");
+    const [infoProdutos, setInfoProdutos] = useState([]);
+    const [nomeProdutos, setNomeProdutos] = useState([]);
+    const [produtosLista, setProdutosLista] = useState([
+        {
+            nome: "",
+            valorUnidade: "",
+            quantidade: "",
+            garantia: "",
+            valorTotal: ""
+        }
+    ]);
     //#endregion
 
     //#region Váriaveis Mecânico
@@ -58,35 +71,44 @@ const OrdemServico = () => {
     const mecanicoLupaRef = useRef(null);
     //#endregion
 
-    const [status, setStatus] = useState("Em aberto");
-    const [garantia, setGarantia] = useState("");
-    const [token, setToken] = useState("");
-    const [dataInicio, setDataInicio] = useState("");
-    const [dataFim, setDataFim] = useState("");
+    //#region Váriaveis Ordem de Serviço
+    const tipoOsRef = useRef(null);
+    const tipoOsLupaRef = useRef(null);
     const [tipoOs, setTipoOs] = useState();
-    const [nomeServico, setNomeServico] = useState("");
-    const [valorServico, setValorServico] = useState("");
-    const [observacoes, setObservacoes] = useState();
+    const [tipoOsSelecionada, setTipoOsSelecionada] = useState("");
+    //#endregion
 
-    const [opcoesDropdown, setOpcoesDropdown] = useState([]);
-    const [mostrarDropdown, setMostrarDropdown] = useState(false);
-    const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
-
-    const [produtos, setProdutos] = useState([
-        {
-            nome: "",
-            valorUnidade: "",
-            quantidade: "",
-            garantia: "",
-            valorTotal: ""
-        }
-    ]);
-    const [servicos, setServicos] = useState([
+    //#region Váriaveis Serviços
+    const servicoRef = useRef([]);
+    const servicoLupaRef = useRef([]);
+    const [nomeServicos, setNomeServicos] = useState([]);
+    const [servicoSelecionado, setServicoSelecionado] = useState("");
+    const [valorServico, setValorServico] = useState([]);
+    const [garantiaServico, setGarantiaServico] = useState([]);
+    const [infoServicos, setInfoServicos] = useState([]);
+    const [servicosLista, setServicosLista] = useState([
         {
             nome: "",
             valor: ""
         }
     ]);
+    //#endregion
+
+    const [status, setStatus] = useState("Em aberto");
+    const [garantia, setGarantia] = useState("");
+    const [token, setToken] = useState("");
+    const [dataInicio, setDataInicio] = useState("");
+    const [dataFim, setDataFim] = useState("");
+    const [observacoes, setObservacoes] = useState();
+    const [valorTotal, setValorTotal] = useState(0);
+
+    const [opcoesDropdown, setOpcoesDropdown] = useState([]);
+    const [mostrarDropdown, setMostrarDropdown] = useState(false);
+    const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
+
+    
+
+    
 
     const changeBorderRadius = (valor, valorLupa, ref, refLupa) => {
         ref.current.style.borderRadius = valor;
@@ -110,27 +132,8 @@ const OrdemServico = () => {
         setMostrarDropdown(dropdown);
     }
 
-    const adicionarProduto = () => {
-        setProdutos((prevProdutos) => [
-            ...prevProdutos,
-            {
-                nome: "",
-                valorUnidade: "",
-                quantidade: "",
-                garantia: "",
-                valorTotal: ""
-            }
-        ]);
-    };
-
-    const excluirProduto = () => {
-        if (produtos.length > 1) {
-            setProdutos((prevProdutos) => prevProdutos.slice(0, -1));
-        }
-    };
-
-    const adicionarServico = () => {
-        setServicos((prevServicos) => [
+    const adicionarServicoLista = () => {
+        setServicosLista((prevServicos) => [
             ...prevServicos,
             {
                 nome: "",
@@ -140,8 +143,8 @@ const OrdemServico = () => {
     };
 
     const excluirServico = () => {
-        if (servicos.length > 1) {
-            setServicos((prevServicos) => prevServicos.slice(0, -1));
+        if (servicosLista.length > 1) {
+            setServicosLista((prevServicos) => prevServicos.slice(0, -1));
         }
     };
 
@@ -182,6 +185,10 @@ const OrdemServico = () => {
     useEffect(() => {
         buscarInfoCliente();
     }, [nomeClienteSelecionado]);
+
+    useEffect(() => {
+        buscarCliente();
+    });
 
     //#endregion
 
@@ -314,6 +321,17 @@ const OrdemServico = () => {
 
     //#endregion
 
+    //#region Ordem de Serviço
+
+    function addTipoOs(e, select) {
+        if (e.key === "Enter") {
+            setTipoOs(e.target.value);
+            setMostrarDropdown(false);
+        } else if (select !== "") {
+            setTipoOs(select);
+        }
+    }
+
     function salvarOS() {
         if (existeVeiculo()) {
             api.post("/ordemDeServicos", {
@@ -326,8 +344,8 @@ const OrdemServico = () => {
                 dataInicio: dataInicio,
                 dataFim: dataFim,
                 tipoOs: tipoOs,
-                produtos: produtos,
-                servicos: servicos,
+                produtos: "",
+                servicos: "",
                 observacoes: observacoes
             }).then((response) => {
                 console.log("Ordem de serviço cadastrada com sucesso", response);
@@ -352,9 +370,130 @@ const OrdemServico = () => {
         }
     }
 
+    //#endregion
+
+    //#region Produtos
+
+    function buscarProdutos() {
+        api.get(`/produtoEstoque/oficina/${sessionStorage.getItem("idOficina")}`).then((response) => {
+            let infoProdutos = [];
+            let nomeProdutos = [];
+            for (let i = 0; i < response.data.length; i++) {
+                infoProdutos.push(response.data[i]);
+                nomeProdutos.push(response.data[i].nome);
+            }
+            setNomeProdutos(nomeProdutos);
+            setInfoProdutos(infoProdutos);
+        }).catch((error) => {
+            console.error("Erro ao buscar produtos", error);
+        });
+    }
+
+    function addProduto(e, select, indexOption, index) {
+        if (e.key === "Enter") {
+            setProdutoSelecionado(e.target.value);
+            setMostrarDropdown(false);
+        } else if (select !== "") {
+            const novosProdutosSelecionados = [...produtoSelecionado];
+            novosProdutosSelecionados[index] = select;
+            setProdutoSelecionado(novosProdutosSelecionados);
+
+            const novoValorUnidade = [...valorUnidadeAtual];
+            novoValorUnidade[index] = infoProdutos[indexOption].valorVenda;
+            setValorUnidadeAtual(novoValorUnidade);
+
+            const novoValorGarantia = [...garantiaProdutoAtual];
+            novoValorGarantia[index] = infoProdutos[indexOption].garantia;
+            setGarantiaProdutoAtual(novoValorGarantia);
+        }
+    }
+
+    function calcularValorTotalProduto(index) {
+        const novoValorTotalProduto = [...valorTotalProdutoAtual];
+        novoValorTotalProduto[index] = qtdProdutoAtual[index] * valorUnidadeAtual[index];
+        setValorTotalProdutoAtual(novoValorTotalProduto);
+    }
+
+    function setarQtdAtual(e, index) {
+        const novoQtd = [...qtdProdutoAtual];
+        novoQtd[index] = e.target.value;
+        setQtdProdutoAtual(novoQtd);
+    }   
+
+    const adicionarProdutoLista = () => {
+        setProdutosLista((prevProdutos) => [
+            ...prevProdutos,
+            {
+                nome: "",
+                valorUnidade: "",
+                quantidade: "",
+                garantia: "",
+                valorTotal: ""
+            }
+        ]);
+    };
+
+    const excluirProduto = () => {
+        if (produtosLista.length > 1) {
+            setProdutosLista((prevProdutos) => prevProdutos.slice(0, -1));
+        }
+    };
+
     useEffect(() => {
-        buscarCliente();
-    });
+        buscarProdutos();
+    }, []);
+
+    //#endregion
+
+    //#region Serviços
+
+    function buscarServicos() {
+        api.get(`/servicos/oficina/${sessionStorage.getItem("idOficina")}`).then((response) => {
+            let nomeServicos = [];
+            let infoServicos = [];
+            for (let i = 0; i < response.data.length; i++) {
+                nomeServicos.push(response.data[i].nome);
+                infoServicos.push(response.data[i]);
+            }
+            setNomeServicos(nomeServicos);
+            setInfoServicos(infoServicos);
+        }).catch((error) => {
+            console.error("Erro ao buscar serviços", error);
+        });
+    }
+
+    function addServico(e, select, indexOption, index) {
+        if (e.key === "Enter") {
+            setProdutoSelecionado(e.target.value);
+            setMostrarDropdown(false);
+        } else if (select !== "") {
+            const novosServicosSelecionados = [...servicoSelecionado];
+            novosServicosSelecionados[index] = select;
+            setServicoSelecionado(novosServicosSelecionados);
+
+            const novoValorServico = [...valorServico];
+            novoValorServico[index] = infoServicos[indexOption].valorServico;
+            setValorServico(novoValorServico);
+
+            const novoGarantiaServico = [...garantiaServico];
+            novoGarantiaServico[index] = infoServicos[indexOption].garantia;
+            setGarantiaServico(novoGarantiaServico);
+
+            calcularValorTotal(novoValorServico);
+        }
+    }
+
+    useEffect(() => {
+        buscarServicos();
+    }, []);
+
+    function calcularValorTotal(produto, servico) {
+        let total = 0;
+        for (let i = 0; i < produto.length; i++) {
+            total += valorTotalProdutoAtual[i];
+        }
+        setValorTotal(total);
+    }
 
     return (
         <>
@@ -392,7 +531,7 @@ const OrdemServico = () => {
                                     </div>
                                 )}
                                 <div className={style["box-cliente-inputs"]}>
-                                    <Input nome={"Telefone*"} value={telefoneCliente} onChange={(e) => setTelefoneCliente(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
+                                    <Input nome={"Telefone*"} value={telefoneCliente} onChange={(e) => setTelefoneCliente(e.target.value)} onInput={inputMascaraTelefoneCelular} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
                                     <Input nome={"E-mail*"} value={emailCliente} onChange={(e) => setEmailCliente(e.target.value)} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
                                 </div>
                             </div>
@@ -426,7 +565,7 @@ const OrdemServico = () => {
                                         <span className={style["input-label"]}>Nome*</span>
                                         <div className={style["input-type"]}>
                                             <div className={style["img-lupa"]} ref={mecanicoLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                                            <input type="text" value={mecanicoSelecionado} ref={mecanicoRef} onFocus={() => mostrarOpcoesDropdown(true, nomeMecanico, mecanicoRef, mecanicoLupaRef, "Mecanico")} onBlur={() => mostrarOpcoesDropdown(false, "", mecanicoRef, mecanicoLupaRef, "")} maxLength={8} onChange={(e) => setMecanicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} onKeyDown={(e) => addMecanico(e)} />
+                                            <input type="text" value={mecanicoSelecionado} ref={mecanicoRef} onFocus={() => mostrarOpcoesDropdown(true, nomeMecanico, mecanicoRef, mecanicoLupaRef, "Mecanico")} onBlur={() => mostrarOpcoesDropdown(false, "", mecanicoRef, mecanicoLupaRef, "")} onChange={(e) => setMecanicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} onKeyDown={(e) => addMecanico(e)} />
                                         </div>
                                         {mostrarDropdown && opcaoSelecionada === "Mecanico" && (
                                             <div className={style["dropdown"]} style={{ height: nomeMecanico.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
@@ -438,7 +577,12 @@ const OrdemServico = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <Input nome={"Telefone*"} value={telMecanico} onChange={(e) => setTelMecanico(e.target.value)} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
+                                    <div className={style["input-select"]}>
+                                        <span className={style["input-label"]}>Telefone*</span>
+                                        <div className={style["input-type"]}>
+                                            <input type="text" value={telMecanico} onInput={inputMascaraTelefoneCelular} onChange={(e) => setTelMecanico(e.target.value)} maxLength={14} style={{ width: "20vw", borderRadius: "3vh", paddingLeft: "2vh" }} />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -446,14 +590,29 @@ const OrdemServico = () => {
                                 <div className={style["tema-prazos"]}>
                                     <h1>Prazos</h1>
                                     <div className={style["box-cliente-inputs"]}>
-                                        <Input nome={"Inicio*"} value={dataInicio} onChange={(e) => setDataInicio(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
-                                        <Input nome={"Previsão de Término*"} value={dataFim} onChange={(e) => setDataFim(e.target.value)} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
+                                        <Input nome={"Inicio*"} type={"date"} value={dataInicio} onChange={(e) => setDataInicio(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
+                                        <Input nome={"Previsão de Término*"} type={"date"} value={dataFim} onChange={(e) => setDataFim(e.target.value)} corBackground={corInput} tamanho={"98%"} tamanhoFundo={"90%"} />
                                     </div>
                                 </div>
                                 <div className={style["tema-classificacao"]}>
                                     <h1>Classificação</h1>
                                     <div className={style["box-cliente-inputs"]}>
-                                        <Input nome={"Tipo de OS*"} value={tipoOs} onChange={(e) => setTipoOs(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"50%"} />
+                                        <div className={style["input-select"]}>
+                                            <span className={style["input-label"]}>Tipo de OS*</span>
+                                            <div className={style["input-type"]}>
+                                                <div className={style["img-lupa"]} ref={tipoOsLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
+                                                <input type="text" value={tipoOs} ref={tipoOsRef} onFocus={() => mostrarOpcoesDropdown(true, tiposDeOs, tipoOsRef, tipoOsLupaRef, "TipoOs")} onBlur={() => mostrarOpcoesDropdown(false, "", tipoOsRef, tipoOsLupaRef, "")} onChange={(e) => setTipoOsSelecionada(e.target.value)} style={{ width: "18.1vw" }} />
+                                            </div>
+                                            {mostrarDropdown && opcaoSelecionada === "TipoOs" && (
+                                                <div className={style["dropdown"]} style={{ height: tiposDeOs.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                                    {opcoesDropdown.map((tipo, index) => (
+                                                        <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addTipoOs(e, tipo)}>
+                                                            {tipo}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -462,24 +621,39 @@ const OrdemServico = () => {
                                 <div className={style["titulo-com-excluir"]}>
                                     <div className={style["titulo-desfazer"]}>
                                         <h1>Produtos</h1>
-                                        {produtos.length > 1 && (
+                                        {produtosLista.length > 1 && (
                                             <a onClick={excluirProduto} className={style["btn-excluir"]}>
                                                 Desfazer
                                             </a>
                                         )}
                                     </div>
                                 </div>
-                                {produtos.map((produto, index) => (
+                                {produtosLista.map((itemProduto, index) => (
                                     <div key={index} className={style["box-cliente-inputs"]}>
-                                        <Input nome={"Nome*"} value={nomeProduto} onChange={(e) => setNomeProduto(e.target.value)} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
-                                        <Input nome={"Valor Unidade*"} value={valorProduto} onChange={(e) => setValorProduto(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Quantidade*"} value={qtdProduto} onChange={(e) => setQtdProduto(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Garantia*"} value={garantiaProduto} onChange={(e) => setGarantiaProduto(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Valor Total*"} value={valorTotalProduto} onChange={(e) => setValorTotalProduto(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <div className={style["input-select"]}>
+                                            <span className={style["input-label"]}>Nome*</span>
+                                            <div className={style["input-type"]}>
+                                                <div className={style["img-lupa"]} ref={el => produtoLupaRef.current[index] = el}><img src={lupaImg} alt="Imagem de Lupa" /></div>
+                                                <input type="text" id={"input-produto-" + index} autoComplete={false} value={produtoSelecionado[index]} ref={el => produtoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeProdutos, { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, "")} onChange={(e) => setProdutoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
+                                            </div>
+                                            {mostrarDropdown && opcaoSelecionada === "input-produto-" + index && (
+                                                <div className={style["dropdown"]} style={{ height: "10vw", width: "20vw" }}>
+                                                    {opcoesDropdown.map((produto, indexOption) => (
+                                                        <div key={indexOption} className={style["opcao-dropdown"]} onMouseDown={(e) => addProduto(e, produto, indexOption, index)}>
+                                                            {produto}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <Input nome={"Valor Unidade*"} value={valorUnidadeAtual[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Quantidade*"} value={qtdProdutoAtual[index]} onChange={(e) => setarQtdAtual(e, index)} onKeyUp={() => calcularValorTotalProduto(index)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Garantia*"} value={garantiaProdutoAtual[index]} onChange={(e) => setGarantiaProdutoAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Valor Total*"} value={valorTotalProdutoAtual[index]} onChange={(e) => setValorTotalProdutoAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     </div>
                                 ))}
                                 <div className={style["box-add"]}>
-                                    <a onClick={adicionarProduto}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
+                                    <a onClick={adicionarProdutoLista}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
                                 </div>
                             </div>
 
@@ -487,21 +661,37 @@ const OrdemServico = () => {
                                 <div className={style["titulo-com-excluir"]}>
                                     <div className={style["titulo-desfazer"]}>
                                         <h1>Serviços</h1>
-                                        {servicos.length > 1 && (
+                                        {servicosLista.length > 1 && (
                                             <a onClick={excluirServico} className={style["btn-excluir"]}>
                                                 Desfazer
                                             </a>
                                         )}
                                     </div>
                                 </div>
-                                {servicos.map((servico, index) => (
-                                    <div key={index} className={style["box-servicos-inputs"]}>
-                                        <Input nome={"Nome*"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} imagem={lupa} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"100%"} />
-                                        <Input nome={"Valor*"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} corBackground={corInput} tamanho={"50%"} tamanhoFundo={"100%"} />
+                                {servicosLista.map((itemServico, index) => (
+                                    <div key={index} className={style["box-cliente-inputs"]}>
+                                        <div className={style["input-select"]}>
+                                            <span className={style["input-label"]}>Nome*</span>
+                                            <div className={style["input-type"]}>
+                                                <div className={style["img-lupa"]} ref={el => servicoLupaRef.current[index] = el}><img src={lupaImg} alt="Imagem de Lupa" /></div>
+                                                <input type="text" id={"input-servico-" + index} autoComplete={false} value={servicoSelecionado[index]} ref={el => servicoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeServicos, { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, "")} onChange={(e) => setServicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
+                                            </div>
+                                            {mostrarDropdown && opcaoSelecionada === "input-servico-" + index && (
+                                                <div className={style["dropdown"]} style={{ height: nomeServicos.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                                    {opcoesDropdown.map((servico, indexOption) => (
+                                                        <div key={indexOption} className={style["opcao-dropdown"]} onMouseDown={(e) => addServico(e, servico, indexOption, index)}>
+                                                            {servico}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <Input nome={"Garantia*"} value={garantiaServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Valor*"} value={valorServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     </div>
                                 ))}
                                 <div className={style["box-add"]}>
-                                    <a onClick={adicionarServico}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
+                                    <a onClick={adicionarServicoLista}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
                                 </div>
                             </div>
 
@@ -512,7 +702,7 @@ const OrdemServico = () => {
 
                             <div className={style["box-valor"]}>
                                 <div className={style["titulo"]}><h1>Valor Total</h1></div>
-                                <div className={style["valor"]}><h1>R$1566,37</h1></div>
+                                <div className={style["valor"]}><h1></h1>{valorTotal}</div>
                             </div>
 
                             <div className={style["box-salvar"]}>
