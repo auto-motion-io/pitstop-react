@@ -82,10 +82,11 @@ const OrdemServico = () => {
     const servicoRef = useRef([]);
     const servicoLupaRef = useRef([]);
     const [nomeServicos, setNomeServicos] = useState([]);
-    const [servicoSelecionado, setServicoSelecionado] = useState("");
+    const [servicoSelecionado, setServicoSelecionado] = useState([]);
     const [valorServico, setValorServico] = useState([]);
     const [garantiaServico, setGarantiaServico] = useState([]);
     const [infoServicos, setInfoServicos] = useState([]);
+
     const [servicosLista, setServicosLista] = useState([
         {
             nome: "",
@@ -100,15 +101,12 @@ const OrdemServico = () => {
     const [dataInicio, setDataInicio] = useState("");
     const [dataFim, setDataFim] = useState("");
     const [observacoes, setObservacoes] = useState();
-    const [valorTotal, setValorTotal] = useState(0);
 
+    //#region Váriaveis Dropdown-List
     const [opcoesDropdown, setOpcoesDropdown] = useState([]);
     const [mostrarDropdown, setMostrarDropdown] = useState(false);
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
-
-    
-
-    
+    //#endregion
 
     const changeBorderRadius = (valor, valorLupa, ref, refLupa) => {
         ref.current.style.borderRadius = valor;
@@ -405,13 +403,15 @@ const OrdemServico = () => {
             const novoValorGarantia = [...garantiaProdutoAtual];
             novoValorGarantia[index] = infoProdutos[indexOption].garantia;
             setGarantiaProdutoAtual(novoValorGarantia);
+
+            console.log(infoProdutos[indexOption].valorCompra);
         }
     }
 
-    function calcularValorTotalProduto(index) {
-        const novoValorTotalProduto = [...valorTotalProdutoAtual];
-        novoValorTotalProduto[index] = qtdProdutoAtual[index] * valorUnidadeAtual[index];
-        setValorTotalProdutoAtual(novoValorTotalProduto);
+    function calcularValorTotal(index) {
+        const novoValorTotal = [...valorTotalProdutoAtual];
+        novoValorTotal[index] = qtdProdutoAtual[index] * valorUnidadeAtual[index];
+        setValorTotalProdutoAtual(novoValorTotal);
     }
 
     function setarQtdAtual(e, index) {
@@ -478,8 +478,6 @@ const OrdemServico = () => {
             const novoGarantiaServico = [...garantiaServico];
             novoGarantiaServico[index] = infoServicos[indexOption].garantia;
             setGarantiaServico(novoGarantiaServico);
-
-            calcularValorTotal(novoValorServico);
         }
     }
 
@@ -487,21 +485,13 @@ const OrdemServico = () => {
         buscarServicos();
     }, []);
 
-    function calcularValorTotal(produto, servico) {
-        let total = 0;
-        for (let i = 0; i < produto.length; i++) {
-            total += valorTotalProdutoAtual[i];
-        }
-        setValorTotal(total);
-    }
-
     return (
         <>
             <div>
                 <NavBar currentPage={"os"} />
             </div>
             <Alignner>
-                <BoxInfo titulo="Ordens" resposta={["Cliente", "Status", "Ações"]} tamanho="28vw" hasInput={false} ordem={true} endpoint={"/ordemDeServicos"} />
+                <BoxInfo titulo="Ordens" resposta={["Cliente", "Status", "Ações"]} tamanho="28vw" hasInput={false} ordem={true} endpoint={`/ordemDeServicos/oficina/${sessionStorage.getItem("idOficina")}`} />
                 <div className={style["box"]}>
                     <h1>Nova</h1>
                     <div className={style["container"]}>
@@ -647,7 +637,7 @@ const OrdemServico = () => {
                                             )}
                                         </div>
                                         <Input nome={"Valor Unidade*"} value={valorUnidadeAtual[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Quantidade*"} value={qtdProdutoAtual[index]} onChange={(e) => setarQtdAtual(e, index)} onKeyUp={() => calcularValorTotalProduto(index)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Quantidade*"} value={qtdProdutoAtual[index]} onChange={(e) => setarQtdAtual(e, index)} onKeyUp={() => calcularValorTotal(index)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                         <Input nome={"Garantia*"} value={garantiaProdutoAtual[index]} onChange={(e) => setGarantiaProdutoAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                         <Input nome={"Valor Total*"} value={valorTotalProdutoAtual[index]} onChange={(e) => setValorTotalProdutoAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     </div>
@@ -686,8 +676,8 @@ const OrdemServico = () => {
                                                 </div>
                                             )}
                                         </div>
-                                        <Input nome={"Garantia*"} value={garantiaServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                         <Input nome={"Valor*"} value={valorServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Garantia*"} value={garantiaServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     </div>
                                 ))}
                                 <div className={style["box-add"]}>
@@ -702,7 +692,7 @@ const OrdemServico = () => {
 
                             <div className={style["box-valor"]}>
                                 <div className={style["titulo"]}><h1>Valor Total</h1></div>
-                                <div className={style["valor"]}><h1></h1>{valorTotal}</div>
+                                <div className={style["valor"]}><h1></h1></div>
                             </div>
 
                             <div className={style["box-salvar"]}>
