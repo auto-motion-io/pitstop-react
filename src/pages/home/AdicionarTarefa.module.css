@@ -8,19 +8,41 @@
 }
 
 .container{
-    width: 35vw;
-    height: 35vh;
+    width: 38%;
+    height: auto;
     background-color: #f7f5f1;
     border-radius: 5vh;
-    padding: 5vh;
+    padding: 8vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+ 
 }
 
 .titulo{
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: start;
+    width: 100%;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+}
+
+.inputs{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 3vh;
+    flex-direction: column;
+}
+
+.botao{
+    display: flex;
+    align-items: center;
+    justify-content:  center;
+    width: 100%;
+    gap: 3vh;
+    margin-bottom: 3vh;    
 }
