@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setAuthToken(null);
     setIsAuthenticated(false);
+    sessionStorage.clear()
   };
 
   return (

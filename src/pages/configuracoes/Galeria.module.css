@@ -37,6 +37,12 @@
     margin-top: 4vh;
     border-radius: 5vh;
 }
+.container-foto img{
+    width: 45vw;
+    height: 50vh;
+    border-radius: 5vh;
+    object-fit: cover;
+}
 
 .link-foto{
     display: flex;
