@@ -329,7 +329,7 @@ function ConfiguracoesMecanica() {
                         <h1 className={styles["titulo-dias-semana"]}>Dias da Semana</h1>
                         <div className={styles["dias-semana"]}>
                             <div className={styles["dia-semana"]}>
-                                <h4>S</h4>
+                                <h4>D</h4>
                                 <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[0] = novoArray[0] ? false : true;
@@ -338,7 +338,7 @@ function ConfiguracoesMecanica() {
                                     <img src={diasSemana[0] ? botaoCheckColorido : botaoCheck} alt='Imagem de Certo' /></a>
                             </div>
                             <div className={styles["dia-semana"]}>
-                                <h4>T</h4>
+                                <h4>S</h4>
                                 <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[1] = novoArray[1] ? false : true;
@@ -347,7 +347,7 @@ function ConfiguracoesMecanica() {
                                     <img src={diasSemana[1] ? botaoCheckColorido : botaoCheck} alt='Imagem de Certo' /></a>
                             </div>
                             <div className={styles["dia-semana"]}>
-                                <h4>Q</h4>
+                                <h4>T</h4>
                                 <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[2] = novoArray[2] ? false : true;
@@ -365,7 +365,7 @@ function ConfiguracoesMecanica() {
                                     <img src={diasSemana[3] ? botaoCheckColorido : botaoCheck} alt='Imagem de Certo' /></a>
                             </div>
                             <div className={styles["dia-semana"]}>
-                                <h4>S</h4>
+                                <h4>Q</h4>
                                 <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[4] = novoArray[4] ? false : true;
@@ -383,7 +383,7 @@ function ConfiguracoesMecanica() {
                                     <img src={diasSemana[5] ? botaoCheckColorido : botaoCheck} alt='Imagem de Certo' /></a>
                             </div>
                             <div className={styles["dia-semana"]}>
-                                <h4>D</h4>
+                                <h4>S</h4>
                                 <a href style={{ cursor: 'pointer' }} onClick={() => setDiasSemana(prevState => {
                                     const novoArray = [...prevState];
                                     novoArray[6] = novoArray[6] ? false : true;
