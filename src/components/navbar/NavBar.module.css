@@ -74,7 +74,10 @@ nav{
     justify-content: center;
 }
 .foto-perfil img{
-    height: 75%;
+    height: 8vh;
+    width: 8vh;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .infos{

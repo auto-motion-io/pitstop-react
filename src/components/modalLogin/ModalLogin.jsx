@@ -21,6 +21,10 @@ const ModalLogin = ({ logo, nome1, tamanho1, tamanhoFundo1, nome2, tamanho2, tam
     try {
       await api.post(`/gerentes/login`, valorLogin).then((response) => {
         login(response.data.token, response.data.oficina.id, email);
+        
+        sessionStorage.setItem('imgOficina',btoa(response.data.oficina.logoUrl != null ? response.data.oficina.logoUrl : ""))
+        sessionStorage.setItem('imgGerente',btoa(response.data.fotoUrl != null ? response.data.fotoUrl : ""))
+        
         toast.success("Logado com sucesso!", { autoClose: 3000 });
         return {
           email: email,

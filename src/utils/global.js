@@ -211,18 +211,18 @@ export const tiposDeVeiculos = [
     "Carros",
     "Motos",
     "Ônibus",
-    "Caminhões",
+    "Caminhão",
 ];
 
 export const tiposPropulsaoComuns = [
-    "Gasolina",
-    "Diesel",
-    "Flex",
-    "Elétrico puro (EV)",
-    "Híbrido",
-    "Plug-in híbrido",
-    "Veículo a hidrogênio",
-    "Veículo movido a gás natural"
+    "Combustão",
+    "Hibrido",
+    "Elétrico"
 ];
+
+export const tiposDeOs = [
+    "Orçamento",
+    "Serviço"
+]
 
 export const regexPlacas = /[A-z]{3}-\d[A-j0-9]\d{2}/;

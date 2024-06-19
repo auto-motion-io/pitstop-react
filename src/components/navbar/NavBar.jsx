@@ -15,8 +15,9 @@ import iconLogout from "../../utils/assets/icon-logout.svg";
 
 const NavBar = ({ currentPage }) => {
   const [nomeUser, setNomeUser] = useState("");
+  const [imgGerente, setImgGerente] = useState("");
   var navigate = useNavigate();
-
+ 
   function mudarPagina(pagina) {
     navigate(pagina);
   }
@@ -26,6 +27,7 @@ const NavBar = ({ currentPage }) => {
       for (let i = 0; i < response.data.length; i++) {
         if (response.data[i].oficina.id.toString() === sessionStorage.getItem("idOficina") && response.data[i].email === sessionStorage.getItem("email")) {
           setNomeUser(response.data[i].nome + " " + response.data[i].sobrenome);
+          setImgGerente(response.data[i].fotoUrl);
         }
       }
     });
@@ -77,7 +79,7 @@ const NavBar = ({ currentPage }) => {
         <div className={styles.perfil}>
           <div className={styles["perfil-logout"]}>
             <div className={styles["foto-perfil"]}>
-              <img src={gerente} alt="Foto de perfil" className={styles["img-perfil"]} />
+              <img src={imgGerente != null ? imgGerente: gerente} alt="Foto de perfil" className={styles["img-perfil"]} />
             </div>
             <div className={styles.infos}>
               <span className={styles.nome}>Boa Tarde!</span>
