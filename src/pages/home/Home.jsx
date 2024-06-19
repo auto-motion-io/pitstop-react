@@ -126,7 +126,7 @@ const Home = () => {
                   </div>
 
                   <div className={style["container_registros_kp2"]}>
-                    {estoqueBaixo.map((produto) => (
+                    {estoqueBaixo && estoqueBaixo.map((produto) => (
                       <div className={style["registro"]} key={produto.id}>
                         <div style={{width: "65%"}}><span id="nomeProduto">{produto.nome}</span></div>
                         <div><span id="qtdProduto">{produto.quantidade}</span></div>
