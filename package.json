@@ -34,6 +34,7 @@
     "react-tag-input-component": "^2.0.2",
     "react-toastify": "^10.0.5",
     "redirect": "^0.2.0",
+    "supabase": "^1.176.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

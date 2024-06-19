@@ -10,11 +10,23 @@ import Botao from "../../components/botao/Botao";
 import api from "../../services/api";
 import { inputMascaraTelefoneCelular, regexPlacas, tiposDeOs } from "../../utils/global"
 import lupaImg from "./../../utils/assets/lupa.svg";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 const OrdemServico = () => {
 
+    //#region Váriaveis
+
+
     const corInput = "#ECEAE5";
+    const [valorTotalProdutoServico, setValorTotalProdutoServico] = useState(0);
+    const [status, setStatus] = useState("Em aberto");
+    const [garantia, setGarantia] = useState("");
+    const [dataInicio, setDataInicio] = useState("");
+    const [dataFim, setDataFim] = useState("");
+    const [observacoes, setObservacoes] = useState();
+    const navigate = useNavigate();
 
     //#region Variáveis Cliente
     const [idCliente, setIdCliente] = useState([]);
@@ -32,8 +44,8 @@ const OrdemServico = () => {
     const [marca, setMarca] = useState("");
     const [modelo, setModelo] = useState("");
     const [cor, setCor] = useState("");
-    const [ano, setAno] = useState("");
-    const [idVeiculo, setIdVeiculo] = useState();
+    const [ano, setAno] = useState(0);
+    const [idVeiculo, setIdVeiculo] = useState(0);
     const [infoVeiculo, setInfoVeiculo] = useState([]);
     const [placaSelecionada, setPlacaSelecionada] = useState("");
     const placaRef = useRef(null);
@@ -41,10 +53,10 @@ const OrdemServico = () => {
     //#endregion
 
     //#region Váriaveis Produtos
-    const [valorUnidadeAtual, setValorUnidadeAtual] = useState([]);
-    const [qtdProdutoAtual, setQtdProdutoAtual] = useState([]);
-    const [garantiaProdutoAtual, setGarantiaProdutoAtual] = useState([]);
-    const [valorTotalProdutoAtual, setValorTotalProdutoAtual] = useState([]);
+    const [valorUnidade, setValorUnidade] = useState([]);
+    const [qtdProduto, setQtdProduto] = useState([]);
+    const [garantiaProduto, setGarantiaProduto] = useState([]);
+    const [valorTotalProduto, setValorTotalProduto] = useState(0);
     const produtoRef = useRef([]);
     const produtoLupaRef = useRef([]);
     const [produtoSelecionado, setProdutoSelecionado] = useState("");
@@ -59,6 +71,7 @@ const OrdemServico = () => {
             valorTotal: ""
         }
     ]);
+    const [produtoOrdemServico, setProdutoOrdemServico] = useState([{}]);
     //#endregion
 
     //#region Váriaveis Mecânico
@@ -76,6 +89,7 @@ const OrdemServico = () => {
     const tipoOsLupaRef = useRef(null);
     const [tipoOs, setTipoOs] = useState();
     const [tipoOsSelecionada, setTipoOsSelecionada] = useState("");
+    const [idOrdemServico, setIdOrdemServico] = useState();
     //#endregion
 
     //#region Váriaveis Serviços
@@ -84,29 +98,36 @@ const OrdemServico = () => {
     const [nomeServicos, setNomeServicos] = useState([]);
     const [servicoSelecionado, setServicoSelecionado] = useState([]);
     const [valorServico, setValorServico] = useState([]);
+    const [valorTotalServicos, setValorTotalServicos] = useState(0);
     const [garantiaServico, setGarantiaServico] = useState([]);
     const [infoServicos, setInfoServicos] = useState([]);
-
     const [servicosLista, setServicosLista] = useState([
         {
             nome: "",
             valor: ""
         }
     ]);
+    const [servicoOrdemServico, setServicoOrdemServico] = useState([{}]);
     //#endregion
-
-    const [status, setStatus] = useState("Em aberto");
-    const [garantia, setGarantia] = useState("");
-    const [token, setToken] = useState("");
-    const [dataInicio, setDataInicio] = useState("");
-    const [dataFim, setDataFim] = useState("");
-    const [observacoes, setObservacoes] = useState();
 
     //#region Váriaveis Dropdown-List
     const [opcoesDropdown, setOpcoesDropdown] = useState([]);
     const [mostrarDropdown, setMostrarDropdown] = useState(false);
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
     //#endregion
+
+    //#endregion
+
+
+
+
+
+
+
+    //#region Funções
+
+
+    //#region Funções Auxiliares
 
     const changeBorderRadius = (valor, valorLupa, ref, refLupa) => {
         ref.current.style.borderRadius = valor;
@@ -130,21 +151,7 @@ const OrdemServico = () => {
         setMostrarDropdown(dropdown);
     }
 
-    const adicionarServicoLista = () => {
-        setServicosLista((prevServicos) => [
-            ...prevServicos,
-            {
-                nome: "",
-                valor: ""
-            }
-        ]);
-    };
-
-    const excluirServico = () => {
-        if (servicosLista.length > 1) {
-            setServicosLista((prevServicos) => prevServicos.slice(0, -1));
-        }
-    };
+    //#endregion
 
     //#region Cliente
 
@@ -184,10 +191,6 @@ const OrdemServico = () => {
         buscarInfoCliente();
     }, [nomeClienteSelecionado]);
 
-    useEffect(() => {
-        buscarCliente();
-    });
-
     //#endregion
 
     //#region Veículo
@@ -222,12 +225,10 @@ const OrdemServico = () => {
     }
 
     function addVeiculo(e, select) {
-        if (e.key === "Enter") {
-            setPlacaSelecionada(e.target.value);
-            setMostrarDropdown(false);
-        }
-        else if (select !== "") {
+        if (select !== "") {
             setPlacaSelecionada(select);
+        } else{
+            setPlacaSelecionada(e.target.value);
         }
     }
 
@@ -240,20 +241,6 @@ const OrdemServico = () => {
 
         setPlacaSelecionada(placaDigitada);
     };
-
-    function existeVeiculo() {
-        api.get(`/veiculos`).then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].placa === placaSelecionada) {
-                    return true;
-                }
-            }
-            return false;
-        }).catch((error) => {
-            console.error("Erro ao buscar veículos", error);
-        });
-    }
-
 
     useEffect(() => {
         buscarInfoVeiculo();
@@ -313,10 +300,6 @@ const OrdemServico = () => {
         buscarInfoMecanico();
     }, [mecanicoSelecionado]);
 
-    useEffect(() => {
-        buscarMecanico();
-    }, []);
-
     //#endregion
 
     //#region Ordem de Serviço
@@ -330,42 +313,85 @@ const OrdemServico = () => {
         }
     }
 
-    function salvarOS() {
-        if (existeVeiculo()) {
-            api.post("/ordemDeServicos", {
-                idCliente: idCliente,
-                idVeiculo: idVeiculo,
-                idMecanico: idMecanico,
-                status: status,
-                garantia: garantia,
-                token: token,
-                dataInicio: dataInicio,
-                dataFim: dataFim,
-                tipoOs: tipoOs,
-                produtos: "",
-                servicos: "",
-                observacoes: observacoes
-            }).then((response) => {
-                console.log("Ordem de serviço cadastrada com sucesso", response);
-            }).catch((error) => {
-                console.error("Erro ao cadastrar ordem de serviço", error);
-            });
-        } else {
-            api.post("/veiculos", {
-                fkCliente: idCliente,
-                placa: placaSelecionada,
-                marca: marca,
-                modelo: modelo,
-                cor: cor,
-                anoFabricacao: ano
-            }).then((response) => {
-                console.log("Veículo cadastrado com sucesso", response);
-                setIdVeiculo(response.data.id);
-                salvarOS();
-            }).catch((error) => {
-                console.error("Erro ao cadastrar veículo", error);
-            });
+    async function existeVeiculo() {
+        try {
+            debugger
+            const response = await api.get(`/veiculos/buscar-por-oficina/${sessionStorage.getItem("idOficina")}`);
+            for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].placa === placaSelecionada) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error("Erro ao buscar veículos", error);
+            throw error; // Lança o erro para quem chamar existeVeiculo()
         }
+    }
+    
+    async function salvarOS() {
+        if (verificarOrdemServico()) {
+            debugger
+            try {
+                // Espera pela conclusão de existeVeiculo()
+                const veiculoExiste = await existeVeiculo();
+    
+                if (veiculoExiste) {
+                    // Se o veículo existe, prossegue com o cadastro da ordem de serviço
+                    await api.post("/ordemDeServicos", {
+                        fkOficina: sessionStorage.getItem("idOficina"),
+                        status: status,
+                        garantia: garantia,
+                        fkVeiculo: idVeiculo,
+                        fkMecanico: idMecanico,
+                        dataInicio: dataInicio,
+                        dataFim: dataFim,
+                        tipoOs: tipoOs,
+                        produtos: produtoOrdemServico,
+                        servicos: servicoOrdemServico,
+                        observacoes: observacoes,
+                        valorTotal: parseFloat(valorTotalProdutoServico),
+                        quantidade: 0
+                    });
+                    toast.success("Ordem de serviço cadastrada com sucesso!");
+                    window.location.reload()
+                } else {
+                    // Se o veículo não existe, cadastra o veículo primeiro
+                    const response = await api.post("/veiculos", {
+                        fkCliente: idCliente,
+                        placa: placaSelecionada,
+                        marca: marca,
+                        modelo: modelo,
+                        cor: cor,
+                        ano: ano
+                    });
+                    toast.success("Veículo cadastrado com sucesso!");
+                    setIdVeiculo(response.data.id);
+                    // Após cadastrar o veículo, chama salvarOS() novamente para cadastrar a ordem de serviço
+                    await salvarOS();
+                }
+            } catch (error) {
+                console.error("Erro ao salvar ordem de serviço", error);
+            }
+        }
+    }
+    
+
+    function verificarOrdemServico() {
+        if (nomeClienteSelecionado === "" || telefoneCliente === "" || emailCliente === "" || placaSelecionada === "" || marca === "" || modelo === "" || cor === "" || ano === "" || tipoOs === "" || dataInicio === "" || dataFim === "" || produtoOrdemServico.length === 0 || servicoOrdemServico.length === 0 || observacoes === "" || garantia === "" || status === "") {
+            toast.error("Preencha todos os campos obrigatórios!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function buscarIdOrdemServico() {
+        api.get(`/ordemDeServicos/oficina/${sessionStorage.getItem("idOficina")}`).then((response) => {
+            setIdOrdemServico(response.data.length + 1);
+        }).catch((error) => {
+            console.error("Erro ao buscar id da ordem de serviço", error);
+        });
     }
 
     //#endregion
@@ -396,29 +422,55 @@ const OrdemServico = () => {
             novosProdutosSelecionados[index] = select;
             setProdutoSelecionado(novosProdutosSelecionados);
 
-            const novoValorUnidade = [...valorUnidadeAtual];
+            const novoValorUnidade = [...valorUnidade];
             novoValorUnidade[index] = infoProdutos[indexOption].valorVenda;
-            setValorUnidadeAtual(novoValorUnidade);
+            setValorUnidade(novoValorUnidade);
 
-            const novoValorGarantia = [...garantiaProdutoAtual];
+            const novoValorGarantia = [...garantiaProduto];
             novoValorGarantia[index] = infoProdutos[indexOption].garantia;
-            setGarantiaProdutoAtual(novoValorGarantia);
+            setGarantiaProduto(novoValorGarantia);
 
-            console.log(infoProdutos[indexOption].valorCompra);
+            const novoQtd = [...qtdProduto];
+            novoQtd[index] = infoProdutos[indexOption].quantidade;
+            setQtdProduto(novoQtd);
+            setValorTotalProduto(prevValorTotal => prevValorTotal + novoValorUnidade[index]);
+
+            const valorTotalProdutos = novoValorUnidade.reduce((total, valor) => total + parseFloat(valor), 0);
+            console.log(valorTotalProdutos);
+            setValorTotalProduto(valorTotalProdutos);
         }
     }
 
-    function calcularValorTotal(index) {
-        const novoValorTotal = [...valorTotalProdutoAtual];
-        novoValorTotal[index] = qtdProdutoAtual[index] * valorUnidadeAtual[index];
-        setValorTotalProdutoAtual(novoValorTotal);
+    function adicionarProdutoOrdemServico() {
+        const novoProdutoOrdemServico = [];
+
+        // Itera sobre os produtos selecionados
+        for (let i = 0; i < produtoSelecionado.length; i++) {
+            // Verifica se o produto foi selecionado (não vazio)
+            if (produtoSelecionado[i]) {
+                // Encontra o índice correspondente em infoProdutos usando produtoSelecionado[i]
+                const indexOption = infoProdutos.findIndex(produto => produto.nome === produtoSelecionado[i]);
+
+                // Se encontrou o produto correspondente
+                if (indexOption !== -1) {
+                    novoProdutoOrdemServico.push({
+                        nome: produtoSelecionado[i],
+                        valor: infoProdutos[indexOption].valor,
+                        quantidade: qtdProduto[i],
+                        garantia: garantiaProduto[i],
+                        valorTotal: infoProdutos[indexOption].valor * qtdProduto[i]
+                    });
+                }
+            }
+        }
+
+        // Atualiza o estado com o novo array de produtos na ordem de serviço
+        setProdutoOrdemServico(novoProdutoOrdemServico);
     }
 
-    function setarQtdAtual(e, index) {
-        const novoQtd = [...qtdProdutoAtual];
-        novoQtd[index] = e.target.value;
-        setQtdProdutoAtual(novoQtd);
-    }   
+    useEffect(() => {
+        adicionarProdutoOrdemServico();
+    }, [produtoSelecionado]);
 
     const adicionarProdutoLista = () => {
         setProdutosLista((prevProdutos) => [
@@ -435,17 +487,68 @@ const OrdemServico = () => {
 
     const excluirProduto = () => {
         if (produtosLista.length > 1) {
+            // Salva o último produto antes de removê-lo
+            const ultimoProduto = produtosLista[produtosLista.length - 1];
+
             setProdutosLista((prevProdutos) => prevProdutos.slice(0, -1));
+
+            const index = produtosLista.length - 1;
+            const novoProdutoSelecionado = [...produtoSelecionado];
+            novoProdutoSelecionado[index] = '';
+            setProdutoSelecionado(novoProdutoSelecionado);
+
+            const novoValorUnidade = [...valorUnidade];
+            novoValorUnidade[index] = '';
+            setValorUnidade(novoValorUnidade);
+
+            const novoQtdProduto = [...qtdProduto];
+            novoQtdProduto[index] = '';
+            setQtdProduto(novoQtdProduto);
+
+            const novoGarantiaProduto = [...garantiaProduto];
+            novoGarantiaProduto[index] = '';
+            setGarantiaProduto(novoGarantiaProduto);
+
+            const novaLista = produtoOrdemServico.slice(0, -1);
+            setProdutoOrdemServico(novaLista);
+            console.log(novaLista);
         }
     };
-
-    useEffect(() => {
-        buscarProdutos();
-    }, []);
 
     //#endregion
 
     //#region Serviços
+
+    const adicionarServicoLista = () => {
+        setServicosLista((prevServicos) => [
+            ...prevServicos,
+            {
+                nome: "",
+                valor: ""
+            }
+        ]);
+    };
+
+    const excluirServico = () => {
+        if (servicosLista.length > 1) {
+            const ultimoProduto = produtosLista[produtosLista.length - 1];
+
+            setServicosLista((prevServicos) => prevServicos.slice(0, -1));
+
+            const index = servicosLista.length - 1;
+            const novoServicoSelecionado = [...servicoSelecionado];
+            novoServicoSelecionado[index] = '';
+            setServicoSelecionado(novoServicoSelecionado);
+
+            const novoValorServico = [...valorServico];
+            novoValorServico[index] = '';
+            setValorServico(novoValorServico);
+
+            const novoGarantiaServico = [...garantiaServico];
+            novoGarantiaServico[index] = '';
+            setGarantiaServico(novoGarantiaServico);
+        }
+    };
 
     function buscarServicos() {
         api.get(`/servicos/oficina/${sessionStorage.getItem("idOficina")}`).then((response) => {
@@ -478,12 +581,61 @@ const OrdemServico = () => {
             const novoGarantiaServico = [...garantiaServico];
             novoGarantiaServico[index] = infoServicos[indexOption].garantia;
             setGarantiaServico(novoGarantiaServico);
+
+            const valorTotalServicos = novoValorServico.reduce((total, valor) => total + parseFloat(valor), 0);
+            console.log(valorTotalServicos);
+            setValorTotalServicos(valorTotalServicos);
+
+            console.log(produtoOrdemServico);
         }
     }
 
+    function adicionarServicoOrdemServico() {
+        const novoServicoOrdemServico = [];
+
+        // Itera sobre os serviços selecionados
+        for (let i = 0; i < servicoSelecionado.length; i++) {
+            // Verifica se o serviço foi selecionado (não vazio)
+            if (servicoSelecionado[i]) {
+                // Encontra o índice correspondente em infoServicos usando servicoSelecionado[i]
+                const indexOption = infoServicos.findIndex(servico => servico.nome === servicoSelecionado[i]);
+
+                // Se encontrou o serviço correspondente
+                if (indexOption !== -1) {
+                    novoServicoOrdemServico.push({
+                        nome: servicoSelecionado[i],
+                        valor: infoServicos[indexOption].valor,
+                        garantia: garantiaServico[i]
+                    });
+                }
+            }
+        }
+
+        // Atualiza o estado com o novo array de serviços na ordem de serviço
+        setServicoOrdemServico(novoServicoOrdemServico);
+    }
+
     useEffect(() => {
+        adicionarServicoOrdemServico();
+    }, [servicoSelecionado]);
+
+
+    //#endregion
+
+    useEffect(() => {
+        const totalFormatado = (valorTotalServicos + valorTotalProduto).toFixed(2).replace('.', ',');;
+        setValorTotalProdutoServico(totalFormatado);
+    }, [valorTotalServicos, valorTotalProduto]);
+
+    useEffect(() => {
+        buscarIdOrdemServico();
+        buscarCliente();
+        buscarMecanico();
+        buscarProdutos();
         buscarServicos();
     }, []);
+
+    //#endregion
 
     return (
         <>
@@ -491,7 +643,7 @@ const OrdemServico = () => {
                 <NavBar currentPage={"os"} />
             </div>
             <Alignner>
-                <BoxInfo titulo="Ordens" resposta={["Cliente", "Status", "Ações"]} tamanho="28vw" hasInput={false} ordem={true} endpoint={`/ordemDeServicos/oficina/${sessionStorage.getItem("idOficina")}`} />
+                <BoxInfo titulo="Ordens" resposta={["Cliente", "Fim", "Ações"]} tamanho="28vw" hasInput={false} ordem={true} endpoint={`/ordemDeServicos`} />
                 <div className={style["box"]}>
                     <h1>Nova</h1>
                     <div className={style["container"]}>
@@ -499,9 +651,24 @@ const OrdemServico = () => {
                             <div className={style["box-header"]}>
                                 <h1>#2559</h1>
                                 <div className={style["box-header-inputs"]}>
-                                    <Input value={status} onChange={(e) => setStatus(e.target.value)} nome={"Status"} tamanho={"8vw"} corBackground={corInput} />
-                                    <Input value={garantia} onChange={(e) => setGarantia(e.target.value)} nome={"Garantia"} tamanho={"8vw"} corBackground={corInput} />
-                                    <h2><b>Token</b><br />E0BZZ</h2>
+                                    <div className={style["input-select"]}>
+                                        <span>Status*</span>
+                                        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                                            <option value="">Selecione</option>
+                                            <option value="PENDENTE">PENDENTE</option>
+                                            <option value="CONCLUIDO">CONCLUIDO</option>
+                                        </select>
+                                    </div>
+                                    <div className={style["input-select"]}>
+                                        <span>Garantia*</span>
+                                        <select value={garantia} onChange={(e) => setGarantia(e.target.value)}>
+                                            <option value="">Selecione</option>
+                                            <option value="Sem Garantia">Sem Garantia</option>
+                                            <option value="1 mês">1 mês</option>
+                                            <option value="2 mêses">2 mêses</option>
+                                        </select>
+                                    </div>
+                                    {/* <h2><b>Token</b><br />{token}</h2> */}
                                 </div>
                             </div>
                             <div className={style["box-cliente"]}>
@@ -624,7 +791,7 @@ const OrdemServico = () => {
                                             <span className={style["input-label"]}>Nome*</span>
                                             <div className={style["input-type"]}>
                                                 <div className={style["img-lupa"]} ref={el => produtoLupaRef.current[index] = el}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                                                <input type="text" id={"input-produto-" + index} autoComplete={false} value={produtoSelecionado[index]} ref={el => produtoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeProdutos, { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, "")} onChange={(e) => setProdutoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
+                                                <input type="text" id={"input-produto-" + index} autoComplete={"off"} value={produtoSelecionado[index]} ref={el => produtoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeProdutos, { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, "")} onChange={(e) => setProdutoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                             </div>
                                             {mostrarDropdown && opcaoSelecionada === "input-produto-" + index && (
                                                 <div className={style["dropdown"]} style={{ height: "10vw", width: "20vw" }}>
@@ -636,11 +803,11 @@ const OrdemServico = () => {
                                                 </div>
                                             )}
                                         </div>
-                                        <Input nome={"Valor Unidade*"} value={valorUnidadeAtual[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Quantidade*"} value={qtdProdutoAtual[index]} onChange={(e) => setarQtdAtual(e, index)} onKeyUp={() => calcularValorTotal(index)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Garantia*"} value={garantiaProdutoAtual[index]} onChange={(e) => setGarantiaProdutoAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Valor Total*"} value={valorTotalProdutoAtual[index]} onChange={(e) => setValorTotalProdutoAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Valor Unidade*"} disabled={true} value={valorUnidade[index]} onChange={(e) => setValorUnidade(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Quantidade Restante*"} disabled={true} value={qtdProduto[index]} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Garantia*"} disabled={true} value={garantiaProduto[index]} onChange={(e) => setGarantiaProduto(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     </div>
+
                                 ))}
                                 <div className={style["box-add"]}>
                                     <a onClick={adicionarProdutoLista}><img src={botaoAdicionar} alt="Botão de adicionar" /></a>
@@ -664,7 +831,7 @@ const OrdemServico = () => {
                                             <span className={style["input-label"]}>Nome*</span>
                                             <div className={style["input-type"]}>
                                                 <div className={style["img-lupa"]} ref={el => servicoLupaRef.current[index] = el}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                                                <input type="text" id={"input-servico-" + index} autoComplete={false} value={servicoSelecionado[index]} ref={el => servicoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeServicos, { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, "")} onChange={(e) => setServicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
+                                                <input type="text" id={"input-servico-" + index} autoComplete={"off"} value={servicoSelecionado[index]} ref={el => servicoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeServicos, { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, "")} onChange={(e) => setServicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                             </div>
                                             {mostrarDropdown && opcaoSelecionada === "input-servico-" + index && (
                                                 <div className={style["dropdown"]} style={{ height: nomeServicos.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
@@ -676,8 +843,8 @@ const OrdemServico = () => {
                                                 </div>
                                             )}
                                         </div>
-                                        <Input nome={"Valor*"} value={valorServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                        <Input nome={"Garantia*"} value={garantiaServico[index]} onChange={(e) => setValorUnidadeAtual(e.target.value)} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Garantia*"} disabled={true} value={garantiaServico[index]} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                        <Input nome={"Valor*"} disabled={true} value={valorServico[index]} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     </div>
                                 ))}
                                 <div className={style["box-add"]}>
@@ -692,11 +859,11 @@ const OrdemServico = () => {
 
                             <div className={style["box-valor"]}>
                                 <div className={style["titulo"]}><h1>Valor Total</h1></div>
-                                <div className={style["valor"]}><h1></h1></div>
+                                <div className={style["valor"]}><h1>R${valorTotalProdutoServico}</h1></div>
                             </div>
 
                             <div className={style["box-salvar"]}>
-                                {<Botao nome={"Salvar"} onClick={buscarCliente} cor={"#C66D2C"} />}
+                                {<Botao nome={"Salvar"} onClick={salvarOS} cor={"#C66D2C"} />}
                             </div>
                         </div>
                     </div>

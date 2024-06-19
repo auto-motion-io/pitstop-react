@@ -25,7 +25,19 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
             if (response.data.length === 0) {
                 setMostrarMensagem(true);
             }
-            setDataRegistro(response.data);
+            if(ordem !== true){
+                setDataRegistro(response.data);
+            } else{
+                let infoOrdem = response.data.map((item) => {
+                    return {
+                        id: item.id,
+                        nomeCliente: item.veiculo.cliente.nome,
+                        dataFim: item.dataFim
+                    }   
+                });
+                console.log(infoOrdem);
+                setDataRegistro(infoOrdem);
+            }
         } catch (error) {
             switch (error.response.status) {
                 case 401:
@@ -76,7 +88,8 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                         <input type="text" />
                     </div>
                 </div>
-                <div>
+                <div className={style["header-coluna"]}>{coluna}</div>
+                <div className={style["linhas"]}>
                     {mostrarMensagem ? mensagemSemRegistro : linhas}
                 </div>
             </div>

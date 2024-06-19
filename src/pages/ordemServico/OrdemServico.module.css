@@ -79,6 +79,32 @@
     gap: 1vw;
 }
 
+.input-select{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-select span{
+    font-size: 1.8vh;
+    color: #474747;
+    font-family: 'Product-Sans';
+    font-weight: bold;
+    margin-bottom: 0.5vh;
+
+}
+
+.input-select select{
+    width: 10vw;
+    height: 4.6vh;
+    border-radius: 5vh;
+    margin-top: 0.5vh;
+    background-color: #EDEBE6;
+    border: none;
+    font-family: 'Product-Sans';
+    outline: none;
+    padding-left: 0.4vw;
+}
+
 .box-header-inputs h2{
     font-size: 3vh;
     margin: 0;
