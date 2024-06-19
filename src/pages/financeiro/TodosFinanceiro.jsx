@@ -17,18 +17,20 @@ const TodosFinanceiro = () => {
 
   const inputs = (
     <div>
-      <Input nome={"Transação*"} tipo={"text"} tamanho={"100%"} />
-      <Input nome={"Categoria*"} tipo={"text"} tamanho={"100%"} />
+      <Input nome={"Transação*"} type={"text"} tamanho={"100%"}  />
       <div style={{ display: "flex", width: "100%" }}>
-        <Input nome={"Produto*"} tipo={"text"} maxLength={15} tamanho={"90%"} />
-        <Input nome={"Quantidade*"} tipo={"text"} tamanho={"100%"} />
+        <Input nome={"Valor*"} type={"number"} tamanho={"90%"}  />
+        <Input nome={"Forma de Pagamento*"} type={"text"} tamanho={"100%"}  />
       </div>
-      <div style={{ display: "flex", width: "100%" }}>
-        <Input nome={"Valor*"} tipo={"text"} tamanho={"90%"} />
-        <Input nome={"Forma de Pagamento*"} tipo={"text"} tamanho={"100%"} />
-      </div>
-
-      <Input nome={"Data de Lançamento*"} tipo={"text"} tamanho={"50%"} />
+      <Input nome={"Data de Lançamento*"} type={"date"} tamanho={"50%"} />
+        <div className={style["select"]} >
+          <span>Categoria</span>
+          <select id="categoria" name="categoria">
+          <option selected disabled>Categoria</option>
+          <option value="entrada">Entrada</option>
+          <option value="saida">Saída</option>
+          </select>
+        </div>
     </div>
   );
 
@@ -39,7 +41,7 @@ const TodosFinanceiro = () => {
       </div>
 
       <Alignner>
-      <BoxInfo titulo="Financeiro" resposta={["Transação", "Categoria", "Valor(R$)", "Data de Lançamento", "Ações"]} endpoint={""}/>
+      <BoxInfo titulo="Financeiro" resposta={["Transação", "Categoria", "Valor(R$)", "Data de Lançamento", "Ações"]} />
         <BoxConfig titulo={"Novo"} nomeBotao={"Editar"} inputs={inputs} />
       </Alignner>
     </div>

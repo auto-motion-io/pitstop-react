@@ -21,7 +21,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
 
     async function buscar() {
         try {
-            const response = await api.get(endpoint + `/oficina/${sessionStorage.getItem("idOficina")}`);
+            const response = await api.get(endpoint + `/oficina/${sessionStorage.getItem("idOficina")}`  );
             if (response.data.length === 0) {
                 setMostrarMensagem(true);
             }
@@ -37,7 +37,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                 default:
                     toast.error("Erro ao buscar registros!")
                     break;
-            }
+            } 
         }
     }
 

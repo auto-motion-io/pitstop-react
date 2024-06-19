@@ -1,46 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import api from '../../services/api';
 
-const data = [
-  {
-    id: 'Entradas',
-    color: '#C66D2C',
-    data: [
-      { x: 'Janeiro', y: 70 },
-      { x: 'Fevereiro', y: 60 },
-      { x: 'Março', y: 70 },
-      { x: 'Abril', y: 80 },
-      { x: 'Maio', y: 90 },
-      { x: 'Junho', y: 40 },
-      { x: 'Julho', y: 80 },
-      { x: 'Agosto', y: 70 },
-      { x: 'Setembro', y: 80 },
-      { x: 'Outubro', y: 60 },
-      { x: 'Novembro', y: 70 },
-      { x: 'Dezembro', y: 80 },
-    ],
-  },
-  {
-    id: 'Saídas',
-    color: '#89532B',
-    data: [
-      { x: 'Janeiro', y: 50 },
-      { x: 'Fevereiro', y: 30 },
-      { x: 'Março', y: 40 },
-      { x: 'Abril', y: 60 },
-      { x: 'Maio', y: 70 },
-      { x: 'Junho', y: 20 },
-      { x: 'Julho', y: 50 },
-      { x: 'Agosto', y: 40 },
-      { x: 'Setembro', y: 60 },
-      { x: 'Outubro', y: 30 },
-      { x: 'Novembro', y: 40 },
-      { x: 'Dezembro', y: 60 },
-    ],
-  },
-];
+const GraficoEntradaSaida = ({ idOficina }) => {
+  const [dataEntradas, setDataEntradas] = useState([]);
+  const [dataSaidas, setDataSaidas] = useState([]);
 
-const GraficoEntradaSaida = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseEntradas = await api.get(`/financeiro/info-12-meses/${idOficina}`);
+        const responseSaidas = await api.get(`/financeiro/info-12-meses/${idOficina}`); // Ajustar endpoint de saídas se necessário
+
+        const entradas = responseEntradas.data.map(item => ({
+          x: item.mes,
+          y: item.entradas,
+        }));
+
+        const saidas = responseSaidas.data.map(item => ({
+          x: item.mes,
+          y: item.saidas,
+        }));
+
+        setDataEntradas(entradas);
+        setDataSaidas(saidas);
+      } catch (error) {
+        console.error('Erro ao buscar dados do gráfico:', error);
+      }
+    };
+
+    fetchData();
+  }, [idOficina]);
+
+  const data = [
+    {
+      id: 'Entradas',
+      color: '#C66D2C',
+      data: dataEntradas,
+    },
+    {
+      id: 'Saídas',
+      color: '#89532B',
+      data: dataSaidas,
+    },
+  ];
+
   return (
     <div style={{ height: '30vh', width: '100%' }}>
       <ResponsiveLine
@@ -51,29 +55,29 @@ const GraficoEntradaSaida = () => {
         axisTop={null}
         axisRight={null}
         axisBottom={null}
-        axisLeft={null} // Ocultar eixo esquerdo
-        enableGridX={false} // Desativar linhas de grid vertical
-        enableGridY={false} // Desativar linhas de grid horizontal
+        axisLeft={null}
+        enableGridX={false}
+        enableGridY={false}
         lineWidth={3}
         pointSize={10}
         pointBorderWidth={2}
         pointLabelYOffset={-12}
         useMesh={true}
-        curve="monotoneX" // Linhas curvadas
-        colors={{ datum: 'color' }} // Usar a cor especificada nos dados
+        curve="monotoneX"
+        colors={{ datum: 'color' }}
         theme={{
-          fontFamily: 'Product-Sans', // Definir família de fontes para Product-Sans
+          fontFamily: 'Product-Sans',
           axis: {
             ticks: {
               text: {
-                fontFamily: 'Product-Sans', // Aplicar família de fontes aos ticks dos eixos
+                fontFamily: 'Product-Sans',
                 fontSize: 12,
               },
             },
           },
           tooltip: {
             container: {
-              fontFamily: 'Product-Sans', // Aplicar família de fontes ao tooltip
+              fontFamily: 'Product-Sans',
             },
           },
         }}

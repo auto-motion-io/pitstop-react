@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import api from "../../services/api";
 
-// Gerar dados para o gráfico de linha
-const data = [
-  {
-    id: 'Clientes Ativos',
-    color: '#C66D2C',
-    data: [
-      { x: 'Janeiro', y: 70 },
-      { x: 'Fevereiro', y: 60 },
-      { x: 'Março', y: 70 },
-      { x: 'Abril', y: 80 },
-      { x: 'Maio', y: 90 },
-      { x: 'Junho', y: 40 },
-      { x: 'Julho', y: 80 },
-      { x: 'Agosto', y: 70 },
-      { x: 'Setembro', y: 80 },
-      { x: 'Outubro', y: 60 },
-      { x: 'Novembro', y: 70 },
-      { x: 'Dezembro', y: 80 },
-    ],
-  },
-];
+const GraficoClientesAtivos = ({ idOficina }) => {
+  const [data, setData] = useState([]);
 
-const GraficoClientesAtivos = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`/ordemDeServicos/quantidade-mes/${idOficina}`);
+        const formattedData = [{
+          id: 'Ordens de Serviço',
+          color: '#C66D2C',
+          data: response.data.map(item => ({
+            x: item.mes,
+            y: item.qtd,
+          })),
+        }];
+        setData(formattedData);
+      } catch (error) {
+        console.error("Erro ao buscar dados das ordens de serviço:", error);
+      }
+    };
+
+    fetchData();
+  }, [idOficina]);
+
   return (
     <div style={{ height: '30vh', width: '100%' }}>
       <ResponsiveLine
@@ -34,37 +36,37 @@ const GraficoClientesAtivos = () => {
         axisTop={null}
         axisRight={null}
         axisBottom={null}
-        axisLeft={null} // Ocultar eixo esquerdo
-        enableGridX={false} // Desativar linhas de grid vertical
-        enableGridY={false} // Desativar linhas de grid horizontal
+        axisLeft={null}
+        enableGridX={false}
+        enableGridY={false}
         colors={{ datum: 'color' }}
         lineWidth={3}
         pointSize={10}
-        pointColor={{ theme: 'background' }} // Cor de preenchimento dos pontos
+        pointColor={{ theme: 'background' }}
         pointBorderWidth={2}
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         useMesh={true}
-        curve="monotoneX" // Linhas curvadas
+        curve="monotoneX"
         theme={{
-          fontFamily: 'Product-Sans', // Definir família de fontes para Product-Sans
+          fontFamily: 'Product-Sans',
           axis: {
             ticks: {
               text: {
-                fontFamily: 'Product-Sans', // Aplicar família de fontes aos ticks dos eixos
+                fontFamily: 'Product-Sans',
                 fontSize: 12,
               },
             },
           },
           legends: {
             text: {
-              fontFamily: 'Product-Sans', // Aplicar família de fontes aos textos das legendas
+              fontFamily: 'Product-Sans',
               fontSize: 12,
             },
           },
           tooltip: {
             container: {
-              fontFamily: 'Product-Sans', // Aplicar família de fontes ao tooltip
+              fontFamily: 'Product-Sans',
             },
           },
         }}
@@ -72,10 +74,10 @@ const GraficoClientesAtivos = () => {
           <circle
             cx={props.x}
             cy={props.y}
-            r={5} // Tamanho do ponto
-            fill="#C66D2C" // Cor de preenchimento dos pontos
-            stroke="#C66D2C" // Cor da borda dos pontos
-            strokeWidth={2} // Largura da borda dos pontos
+            r={5}
+            fill="#C66D2C"
+            stroke="#C66D2C"
+            strokeWidth={2}
           />
         )}
       />
