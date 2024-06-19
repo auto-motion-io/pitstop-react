@@ -8,7 +8,7 @@ import botaoCheckColorido from "./../../utils/assets/botao-check-colorido.svg";
 import relogioImg from "./../../utils/assets/relogio.svg";
 import lupaImg from "./../../utils/assets/lupa.svg";
 import MenuConfig from '../../components/menuConfig/MenuConfig';
-import { inputMascaraTelefoneCelular, servicosOficina, marcasDeVeiculos, tiposDeVeiculos, tiposPropulsaoComuns } from '../../utils/global';
+import { inputMascaraTelefoneCelular, marcasDeVeiculos, tiposDeVeiculos, tiposPropulsaoComuns } from '../../utils/global';
 import iconSave from "./../../utils/assets/icon-save.png";
 import api from '../../services/api';
 import { toast } from 'react-toastify';
@@ -22,7 +22,6 @@ function ConfiguracoesMecanica() {
     const [horarioFSSaida, setHorarioFSSaida] = useState("");
     const [diasSemana, setDiasSemana] = useState([]);
     const [servicos, setServicos] = useState([]);
-    const [servicosFiltrados, setServicosFiltrados] = useState([]);
     const [veiculos, setVeiculos] = useState([]);
     const [veiculosFiltrados, setVeiculosFiltrados] = useState([]);
     const [marcas, setMarcas] = useState([]);
@@ -83,7 +82,11 @@ function ConfiguracoesMecanica() {
         .then((response) =>{
             var servicosBuscados = [];
             for(var i = 0; i < response.data.length; i++){
-                servicosBuscados.push(response.data[i].nome)
+                servicosBuscados.push(
+                    {
+                        nome: response.data[i].nome,
+                        id: response.data[i].id
+                    })
             }
             setServicos(servicosBuscados)
         }).catch((error) =>{
@@ -150,40 +153,57 @@ function ConfiguracoesMecanica() {
 
     //#region Servicos
 
-    function deletarServico(key) {
+    function deletarServico(id, index) {
         setServicos(prevState => {
             const novoArray = [...prevState];
-            novoArray.splice(key, 1);
+            novoArray.splice(index, 1);
             return novoArray;
-        });
+        });     
+        api.delete(`buscar-servicos/${id}`)
+        .then(() =>{
+            toast.success("Serviço excluido com sucesso!")
+        }).catch((e) =>{
+            toast.error("Houve um erro ao excluir serviço")
+            console.log(e)
+        })
     }
 
-    function filtrarServicos(e) {
-        const filtro = e.target.value.toLowerCase();
-        const servicosFiltrados = servicos.filter((servicos) =>
-            servicos.toLowerCase().startsWith(filtro)
-        );
-        setServicosFiltrados(servicosFiltrados);
-    }
+    // function filtrarServicos(e) {
+    //     const filtro = e.target.value.toLowerCase();
+    //     const servicosFiltrados = servicos.filter((servicos) =>
+    //         servicos.toLowerCase().startsWith(filtro)
+    //     );
+    //     setServicosFiltrados(servicosFiltrados);
+    // }
 
-    function addServico(e, select = "") {
+    function addServico(e) {
         if (e.key === "Enter") {
-            setServicos(prevState => {
-                const novoArray = [...prevState];
-                novoArray.push(e.target.value);
-                e.target.value = "";
-                changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", servicoRef, lupaServicoRef);
-                setMostrarDropdown(false);
-                return novoArray;
-            });
-        } else if (select !== "") {
-            setServicos(prevState => {
-                const novoArray = [...prevState];
-                novoArray.push(select);
-                return novoArray;
-            });
+            const novoServico = e.target.value.trim(); // Remover espaços extras antes de capitalizar
+            if (novoServico) {
+                const capitalizedServico = novoServico.charAt(0).toUpperCase() + novoServico.slice(1); // Capitalizar a primeira letra
+                api.post(`/buscar-servicos`, {
+                    nome: capitalizedServico,
+                    descricao: "no-desc",
+                    fkOficina: sessionStorage.getItem("idOficina")
+                }).then((response) => {
+                    const novoServicoObj = {
+                        nome: response.data.nome,
+                        id: response.data.id
+                    };
+                    setServicos(prevState => [...prevState, novoServicoObj]);
+                    e.target.value = "";
+                    changeBorderRadius("0 3vh 3vh 0", "3vh 0 0 3vh", servicoRef, lupaServicoRef);
+                    setMostrarDropdown(false);
+                    toast.success("Serviço adicionado com sucesso!");
+                }).catch((error) => {
+                    console.log("Erro ao cadastrar serviço", error);
+                    toast.error("Erro ao adicionar serviço. Por favor, tente novamente.");
+                });
+            }
         }
     }
+    
+    
 
     //#endregion
 
@@ -385,7 +405,7 @@ function ConfiguracoesMecanica() {
                         <h5>Insira os serviços que sua oficina oferece</h5>
                         <div className={styles["input-pesquisa"]}>
                             <div className={styles["img-lupa"]} ref={lupaServicoRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                            <input type="text" ref={servicoRef} onChange={(e) => filtrarServicos(e)} onFocus={() => mostrarOpcoesDropdown(true, servicosOficina, servicoRef, lupaServicoRef, "Serviços")} onBlur={() => mostrarOpcoesDropdown(false, "", servicoRef, lupaServicoRef, "")} onKeyDown={(e) => addServico(e)} />
+                            <input type="text" ref={servicoRef} onKeyDown={(e) => addServico(e)} />
                         </div>
                         {mostrarDropdown && opcaoSelecionada === "Serviços" && (
                             <div className={styles["dropdown"]}>
@@ -398,10 +418,10 @@ function ConfiguracoesMecanica() {
                         )}
                         <div className={styles["box"]}>
                             <div className={styles["box-tag"]}>
-                                {servicosFiltrados.length !== 0 ? servicosFiltrados.map((item, index) => {
-                                    return <InputTag key={index} nome={item} onClick={() => deletarServico(index)} />
+                                {servicos.length !== 0 ? servicos.map((item, index) => {
+                                    return <InputTag key={item.id} nome={item.nome} onClick={() => deletarServico(item.id, index)} />
                                 }) : servicos.map((item, index) => {
-                                    return <InputTag key={index} nome={item} onClick={() => deletarServico(index)} />
+                                    return <InputTag key={item.id} nome={item.nome} onClick={() => deletarServico(item.id, index)} />
                                 })}
                             </div>
                         </div>
