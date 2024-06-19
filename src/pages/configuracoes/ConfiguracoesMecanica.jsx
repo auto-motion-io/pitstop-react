@@ -21,7 +21,7 @@ function ConfiguracoesMecanica() {
     const [horarioFSEntrada, setHorarioFSEntrada] = useState("");
     const [horarioFSSaida, setHorarioFSSaida] = useState("");
     const [diasSemana, setDiasSemana] = useState([]);
-    const [servicos, setServicos] = useState(servicosOficina);
+    const [servicos, setServicos] = useState([]);
     const [servicosFiltrados, setServicosFiltrados] = useState([]);
     const [veiculos, setVeiculos] = useState([]);
     const [veiculosFiltrados, setVeiculosFiltrados] = useState([]);
@@ -76,6 +76,19 @@ function ConfiguracoesMecanica() {
         }).catch((error) => {
             console.log("Erro foi esse aqui: ", error);
         });
+    }
+
+    async function getServicos(){
+        api.get(`/buscar-servicos/oficina/${sessionStorage.getItem("idOficina")}`)
+        .then((response) =>{
+            var servicosBuscados = [];
+            for(var i = 0; i < response.data.length; i++){
+                servicosBuscados.push(response.data[i].nome)
+            }
+            setServicos(servicosBuscados)
+        }).catch((error) =>{
+            console.log("Erro ao bucar serviços" + error)
+        })
     }
 
     function salvarConfig() {
@@ -254,6 +267,7 @@ function ConfiguracoesMecanica() {
 
     useEffect(() => {
         getConfig();
+        getServicos();
     }, []);
 
     return (
