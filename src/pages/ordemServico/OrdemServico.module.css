@@ -105,6 +105,101 @@
     padding-left: 0.4vw;
 }
 
+.button-cadastrar-veiculo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #C66D2C;
+    color: white;
+    border-radius: 4vh;
+    padding: 0.5vh 0.5vw;
+    cursor: pointer;
+    border: none;
+    margin-left: 1vw;
+}
+
+.modal-cadastro-veiculo {
+    position: absolute;
+    width: 50vw;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #F9F8F5;
+    border-radius: 10vh;
+    padding: 2vh;
+    z-index: 11;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-cadastro-veiculo .input-select{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1vh;
+}
+
+.button-veiculo-cadastro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #C66D2C;
+    color: white;
+    border-radius: 4vh;
+    padding: 2vh 2vw;
+    cursor: pointer;
+    border: none;
+    margin-top: 2vh;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo cinza transparente */
+    display: none; /* Inicialmente invisível */
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Um nível abaixo do modal */
+}
+
+.modal-cadastro-veiculo {
+    width: 50vw;
+    height: 58vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #F9F8F5;
+    border-radius: 8vh;
+    padding: 2vh;
+    z-index: 11; /* Um nível acima do fundo */
+}
+
+.buttons-modal{
+    display: flex;
+    width: 15vw;
+    justify-content: space-between;
+}
+
+
+.input-cadastro{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    border-radius: 5vh;
+}
+
+.modal-inputs{
+    display: flex;
+    gap: 1vh;
+}
+
 .box-header-inputs h2{
     font-size: 3vh;
     margin: 0;
