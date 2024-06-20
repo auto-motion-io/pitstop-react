@@ -29,7 +29,7 @@ function Configuracoes() {
     const [bairro, setBairro] = useState("");
     const [cidade, setCidade] = useState("");
     const [estado, setEstado] = useState("");
-    const [buscar, setBuscar] = useState(false);
+    const [buscar, setBuscar] = useState("");
 
     let imgGerente = atob(sessionStorage.getItem("imgGerente")) != "" ? atob(sessionStorage.getItem("imgGerente")) : marcos;
 
@@ -232,7 +232,7 @@ function Configuracoes() {
                         </div>
                         <div className={styles["botao-buscar"]}>
                             <img src={imgBuscar} alt="Imagem do Buscar" />
-                            <input type="checkbox" checked={buscar} onChange={(e) => setBuscar(e.target.value)} name="buscar-check" id="check" className={styles["buscar-check"]} />
+                            <input type="checkbox" checked={buscar} readOnly={true} name="buscar-check" id="check" className={styles["buscar-check"]} />
                             <label htmlFor="check" className={styles["button-check"]}></label>
                         </div>
                     </div>
