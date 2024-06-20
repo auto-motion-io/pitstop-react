@@ -11,17 +11,33 @@ const Excluir = () => {
 
 
     const handleVoltar = () => {
-        navigate(`${endpoint}`);
+        console.log(endpoint)
+        if (endpoint === "/ordemDeServicos")
+            navigate("/ordem-servico");
+        else
+            navigate(`${endpoint}`);
     }
 
     const handleExcluir = () => {
-        try{
-            api.delete(`${endpoint}/${id}`);
-            setTimeout(() => {
-                navigate(`${endpoint}`);
-            }, 500);
-        } catch (error) {
-            console.log("Erro foi esse aqui: ", error);
+        console.log(endpoint, id)
+        if (endpoint === "/ordemDeServicos") {
+            try {
+                api.delete(`${endpoint}/${id}`);
+                setTimeout(() => {
+                    navigate(`/ordem-servico`);
+                }, 500);
+            } catch (error) {
+                console.log("Erro foi esse aqui: ", error);
+            }
+        } else {
+            try {
+                api.delete(`${endpoint}/${id}`);
+                setTimeout(() => {
+                    navigate(`${endpoint}`);
+                }, 500);
+            } catch (error) {
+                console.log("Erro foi esse aqui: ", error);
+            }
         }
     }
 

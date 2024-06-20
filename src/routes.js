@@ -19,6 +19,8 @@ import EsqueciSenha from "./pages/loginPitstop/EsqueciSenha";
 import Financeiro from "./pages/financeiro/Financeiro"
 import AdicionarTarefa from "./pages/home/AdicionarTarefa";
 import TodosFinanceiro from "./pages/financeiro/TodosFinanceiro";
+import TodosFinanceiroEditar from "./pages/financeiro/TodosFinanceiroEditar";
+import OrdemServicoVisualizacao from "./pages/ordemServico/OrdemServicoVisualizacao";
 function Rotas() {
     return (
         <>
@@ -31,13 +33,9 @@ function Rotas() {
                         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
                         <Route path="/adicionar-tarefa" element={<PrivateRoute element={<AdicionarTarefa />} />} />
 
-
-
                         <Route path="/clientes" element={<PrivateRoute element={<Cliente />} />} />
                         <Route path="/clientes/editar/:id" element={<PrivateRoute element={<ClienteEditar />} />} />
                         <Route path="/clientes/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
-
-
 
                         <Route path="/servicos" element={<PrivateRoute element={<Servicos />} />} />
                         <Route path="/servicos/editar/:id" element={<PrivateRoute element={<ServicosEditar />} />} />
@@ -48,9 +46,13 @@ function Rotas() {
                         <Route path="/produtoEstoque/excluir/:id" element={<Excluir />} />
 
                         <Route path="/financeiro" element={<Financeiro />} />
+                        <Route path="/financeiro/editar/:id" element={<TodosFinanceiroEditar />} />
                         <Route path="/todos-financeiro" element={<TodosFinanceiro />} />
+                        <Route path="/financeiro/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/ordem-servico" element={<PrivateRoute element={<OrdemServico />} />} />
+                        <Route path="/ordemDeServicos/visualizar/:token" element={<PrivateRoute element={<OrdemServicoVisualizacao />} />} />
+                        <Route path="/ordemDeServicos/excluir/:id" element={<PrivateRoute element={<Excluir />} />} />
 
                         <Route path="/configuracoes" element={<PrivateRoute element={<Configuracoes />} />} />
                         <Route path="/configuracoes/mecanica" element={<PrivateRoute element={<ConfiguracoesMecanica />} />} />
