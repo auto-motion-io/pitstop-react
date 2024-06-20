@@ -1002,7 +1002,7 @@ const OrdemServico = () => {
 
                                         <div className={style["box-observacoes"]}>
                                             <h1>Observações</h1>
-                                            <textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)} name="" id=""></textarea>
+                                            <textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)} maxLength={255} name="" id=""></textarea>
                                         </div>
 
                                         <div className={style["box-valor"]}>
