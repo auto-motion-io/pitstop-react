@@ -79,9 +79,10 @@ overflow-y: auto;
 }
 
 .container_registros_kp2 {
-    height: auto;
+    max-height: 17vh;
     display: flex;
     flex-direction: column;
+    overflow-x: auto;
 }
 
 .registro{

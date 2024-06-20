@@ -18,26 +18,32 @@ const AdicionarTarefa = () => {
     }
 
     const handleCadastro = async () => {
-        try {
-            const response = await api.post("/tarefas", {
-                descricao: nomeTarefa,
-                dtDeadline: dataTarefa,
-                status: "Pendente",
-                fkOficina: parseInt(idOficina), // Converte para inteiro se necessário
-            });
-            console.log("Tarefa cadastrada:", response.data);
-            notifyCadastro(); // Chama a função para exibir o toast de sucesso
-            // Após o cadastro bem-sucedido, navegue de volta para a página inicial
-        } catch (error) {
-            console.error("Erro ao cadastrar tarefa:", error);
-            notifyError(); // Chama a função para exibir o toast de erro
+        if(dataTarefa && nomeTarefa){
+            try {
+                const response = await api.post("/tarefas", {
+                    descricao: nomeTarefa,
+                    dtDeadline: dataTarefa,
+                    status: "Pendente",
+                    fkOficina: parseInt(idOficina), // Converte para inteiro se necessário
+                });
+                console.log("Tarefa cadastrada:", response.data);
+                notifyCadastro();
+                setTimeout(() => {
+                    navigate("/home")
+                }, 1500);
+            } catch (error) {
+                console.error("Erro ao cadastrar tarefa:", error);
+                notifyError(); // Chama a função para exibir o toast de erro
+            }
+        }else{
+            toast.error("Preencha todos os campos")
         }
     }
 
     const notifyCadastro = () => {
-        toast.success('Tarefa cadastrada com sucesso!', {
+        toast.success('Tarefa cadastrada com sucesso! Retornando para home', {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -71,14 +77,14 @@ const AdicionarTarefa = () => {
                         tipo={"text"}
                         value={nomeTarefa}
                         onChange={(e) => setNomeTarefa(e.target.value)}
-                        tamanho={"230%"}
+                        tamanho={"30vw"}
                     />
                     <Input
                         nome={"Data*"}
                         type={"date"}
                         value={dataTarefa}
                         onChange={(e) => setDataTarefa(e.target.value)}
-                        tamanho={"100%"}
+                        tamanho={"10.5vw"}
                     />
                 </div>
 
