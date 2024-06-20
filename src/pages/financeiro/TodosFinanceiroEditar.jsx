@@ -5,28 +5,41 @@ import NavBar from "../../components/navbar/NavBar";
 import Alignner from "../../components/alignner/Alignner";
 import BoxConfig from "../../components/boxConfig/BoxConfig";
 import Input from "../../components/input/Input";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import calendario from "../../utils/assets/calendario.svg";
 import BoxInfo from "../../components/boxInfo/BoxInfo";
 import { toast } from "react-toastify";
 import api from "../../services/api";
 
-const TodosFinanceiro = () => {
+const TodosFinanceiroEditar = () => {
   const [transacao, setTransacao] = useState("");
   const [categoria, setCategoria] = useState("");
   const [valor, setValor] = useState("");
   const [formaPagamento, setFormaPagamento] = useState("");
   const [data, setData] = useState("");
-
-  const [entradas, setEntradas] = useState(0);
-  const [saidas, setSaidas] = useState(0);
-  const [saldo, setSaldo] = useState(0);
+  const { id } = useParams();
 
   const idOficina = sessionStorage.getItem("idOficina");
 
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate(`/todos-financeiro`);
+  }
+
+  function editarFinanceiro() {
+    api.put(`/financeiro/${id}`, {
+      transacao: transacao,
+      categoria: categoria,
+      valor: valor,
+      formaPagamento: formaPagamento,
+      data: data,
+      idOficina: sessionStorage.getItem("idOficina")
+    }).then((response) => {
+      toast.success('Transação editada com sucesso!');
+      navigate("/todos-financeiro");
+    }).catch((error) => {
+      toast.error('Erro ao editar transação!');
+    });
   }
 
   const inputs = (
@@ -48,25 +61,6 @@ const TodosFinanceiro = () => {
     </div>
   );
 
-  function cadastrarFinanceiro() {
-    api.post("/financeiro", {
-      transacao: transacao,
-      categoria: categoria,
-      valor: valor,
-      formaPagamento: formaPagamento,
-      data: data,
-      idOficina: sessionStorage.getItem("idOficina")
-    }).then((response) => {
-      toast.success('Transação cadastrada com sucesso!');
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    }).catch((error) => {
-      toast.error('Erro ao cadastrar a transação. Tente novamente.');
-      console.log(error);
-    });
-  }
-
   return (
     <div>
       <div>
@@ -75,10 +69,10 @@ const TodosFinanceiro = () => {
 
       <Alignner>
         <BoxInfo titulo="Financeiro" resposta={["Transação", "Categoria", "Data de Lançamento", "Valor(R$)", "Data de Lançamento", "Ações"]} endpoint={"/financeiro"} />
-        <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} inputs={inputs} onClick={cadastrarFinanceiro}/>
+        <BoxConfig titulo={"Editar"} nomeBotao={"Salvar"} inputs={inputs} onClick={editarFinanceiro}/>
       </Alignner>
     </div>
   );
 };
 
-export default TodosFinanceiro;
+export default TodosFinanceiroEditar;

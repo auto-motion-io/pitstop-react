@@ -89,7 +89,6 @@ const OrdemServico = () => {
     const tipoOsLupaRef = useRef(null);
     const [tipoOs, setTipoOs] = useState();
     const [tipoOsSelecionada, setTipoOsSelecionada] = useState("");
-    const [idOrdemServico, setIdOrdemServico] = useState();
     //#endregion
 
     //#region Váriaveis Serviços
@@ -234,13 +233,24 @@ const OrdemServico = () => {
 
     const mascaraPlaca = (e) => {
         let placaDigitada = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-
+    
         if (placaDigitada.length > 3) {
-            placaDigitada = placaDigitada.replace(/([A-Z]{3})([0-9]{1,4})/, '$1-$2');
+            const letras = placaDigitada.substr(0, 3);
+            const numeros = placaDigitada.substr(3).replace(/[^0-9]/g, '');
+    
+            if (letras.match(/[A-Z]{3}/)) {
+                if (numeros.length <= 4) {
+                    placaDigitada = `${letras}-${numeros}`;
+                } else {
+                    placaDigitada = `${letras}-${numeros.substr(0, 4)}`;
+                }
+            }
         }
-
+        console.log(placaDigitada);
         setPlacaSelecionada(placaDigitada);
     };
+    
+    
 
     useEffect(() => {
         buscarInfoVeiculo();
@@ -315,47 +325,38 @@ const OrdemServico = () => {
 
     async function existeVeiculo() {
         try {
-            debugger
             const response = await api.get(`/veiculos/buscar-por-oficina/${sessionStorage.getItem("idOficina")}`);
-            for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].placa === placaSelecionada) {
-                    return true;
-                }
+            
+            if (response.data && Array.isArray(response.data)) {
+                // Verifica se existe algum veículo com a placa selecionada
+                const veiculoExiste = response.data.some(veiculo => veiculo.placa === placaSelecionada);
+                return veiculoExiste;
+            } else {
+                // Se a resposta não for um Array válido, retorna false para cadastrar um novo veículo
+                return false;
             }
-            return false;
         } catch (error) {
             console.error("Erro ao buscar veículos", error);
-            throw error; // Lança o erro para quem chamar existeVeiculo()
+            // Tratar o erro conforme necessário, por exemplo, retornando false para cadastrar um novo veículo
+            return false;
         }
     }
     
-    async function salvarOS() {
-        if (verificarOrdemServico()) {
-            debugger
-            try {
-                // Espera pela conclusão de existeVeiculo()
-                const veiculoExiste = await existeVeiculo();
     
-                if (veiculoExiste) {
-                    // Se o veículo existe, prossegue com o cadastro da ordem de serviço
-                    await api.post("/ordemDeServicos", {
-                        fkOficina: sessionStorage.getItem("idOficina"),
-                        status: status,
-                        garantia: garantia,
-                        fkVeiculo: idVeiculo,
-                        fkMecanico: idMecanico,
-                        dataInicio: dataInicio,
-                        dataFim: dataFim,
-                        tipoOs: tipoOs,
-                        produtos: produtoOrdemServico,
-                        servicos: servicoOrdemServico,
-                        observacoes: observacoes,
-                        valorTotal: parseFloat(valorTotalProdutoServico),
-                        quantidade: 0
-                    });
-                    toast.success("Ordem de serviço cadastrada com sucesso!");
-                    window.location.reload()
-                } else {
+    async function salvarOS() {
+        if (!verificarOrdemServico()) {
+            return;
+        }
+        debugger
+        console.log(placaSelecionada)
+        let veiculoExiste = false;
+        let idVeiculoCriado = 0;
+    
+        while (!veiculoExiste) {
+            try {
+                veiculoExiste = await existeVeiculo();
+    
+                if (!veiculoExiste) {
                     // Se o veículo não existe, cadastra o veículo primeiro
                     const response = await api.post("/veiculos", {
                         fkCliente: idCliente,
@@ -365,33 +366,52 @@ const OrdemServico = () => {
                         cor: cor,
                         ano: ano
                     });
-                    toast.success("Veículo cadastrado com sucesso!");
+                    console.log(response.data.id);
                     setIdVeiculo(response.data.id);
-                    // Após cadastrar o veículo, chama salvarOS() novamente para cadastrar a ordem de serviço
-                    await salvarOS();
+                    idVeiculoCriado = response.data.id;
                 }
             } catch (error) {
-                console.error("Erro ao salvar ordem de serviço", error);
+                console.error("Erro ao verificar/existir veículo", error);
+                return; // Tratar o erro de forma apropriada conforme necessidade
             }
+        }
+    
+        try {
+            // Após garantir que o veículo existe, prossegue com o cadastro da ordem de serviço
+            const response = await api.post("/ordemDeServicos", {
+                fkOficina: parseInt(sessionStorage.getItem("idOficina")),
+                status: status,
+                garantia: garantia,
+                fkVeiculo: idVeiculoCriado,
+                fkMecanico: idMecanico,
+                dataInicio: dataInicio,
+                dataFim: dataFim,
+                tipoOs: tipoOs,
+                produtos: produtoOrdemServico,
+                servicos: servicoOrdemServico,
+                observacoes: observacoes,
+                valorTotal: parseFloat(valorTotalProdutoServico),
+                quantidade: 0
+            });
+            toast.success("Ordem de serviço cadastrada com sucesso!");
+            window.location.reload();
+        } catch (error) {
+            console.error("Erro ao salvar ordem de serviço", error);
+            toast.error("Erro ao salvar ordem de serviço");
+            api.delete(`/veiculos/${idVeiculo}`);
         }
     }
     
+    
 
     function verificarOrdemServico() {
-        if (nomeClienteSelecionado === "" || telefoneCliente === "" || emailCliente === "" || placaSelecionada === "" || marca === "" || modelo === "" || cor === "" || ano === "" || tipoOs === "" || dataInicio === "" || dataFim === "" || produtoOrdemServico.length === 0 || servicoOrdemServico.length === 0 || observacoes === "" || garantia === "" || status === "") {
+        debugger
+        if (nomeClienteSelecionado === "" || telefoneCliente === "" || emailCliente === "" || placaSelecionada === "" || marca === "" || modelo === "" || cor === "" || ano === "" || tipoOs === "" || dataInicio === "" || dataFim === "" || observacoes === "" || garantia === "" || status === "") {
             toast.error("Preencha todos os campos obrigatórios!");
             return false;
         } else {
             return true;
         }
-    }
-
-    function buscarIdOrdemServico() {
-        api.get(`/ordemDeServicos/oficina/${sessionStorage.getItem("idOficina")}`).then((response) => {
-            setIdOrdemServico(response.data.length + 1);
-        }).catch((error) => {
-            console.error("Erro ao buscar id da ordem de serviço", error);
-        });
     }
 
     //#endregion
@@ -628,7 +648,6 @@ const OrdemServico = () => {
     }, [valorTotalServicos, valorTotalProduto]);
 
     useEffect(() => {
-        buscarIdOrdemServico();
         buscarCliente();
         buscarMecanico();
         buscarProdutos();
@@ -648,8 +667,8 @@ const OrdemServico = () => {
                     <h1>Nova</h1>
                     <div className={style["container"]}>
                         <div className={style["box-container"]}>
-                            <div className={style["box-header"]}>
-                                <h1>#2559</h1>
+                            <div className={style["box-header"]} style={{"marginBottom" : "2vh"}}>
+                            <h1>Ordem de Serviço</h1>
                                 <div className={style["box-header-inputs"]}>
                                     <div className={style["input-select"]}>
                                         <span>Status*</span>
@@ -679,7 +698,7 @@ const OrdemServico = () => {
                                     <input type="text" value={nomeClienteSelecionado} ref={nomeClienteRef} onFocus={() => mostrarOpcoesDropdown(true, nomeCliente, nomeClienteRef, nomeClienteLupaRef, "NomeCliente")} onBlur={() => mostrarOpcoesDropdown(false, "", nomeClienteRef, nomeClienteLupaRef, "")} onChange={(e) => setNomeClienteSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                 </div>
                                 {mostrarDropdown && opcaoSelecionada === "NomeCliente" && (
-                                    <div className={style["dropdown"]} style={{ height: nomeCliente.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                    <div className={style["dropdown"]} style={{ height: nomeCliente.length < 5 ? "fit-content" : "14vh", width: "20vw" }}>
                                         {opcoesDropdown.map((cliente, index) => (
                                             <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addCliente(e, cliente)}>
                                                 {cliente}
@@ -694,13 +713,13 @@ const OrdemServico = () => {
                             </div>
                             <div className={style["box-veiculo"]}>
                                 <h1>Veículo</h1>
-                                <span className={style["input-label"]}>Placa*</span>
+                                <span className={style["input-label"]}>Placa - <span style={{fontWeight: "normal"}}>Exemplo de Placa: (AAA-0000)</span>*</span>
                                 <div className={style["input-type"]}>
                                     <div className={style["img-lupa"]} ref={placaLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
                                     <input type="text" value={placaSelecionada} ref={placaRef} onFocus={() => mostrarOpcoesDropdown(true, placa, placaRef, placaLupaRef, "Placa")} onBlur={() => mostrarOpcoesDropdown(false, "", placaRef, placaLupaRef, "")} maxLength={8} onChange={mascaraPlaca} style={{ width: "18.1vw" }} onKeyDown={(e) => addVeiculo(e)} />
                                 </div>
                                 {mostrarDropdown && opcaoSelecionada === "Placa" && (
-                                    <div className={style["dropdown"]} style={{ height: placa.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                    <div className={style["dropdown"]} style={{ height: placa.length < 5 ? "fit-content" : "14vh", width: "20vw" }}>
                                         {opcoesDropdown.map((placa, index) => (
                                             <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addVeiculo(e, placa)}>
                                                 {placa}
@@ -725,7 +744,7 @@ const OrdemServico = () => {
                                             <input type="text" value={mecanicoSelecionado} ref={mecanicoRef} onFocus={() => mostrarOpcoesDropdown(true, nomeMecanico, mecanicoRef, mecanicoLupaRef, "Mecanico")} onBlur={() => mostrarOpcoesDropdown(false, "", mecanicoRef, mecanicoLupaRef, "")} onChange={(e) => setMecanicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} onKeyDown={(e) => addMecanico(e)} />
                                         </div>
                                         {mostrarDropdown && opcaoSelecionada === "Mecanico" && (
-                                            <div className={style["dropdown"]} style={{ height: nomeMecanico.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                            <div className={style["dropdown"]} style={{ height: nomeMecanico.length < 5 ? "fit-content" : "14vh", width: "20vw" }}>
                                                 {opcoesDropdown.map((mecanico, index) => (
                                                     <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addMecanico(e, mecanico)}>
                                                         {mecanico}
@@ -761,7 +780,7 @@ const OrdemServico = () => {
                                                 <input type="text" value={tipoOs} ref={tipoOsRef} onFocus={() => mostrarOpcoesDropdown(true, tiposDeOs, tipoOsRef, tipoOsLupaRef, "TipoOs")} onBlur={() => mostrarOpcoesDropdown(false, "", tipoOsRef, tipoOsLupaRef, "")} onChange={(e) => setTipoOsSelecionada(e.target.value)} style={{ width: "18.1vw" }} />
                                             </div>
                                             {mostrarDropdown && opcaoSelecionada === "TipoOs" && (
-                                                <div className={style["dropdown"]} style={{ height: tiposDeOs.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                                <div className={style["dropdown"]} style={{ height: tiposDeOs.length < 5 ? "fit-content" : "14vh", width: "20vw" }}>
                                                     {opcoesDropdown.map((tipo, index) => (
                                                         <div key={index} className={style["opcao-dropdown"]} onMouseDown={(e) => addTipoOs(e, tipo)}>
                                                             {tipo}
@@ -794,7 +813,7 @@ const OrdemServico = () => {
                                                 <input type="text" id={"input-produto-" + index} autoComplete={"off"} value={produtoSelecionado[index]} ref={el => produtoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeProdutos, { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: produtoRef.current[index] }, { current: produtoLupaRef.current[index] }, "")} onChange={(e) => setProdutoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                             </div>
                                             {mostrarDropdown && opcaoSelecionada === "input-produto-" + index && (
-                                                <div className={style["dropdown"]} style={{ height: "10vw", width: "20vw" }}>
+                                                <div className={style["dropdown"]} style={{ height: "14vh", width: "20vw" }}>
                                                     {opcoesDropdown.map((produto, indexOption) => (
                                                         <div key={indexOption} className={style["opcao-dropdown"]} onMouseDown={(e) => addProduto(e, produto, indexOption, index)}>
                                                             {produto}
@@ -834,7 +853,7 @@ const OrdemServico = () => {
                                                 <input type="text" id={"input-servico-" + index} autoComplete={"off"} value={servicoSelecionado[index]} ref={el => servicoRef.current[index] = el} onFocus={(e) => mostrarOpcoesDropdown(true, nomeServicos, { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, e.target.id)} onBlur={() => mostrarOpcoesDropdown(false, "", { current: servicoRef.current[index] }, { current: servicoLupaRef.current[index] }, "")} onChange={(e) => setServicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                             </div>
                                             {mostrarDropdown && opcaoSelecionada === "input-servico-" + index && (
-                                                <div className={style["dropdown"]} style={{ height: nomeServicos.length < 5 ? "fit-content" : "20vw", width: "20vw" }}>
+                                                <div className={style["dropdown"]} style={{ height: nomeServicos.length < 5 ? "fit-content" : "14vh", width: "20vw" }}>
                                                     {opcoesDropdown.map((servico, indexOption) => (
                                                         <div key={indexOption} className={style["opcao-dropdown"]} onMouseDown={(e) => addServico(e, servico, indexOption, index)}>
                                                             {servico}

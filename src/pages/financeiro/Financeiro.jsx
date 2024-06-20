@@ -44,22 +44,20 @@ const Financeiro = () => {
     fetchFinanceiroInfo();
   }, [idOficina]);
 
-  const handleCadastro = () => {
+  function cadastrarFinanceiro() {
     api.post("/financeiro", {
-      transacao,
-      categoria,
-      valor,
-      formaPagamento,
-      data,
+      transacao: transacao,
+      categoria: categoria,
+      valor: valor,
+      formaPagamento: formaPagamento,
+      data: data,
       idOficina: sessionStorage.getItem("idOficina")
-    })
-    .then((response) => {
+    }).then((response) => {
       toast.success('Transação cadastrada com sucesso!');
       setTimeout(() => {
         window.location.reload();
       }, 500);
-    })
-    .catch((error) => {
+    }).catch((error) => {
       toast.error('Erro ao cadastrar a transação. Tente novamente.');
       console.log(error);
     });
@@ -73,14 +71,14 @@ const Financeiro = () => {
         <Input nome={"Forma de Pagamento*"} type={"text"} tamanho={"100%"} value={formaPagamento} onChange={(e) => setFormaPagamento(e.target.value)} />
       </div>
       <Input nome={"Data de Lançamento*"} type={"date"} tamanho={"50%"} value={data} onChange={(e) => setData(e.target.value)} />
-        <div className={style["select"]} >
-          <span>Categoria</span>
-          <select id="categoria" name="categoria">
+      <div className={style["select"]} >
+        <span>Categoria</span>
+        <select id="categoria" onChange={(e) => setCategoria(e.target.value)} name="categoria">
           <option selected disabled>Categoria</option>
           <option value="entrada">Entrada</option>
           <option value="saida">Saída</option>
-          </select>
-        </div>
+        </select>
+      </div>
     </div>
   );
 
@@ -138,7 +136,7 @@ const Financeiro = () => {
           </div>
         </div>
 
-        <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} inputs={inputs} onClick={handleCadastro} />
+        <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} inputs={inputs} onClick={cadastrarFinanceiro} />
       </Alignner>
     </div>
   );

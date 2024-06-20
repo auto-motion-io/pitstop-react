@@ -32,6 +32,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                     return {
                         id: item.id,
                         nomeCliente: item.veiculo.cliente.nome,
+                        token: item.token,
                         dataFim: item.dataFim
                     }   
                 });

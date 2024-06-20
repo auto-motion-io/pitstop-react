@@ -11,6 +11,9 @@ const Excluir = () => {
 
 
     const handleVoltar = () => {
+        if(endpoint === "/ordemDeServicos")
+            navigate("/ordem-servico");
+        else
         navigate(`${endpoint}`);
     }
 
