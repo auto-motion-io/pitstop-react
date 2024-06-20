@@ -196,7 +196,7 @@ const OrdemServicoVisualizacao = () => {
                             ))}
                         </div>
 
-                        <div className={style["box-servicos"]} style={servicos.length === 0 ? {marginTop: "5vh"}: ""}>
+                        <div className={style["box-servicos"]} style={servicos.length === 0 ? {marginTop: "5vh"}: {marginTop: "0vh"}}>
                             <div className={style["titulo-com-excluir"]}>
                                 <div className={style["titulo-desfazer"]}>
                                     <h1>Serviços</h1>
@@ -218,7 +218,7 @@ const OrdemServicoVisualizacao = () => {
                             ))}
                         </div>
 
-                        <div className={style["box-observacoes"]} style={servicos.length === 0 ? {marginTop: "5vh"}: ""}>
+                        <div className={style["box-observacoes"]} style={servicos.length === 0 ? {marginTop: "5vh"}: {marginTop: "0vh"}}>
                             <h1>Observações</h1>
                             <textarea value={observacoes} disabled></textarea>
                         </div>

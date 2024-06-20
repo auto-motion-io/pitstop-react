@@ -328,9 +328,16 @@ const OrdemServico = () => {
             const response = await api.get(`/veiculos/buscar-por-oficina/${sessionStorage.getItem("idOficina")}`);
             
             if (response.data && Array.isArray(response.data)) {
-                // Verifica se existe algum veículo com a placa selecionada
-                const veiculoExiste = response.data.some(veiculo => veiculo.placa === placaSelecionada);
-                return veiculoExiste;
+                // Encontra o veículo com a placa selecionada
+                const veiculoEncontrado = response.data.find(veiculo => veiculo.placa === placaSelecionada);
+                
+                if (veiculoEncontrado) {
+                    // Retorna o ID do veículo encontrado
+                    return veiculoEncontrado.id;
+                } else {
+                    // Se nenhum veículo com a placa selecionada foi encontrado
+                    return false;
+                }
             } else {
                 // Se a resposta não for um Array válido, retorna false para cadastrar um novo veículo
                 return false;
@@ -341,6 +348,7 @@ const OrdemServico = () => {
             return false;
         }
     }
+    
     
     
     async function salvarOS() {
@@ -367,7 +375,6 @@ const OrdemServico = () => {
                         ano: ano
                     });
                     console.log(response.data.id);
-                    setIdVeiculo(response.data.id);
                     idVeiculoCriado = response.data.id;
                 }
             } catch (error) {
@@ -377,6 +384,9 @@ const OrdemServico = () => {
         }
     
         try {
+            if(veiculoExiste != false){
+                idVeiculoCriado = veiculoExiste;
+            }
             // Após garantir que o veículo existe, prossegue com o cadastro da ordem de serviço
             const response = await api.post("/ordemDeServicos", {
                 fkOficina: parseInt(sessionStorage.getItem("idOficina")),
@@ -398,7 +408,9 @@ const OrdemServico = () => {
         } catch (error) {
             console.error("Erro ao salvar ordem de serviço", error);
             toast.error("Erro ao salvar ordem de serviço");
-            api.delete(`/veiculos/${idVeiculo}`);
+            if(!existeVeiculo()){
+                api.delete(`/veiculos/${idVeiculo}`);
+            }
         }
     }
     
