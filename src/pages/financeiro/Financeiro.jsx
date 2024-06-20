@@ -122,15 +122,10 @@ const Financeiro = () => {
             <div className={style["titulo"]}>
               <div style={{ width: "100%" }}>
                 <h1>Resumo</h1>
-                <span style={{ fontFamily: "Product-Sans", fontSize: "15px" }}>Entradas X Saídas</span>
+                <span style={{ fontFamily: "Product-Sans", fontSize: "15px" }}>Últimos 12 Meses</span>
               </div>
 
-              <div className={style["input-calendario"]}>
-                <div className={style["calendario"]}>
-                  <img src={calendario} alt="Imagem de Calendário" />
-                </div>
-                <input type="text" />
-              </div>
+              
             </div>
             <GraficoEntradaSaida idOficina={idOficina} />
           </div>

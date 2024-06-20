@@ -83,7 +83,7 @@ const Home = () => {
                     fontSize: "15px",
                   }}
                 >
-                  Pendentes
+                  Próximos 7 Dias
                 </h3>
 
                 <GraficoOrdensPendentes idOficina={idOficina} />
@@ -93,7 +93,7 @@ const Home = () => {
             <div className={style["container_kpi"]}>
               <div className={style["kp1"]}>
                 <div style={{ color: "#474747" }}>
-                  <h2 style={{ fontSize: "25px" }}>Clientes</h2>
+                  <h2 style={{ fontSize: "25px" }}>Ordens de Serviço</h2>
                   <h3
                     style={{
                       fontFamily: "Product-Sans",
@@ -101,7 +101,7 @@ const Home = () => {
                       fontSize: "15px",
                     }}
                   >
-                    Ativos
+                    Últimos 12 Meses
                   </h3>
                 </div>
                 <GraficoClientesAtivos idOficina={idOficina} />
