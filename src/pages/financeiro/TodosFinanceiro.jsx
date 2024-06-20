@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import api from "../../services/api";
 
 const TodosFinanceiro = () => {
-  const [transacao, setTransacao] = useState("");
+  const [transacao, setTransacao] = useState("entrada");
   const [categoria, setCategoria] = useState("");
   const [valor, setValor] = useState("");
   const [formaPagamento, setFormaPagamento] = useState("");
@@ -27,16 +27,16 @@ const TodosFinanceiro = () => {
 
   const inputs = (
     <div>
-      <Input nome={"Transação*"} type={"text"} tamanho={"100%"} value={transacao} onChange={(e) => setTransacao(e.target.value)} />
+      <Input nome={"Categoria*"} type={"text"} tamanho={"100%"} value={categoria} onChange={(e) => setCategoria(e.target.value)} />
       <div style={{ display: "flex", width: "100%" }}>
         <Input nome={"Valor*"} type={"number"} tamanho={"90%"} value={valor} onChange={(e) => setValor(e.target.value)} />
         <Input nome={"Forma de Pagamento*"} type={"text"} tamanho={"100%"} value={formaPagamento} onChange={(e) => setFormaPagamento(e.target.value)} />
       </div>
       <Input nome={"Data de Lançamento*"} type={"date"} tamanho={"50%"} value={data} onChange={(e) => setData(e.target.value)} />
       <div className={style["select"]} >
-        <span>Categoria</span>
-        <select id="categoria" onChange={(e) => setCategoria(e.target.value)} name="categoria">
-          <option selected disabled>Categoria</option>
+        <span>Transação</span>
+        <select id="transacao" value={transacao} onInput={(e) => setTransacao(e.target.value)} name="transacao">
+          <option selected disabled>Transação</option>
           <option value="entrada">Entrada</option>
           <option value="saida">Saída</option>
         </select>

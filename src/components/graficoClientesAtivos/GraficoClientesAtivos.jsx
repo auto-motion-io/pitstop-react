@@ -8,7 +8,8 @@ const GraficoClientesAtivos = ({ idOficina }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`/ordemDeServicos/quantidade-mes/${idOficina}`);
+        let response = await api.get(`/ordemDeServicos/quantidade-mes/${idOficina}`);
+        response.data.reverse()
         const formattedData = [{
           id: 'Ordens de Serviço',
           color: '#C66D2C',

@@ -9,9 +9,11 @@ const GraficoEntradaSaida = ({ idOficina }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseEntradas = await api.get(`/financeiro/info-12-meses/${idOficina}`);
-        const responseSaidas = await api.get(`/financeiro/info-12-meses/${idOficina}`); // Ajustar endpoint de saídas se necessário
+        let responseEntradas = await api.get(`/financeiro/info-12-meses/${idOficina}`);
+        let responseSaidas = await api.get(`/financeiro/info-12-meses/${idOficina}`); // Ajustar endpoint de saídas se necessário
 
+        responseEntradas.data = responseEntradas.data.reverse();
+        responseSaidas.data = responseSaidas.data.reverse();
         const entradas = responseEntradas.data.map(item => ({
           x: item.mes,
           y: item.entradas,
