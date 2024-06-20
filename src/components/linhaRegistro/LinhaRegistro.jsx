@@ -44,8 +44,8 @@ const LinhaRegistro = ({ endpoint, registros }) => {
                 ))}
                 <div className={style["coluna"]}>
                     <div className={style["botoes"]}>
-                        <a id={registro.idServico} onClick={() => endpoint != "/ordemDeServicos" ? handleEditar(registro.id) : handleVisualizar(registro.token)}><img src={endpoint == "/ordemDeServicos" ? visualizar : editar} alt="Botão Editar" /></a>
-                        <a onClick={() => handleExcluir(registro.id)}><img src={excluir} alt="Botão Excluir" /></a>
+                        <a id={registro.idServico} onClick={() => endpoint != "/ordemDeServicos" ? handleEditar(registro.id) : handleVisualizar(registro.token)} style={endpoint == "/ordemDeServicos" ? {marginLeft: "1.2vw"} : {marginLeft : "0vw"}}><img src={endpoint == "/ordemDeServicos" ? visualizar : editar} alt="Botão Editar" /></a>
+                        {endpoint != "/ordemDeServicos" ? <a onClick={() => handleExcluir(registro.id)}><img src={excluir} alt="Botão Excluir" /></a> : null}
                     </div>
                 </div>
             </div>
