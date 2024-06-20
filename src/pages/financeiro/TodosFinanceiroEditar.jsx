@@ -1,5 +1,5 @@
 // Home.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./TodosFinanceiro.module.css";
 import NavBar from "../../components/navbar/NavBar";
 import Alignner from "../../components/alignner/Alignner";
@@ -27,7 +27,7 @@ const TodosFinanceiroEditar = () => {
   }
 
   function editarFinanceiro() {
-    api.put(`/financeiro/${id}`, {
+    api.put(`/financeiro/atualiza/${id}`, {
       transacao: transacao,
       categoria: categoria,
       valor: valor,
@@ -52,7 +52,7 @@ const TodosFinanceiroEditar = () => {
       <Input nome={"Data de Lançamento*"} type={"date"} tamanho={"50%"} value={data} onChange={(e) => setData(e.target.value)} />
       <div className={style["select"]} >
         <span>Categoria</span>
-        <select id="categoria" onChange={(e) => setCategoria(e.target.value)} name="categoria">
+        <select id="categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)} name="categoria">
           <option selected disabled>Categoria</option>
           <option value="entrada">Entrada</option>
           <option value="saida">Saída</option>
@@ -60,6 +60,27 @@ const TodosFinanceiroEditar = () => {
       </div>
     </div>
   );
+
+  function handleValoresEditar() {
+    api.get(`/financeiro/oficina/${sessionStorage.getItem("idOficina")}`)
+      .then((response) => {
+        for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].id == id) {
+            setTransacao(response.data[i].transacao);
+            setCategoria(response.data[i].categoria);
+            setValor(response.data[i].valor);
+            setFormaPagamento(response.data[i].formaPagamento);
+            setData(response.data[i].data);
+          }
+        }
+      }).catch((error) => {
+        toast.error('Erro ao buscar transação!');
+      });
+  }
+
+  useEffect(() => {
+    handleValoresEditar();
+  }, []);
 
   return (
     <div>
@@ -69,7 +90,7 @@ const TodosFinanceiroEditar = () => {
 
       <Alignner>
         <BoxInfo titulo="Financeiro" resposta={["Transação", "Categoria", "Data de Lançamento", "Valor(R$)", "Data de Lançamento", "Ações"]} endpoint={"/financeiro"} />
-        <BoxConfig titulo={"Editar"} nomeBotao={"Salvar"} inputs={inputs} onClick={editarFinanceiro}/>
+        <BoxConfig titulo={"Editar"} nomeBotao={"Salvar"} inputs={inputs} onClick={editarFinanceiro} />
       </Alignner>
     </div>
   );

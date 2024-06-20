@@ -18,10 +18,6 @@ const TodosFinanceiro = () => {
   const [formaPagamento, setFormaPagamento] = useState("");
   const [data, setData] = useState("");
 
-  const [entradas, setEntradas] = useState(0);
-  const [saidas, setSaidas] = useState(0);
-  const [saldo, setSaldo] = useState(0);
-
   const idOficina = sessionStorage.getItem("idOficina");
 
   const navigate = useNavigate();
