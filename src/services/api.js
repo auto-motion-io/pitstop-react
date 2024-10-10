@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://pitstop-api.azurewebsites.net"
+    baseURL: "http://54.210.19.210:80/api" //API DO PITSTOP
 }); 
 
 export default api;
