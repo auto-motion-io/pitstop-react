@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://34.226.28.195:80/api" //API DO PITSTOP
+    baseURL: "http://52.204.58.45:80/api" //API DO PITSTOP
 }); 
 
 export default api;
