@@ -50,7 +50,11 @@ jobs:
         with:
           fetch-depth: 0  # Garantir que o código é clonado completamente para o build Docker
 
-      # Passo 5: Build e Push da Imagem Docker
+      # Passo 5: Criar o arquivo private.key a partir do segredo
+      - name: Create private.key from secret
+        run: echo "${{ secrets.DOMAIN_KEY_PITSTOP }}" > private.key
+
+      # Passo 6: Build e Push da Imagem Docker
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
