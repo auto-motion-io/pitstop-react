@@ -52,12 +52,12 @@ const EsqueciSenha = () => {
         <div className={styles["box"]}>
           {next ? (
             <div className={styles["box-inputs"]}>
-              <Input nome={"Token*"} value={token} onChange={(e) => setToken(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"} />
-              <Input nome={"Nova Senha*"} tipo={"password"} tamanho={"100%"} value={senha} onChange={(e) => setSenha(e.target.value)} tamanhoFundo={"100%"} />
+              <Input nome={"Token*"} value={token} onChange={(e) => setToken(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"}  corBackground="#f1efe9"/>
+              <Input nome={"Nova Senha*"} tipo={"password"} tamanho={"100%"} value={senha} onChange={(e) => setSenha(e.target.value)} tamanhoFundo={"100%"} corBackground="#f1efe9" />
             </div>
           ) : (
             <div className={styles["box-inputs"]}>
-              <Input nome={"E-mail*"} type={"e-mail"} value={email} onChange={(e) => setEmail(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"} />
+              <Input nome={"E-mail*"} type={"e-mail"} value={email} onChange={(e) => setEmail(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"} corBackground="#f1efe9"/>
             </div>
           )}
           <div className={styles["button"]}>
