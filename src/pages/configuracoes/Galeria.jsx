@@ -68,7 +68,7 @@ function Galeria() {
           <div className={styles["img-seta"]}>
             <img src={setaVoltar} alt="Imagem Voltar" />
           </div>
-          <h1>Galeria de Fotos</h1>
+          <h1>Foto de Perfil</h1>
           <h5>
             Insira aqui a imagem principal da oficina que aparecerá para os
             usuários do Buscar!

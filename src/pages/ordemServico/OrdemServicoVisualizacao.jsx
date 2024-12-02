@@ -4,21 +4,14 @@ import BoxInfo from "../../components/boxInfo/BoxInfo";
 import Alignner from "../../components/alignner/Alignner";
 import Input from "../../components/input/Input";
 import style from "./OrdemServico.module.css";
-import lupa from "../../utils/assets/lupa.svg";
-import botaoAdicionar from "../../utils/assets/botao-add-laranja.svg";
-import Botao from "../../components/botao/Botao";
 import api from "../../services/api";
-import { inputMascaraTelefoneCelular, regexPlacas, tiposDeOs } from "../../utils/global"
 import lupaImg from "./../../utils/assets/lupa.svg";
-import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 
 const OrdemServicoVisualizacao = () => {
 
     //#region Váriaveis
-
-
     const corInput = "#ECEAE5";
     const { token } = useParams();
     const [valorTotal, setValorTotal] = useState(0);
@@ -191,7 +184,6 @@ const OrdemServicoVisualizacao = () => {
                                     </div>
                                     <Input nome={"Valor Unidade*"} value={itemProduto.valorVenda} disabled={true} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                     <Input nome={"Quantidade Restante*"} value={itemProduto.quantidade} disabled={true} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                    <Input nome={"Garantia*"} value={itemProduto.garantia} disabled={true} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
                                 </div>
                             ))}
                         </div>

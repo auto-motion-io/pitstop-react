@@ -21,36 +21,39 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
 
     async function buscar() {
         try {
-            const response = await api.get(endpoint + `/oficina/${sessionStorage.getItem("idOficina")}`  );
+            const response = await api.get(endpoint + `/oficina/${sessionStorage.getItem("idOficina")}`);
             if (response.data.length === 0) {
                 setMostrarMensagem(true);
             }
-            if(ordem !== true){
+            if (ordem !== true) {
                 setDataRegistro(response.data);
-            } else{
+            } else {
                 let infoOrdem = response.data.map((item) => {
                     return {
                         id: item.id,
                         nomeCliente: item.veiculo.cliente.nome,
                         token: item.token,
                         dataFim: item.dataFim
-                    }   
+                    }
                 });
-                console.log(infoOrdem);
                 setDataRegistro(infoOrdem);
             }
         } catch (error) {
-            switch (error.response.status) {
-                case 401:
-                    toast.error("Você não tem permissão para acessar esses dados!");
-                    break;
-                case 404:
-                    setMostrarMensagem(true);
-                    break;
-                default:
-                    toast.error("Erro ao buscar registros!")
-                    break;
-            } 
+            if (error.response === undefined) {
+                toast.warn("Lista de ordens de serviço vazia!");
+            } else {
+                switch (error.response.status) {
+                    case 401:
+                        toast.error("Você não tem permissão para acessar esses dados!");
+                        break;
+                    case 404:
+                        setMostrarMensagem(true);
+                        break;
+                    default:
+                        toast.error("Erro ao buscar registros!")
+                        break;
+                }
+            }
         }
     }
 
@@ -75,26 +78,26 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
             </div>
         );
     } else {
-        info=
-        <div className={style["box"]}>
-            <Titulo nomeTitulo={titulo} hasInput={false} />
-            <div className={style["container-ordem"]} style={{ width: "28vw" }}>
-                <div className={style["inputs-row"]}>
-                    <div className={style["input-lupa"]}>
-                        <div className={style["lupa"]}><img src={lupa} alt="Imagem de Lupa" /></div>
-                        <input type="text" />
+        info =
+            <div className={style["box"]}>
+                <Titulo nomeTitulo={titulo} hasInput={false} />
+                <div className={style["container-ordem"]} style={{ width: "28vw" }}>
+                    <div className={style["inputs-row"]}>
+                        <div className={style["input-lupa"]}>
+                            <div className={style["lupa"]}><img src={lupa} alt="Imagem de Lupa" /></div>
+                            <input type="text" />
+                        </div>
+                        <div className={style["input-calendario"]}>
+                            <div className={style["calendario"]}><img src={calendario} alt="Imagem de Calendario" /></div>
+                            <input type="text" />
+                        </div>
                     </div>
-                    <div className={style["input-calendario"]}>
-                        <div className={style["calendario"]}><img src={calendario} alt="Imagem de Calendario" /></div>
-                        <input type="text" />
+                    <div className={style["header-coluna"]}>{coluna}</div>
+                    <div className={style["linhas"]}>
+                        {mostrarMensagem ? mensagemSemRegistro : linhas}
                     </div>
-                </div>
-                <div className={style["header-coluna"]}>{coluna}</div>
-                <div className={style["linhas"]}>
-                    {mostrarMensagem ? mensagemSemRegistro : linhas}
                 </div>
             </div>
-        </div>
     }
 
     return <>{info}</>
