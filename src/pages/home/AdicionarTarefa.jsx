@@ -74,7 +74,7 @@ const AdicionarTarefa = () => {
                 <div className={style["inputs"]}>
                     <Input
                         nome={"Nome da Tarefa*"}
-                        tipo={"text"}
+                        type={"text"}
                         value={nomeTarefa}
                         onChange={(e) => setNomeTarefa(e.target.value)}
                         tamanho={"30vw"}

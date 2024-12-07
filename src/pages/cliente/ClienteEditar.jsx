@@ -17,9 +17,9 @@ const ClienteEditar = () => {
     const navigate = useNavigate();
     const inputs =
         <div>
-            <Input nome={"Nome*"} tipo={"text"} value={nome} onChange={(e) => setNome(e.target.value)} tamanho={"100%"} />
-            <Input nome={"Telefone*"} tipo={"text"} value={telefone} onChange={(e) => setTelefone(e.target.value)} onInput={inputMascaraTelefoneCelular} maxLength={15} tamanho={"80%"} />
-            <Input nome={"E-mail*"} tipo={"text"} value={email} onChange={(e) => setEmail(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Nome*"} type={"text"} value={nome} onChange={(e) => setNome(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Telefone*"} type={"text"} value={telefone} onChange={(e) => setTelefone(e.target.value)} onInput={inputMascaraTelefoneCelular} maxLength={15} tamanho={"80%"} />
+            <Input nome={"E-mail*"} type={"text"} value={email} onChange={(e) => setEmail(e.target.value)} tamanho={"100%"} />
         </div>
 
     async function handleEditar() {

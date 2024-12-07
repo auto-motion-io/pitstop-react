@@ -15,9 +15,9 @@ const Cliente = () => {
 
     const inputs =
         <div>
-            <Input nome={"Nome*"} tipo={"text"} maxLength={26} value={nome} onChange={(e) => setNome(e.target.value)} tamanho={"100%"} />
-            <Input nome={"Telefone*"} tipo={"tel"} value={telefone} onChange={(e) => setTelefone(e.target.value)} onInput={inputMascaraTelefoneCelular} maxLength={14} tamanho={"80%"} />
-            <Input nome={"E-mail*"} tipo={"email"} value={email} onChange={(e) => setEmail(e.target.value)} onInput={verificaEmail} tamanho={"100%"} />
+            <Input nome={"Nome*"} type={"text"} maxLength={26} value={nome} onChange={(e) => setNome(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Telefone*"} type={"tel"} value={telefone} onChange={(e) => setTelefone(e.target.value)} onInput={inputMascaraTelefoneCelular} maxLength={14} tamanho={"80%"} />
+            <Input nome={"E-mail*"} type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} onInput={verificaEmail} tamanho={"100%"} />
         </div>
 
     

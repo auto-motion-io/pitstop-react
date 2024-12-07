@@ -208,11 +208,13 @@ const OrdemServico = () => {
     }
 
     async function existeVeiculo() {
+        let placa = placaSelecionada === "" ? novaPlaca : placaSelecionada;
         try {
             const response = await api.get(`/veiculos/buscar-por-cliente/${idCliente}`);
 
             if (response.data && Array.isArray(response.data)) {
-                const veiculoEncontrado = response.data.find(veiculo => veiculo.placa === placaSelecionada);
+                console.log("placa selecionada",novaPlaca);
+                const veiculoEncontrado = response.data.find(veiculo => veiculo.placa === placa);
                 if (veiculoEncontrado) {
                     return true;
                 } else {
@@ -228,8 +230,10 @@ const OrdemServico = () => {
 
     async function cadastrarVeiculo() {
         const response = await existeVeiculo();
+        console.log("response no cadastra",response);
         if (!response) {
-            api.post("/veiculos", {
+            console.log("Cadastrando veículo");
+           await api.post("/veiculos", {
                 fkCliente: idCliente,
                 placa: novaPlaca,
                 marca: novaMarca,
@@ -241,9 +245,12 @@ const OrdemServico = () => {
                 setQtdCadastrado(qtdCadastrado + 1);
             }).catch((error) => {
                 toast.error("Erro ao cadastrar veículo");
+                return false
             });
+            return true;
         } else {
             toast.error("Placa já cadastrada para esse cliente!")
+            return false;
         }
     }
 
@@ -267,7 +274,8 @@ const OrdemServico = () => {
         if (novaPlaca === "" || novaMarca === "" || novoModelo === "" || novaCor === "" || novoAno === "") {
             toast.error("Preencha todos os campos obrigatórios!");
         } else {
-            const response = cadastrarVeiculo();
+            let response = await cadastrarVeiculo();
+            console.log(response);
             if (response) {
                 closeModal();
             }
@@ -336,14 +344,14 @@ const OrdemServico = () => {
             toast.error("Por favor, selecione ou insira o nome do mecânico.");
             throw new Error("Nome do mecânico inválido");
         }
-    
+
         try {
             const response = await api.post("/mecanicos", {
                 fkOficina: parseInt(sessionStorage.getItem("idOficina")),
                 nome: mecanicoSelecionado.trim(),
                 telefone: telMecanico || ""
             });
-    
+
             if (response.status === 201 || response.status === 200) {
                 const idCriado = response.data.id;
                 setIdMecanico(idCriado);
@@ -358,7 +366,7 @@ const OrdemServico = () => {
             throw error;
         }
     }
-    
+
 
     useEffect(() => {
         buscarInfoMecanico();
@@ -665,7 +673,7 @@ const OrdemServico = () => {
         if (!verificarOrdemServico()) {
             return;
         }
-        let idDoMecanico = idMecanico; 
+        let idDoMecanico = idMecanico;
         try {
             if (!idMecanico) {
                 idDoMecanico = await adicionarMecanico();
@@ -676,7 +684,7 @@ const OrdemServico = () => {
                 toast.error("O veículo não existe!");
                 return;
             }
-    
+
             const response = await api.post("/ordemDeServicos", {
                 fkOficina: parseInt(sessionStorage.getItem("idOficina")),
                 status: status,
@@ -686,13 +694,14 @@ const OrdemServico = () => {
                 dataInicio: dataInicio,
                 dataFim: dataFim,
                 tipoOs: tipoOs,
+                fkCliente: idCliente,
                 produtos: produtoOrdemServico,
                 servicos: servicoOrdemServico,
                 observacoes: observacoes,
                 valorTotal: parseFloat(valorTotalProdutoServico),
                 quantidade: 0
             });
-    
+
             toast.success("Ordem de serviço cadastrada com sucesso!", { autoClose: 1000 });
             setTimeout(() => {
                 window.location.reload();
@@ -732,7 +741,7 @@ const OrdemServico = () => {
                                         <span>Status*</span>
                                         <select value={status} onChange={(e) => setStatus(e.target.value)}>
                                             <option value="">Selecione</option>
-                                            <option value="PENDENTE">PENDENTE</option>
+                                            <option value="PENDENTE">EM ABERTO</option>
                                             <option value="CONCLUIDO">CONCLUIDO</option>
                                         </select>
                                     </div>
@@ -741,8 +750,8 @@ const OrdemServico = () => {
                                         <select value={garantia} onChange={(e) => setGarantia(e.target.value)}>
                                             <option value="">Selecione</option>
                                             <option value="Sem Garantia">Sem Garantia</option>
-                                            <option value="1 mês">1 mês</option>
-                                            <option value="2 mêses">2 mêses</option>
+                                            <option value="3 meses">3 meses</option>
+                                            <option value="6 meses">6 meses</option>
                                         </select>
                                     </div>
                                     {/* <h2><b>Token</b><br />{token}</h2> */}
@@ -824,7 +833,7 @@ const OrdemServico = () => {
                                         <span className={style["input-label"]}>Nome*</span>
                                         <div className={style["input-type"]}>
                                             <div className={style["img-lupa"]} ref={mecanicoLupaRef}><img src={lupaImg} alt="Imagem de Lupa" /></div>
-                                            <input type="text" value={mecanicoSelecionado} ref={mecanicoRef} onFocus={() => mostrarOpcoesDropdown(true, nomeMecanico, mecanicoRef, mecanicoLupaRef, "Mecanico")} onBlur={() => mostrarOpcoesDropdown(false, "", mecanicoRef, mecanicoLupaRef, "")} onChange={(e) => setMecanicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} onKeyDown={(e) => addMecanico(e)} />
+                                            <input type="text" value={mecanicoSelecionado} ref={mecanicoRef} onFocus={() => mostrarOpcoesDropdown(true, nomeMecanico, mecanicoRef, mecanicoLupaRef, "Mecanico")} onBlur={() => mostrarOpcoesDropdown(false, "", mecanicoRef, mecanicoLupaRef, "")} onChange={(e) => setMecanicoSelecionado(e.target.value)} style={{ width: "18.1vw" }} />
                                         </div>
                                         {mostrarDropdown && opcaoSelecionada === "Mecanico" && (
                                             <div className={style["dropdown"]} style={{ height: nomeMecanico.length < 5 ? "fit-content" : "14vh", width: "20vw" }}>

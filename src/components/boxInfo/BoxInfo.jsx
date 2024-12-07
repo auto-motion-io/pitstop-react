@@ -22,6 +22,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
     async function buscar() {
         try {
             const response = await api.get(endpoint + `/oficina/${sessionStorage.getItem("idOficina")}`);
+            console.log(response.data);
             if (response.data.length === 0) {
                 setMostrarMensagem(true);
             }
@@ -31,7 +32,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                 let infoOrdem = response.data.map((item) => {
                     return {
                         id: item.id,
-                        nomeCliente: item.veiculo.cliente.nome,
+                        nomeCliente: item.nomeCliente,
                         token: item.token,
                         dataFim: item.dataFim
                     }
@@ -39,6 +40,7 @@ const BoxInfo = ({ titulo = "Clientes", resposta, tamanho = "62vw", ordem = fals
                 setDataRegistro(infoOrdem);
             }
         } catch (error) {
+            console.log(error);
             if (error.response === undefined) {
                 toast.warn("Lista de ordens de serviço vazia!");
             } else {

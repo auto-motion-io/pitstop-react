@@ -7,10 +7,10 @@ import style from "./OrdemServico.module.css";
 import api from "../../services/api";
 import lupaImg from "./../../utils/assets/lupa.svg";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const OrdemServicoVisualizacao = () => {
-
     //#region Váriaveis
     const corInput = "#ECEAE5";
     const { token } = useParams();
@@ -20,39 +20,111 @@ const OrdemServicoVisualizacao = () => {
     const [dataInicio, setDataInicio] = useState("");
     const [dataFim, setDataFim] = useState("");
     const [observacoes, setObservacoes] = useState("");
-    const [veiculo, setVeiculo] = useState({});
+    const [veiculo, setVeiculo] = useState({
+        placa: "",
+        marca: "",
+        modelo: "",
+        ano: 0,
+        cor: ""
+    });
     const [mecanico, setMecanico] = useState({
         nome: "",
         telefone: ""
     });
     const [produtos, setProdutos] = useState([]);
     const [servicos, setServicos] = useState([]);
-    const [cliente, setCliente] = useState({});
+    const [cliente, setCliente] = useState({
+        nome: "",
+        telefone: "",
+        email: ""
+    });
     const [tipoOs, setTipoOs] = useState("");
     const [idOrdemServico, setIdOrdemServico] = useState(0);
     const [oficina, setOficina] = useState({});
     const navigate = useNavigate();
+    const [novoStatus, setNovoStatus] = useState("");
+
     //#endregion
 
     function buscarOrdemServico() {
         api.get(`/ordemDeServicos/token/${token}`).then((response) => {
-            setIdOrdemServico(response.data.id);
-            setDataInicio(response.data.dataInicio);
-            setDataFim(response.data.dataFim);
-            setStatus(response.data.status);
-            setValorTotal(response.data.valorTotal);
-            setTipoOs(response.data.tipoOs);
-            setGarantia(response.data.garantia);
-            setObservacoes(response.data.observacoes);
-            setOficina(response.data.oficina);
-            setVeiculo(response.data.veiculo);
-            setMecanico(response.data.mecanico);
-            setProdutos(response.data.produtos);
-            setServicos(response.data.servicos);
+            console.log(response.data);
+
+            // Desestruturação dos dados recebidos para atribuir aos estados
+            const {
+                id,
+                status,
+                dataInicio,
+                dataFim,
+                tipoOs,
+                nomeCliente,
+                telefoneCliente,
+                emailCliente,
+                garantia,
+                placaVeiculo,
+                marcaVeiculo,
+                modeloVeiculo,
+                anoVeiculo,
+                corVeiculo,
+                nomeMecanico,
+                telefoneMecanico,
+                valorTotal,
+                observacoes,
+                produtos,
+                servicos
+            } = response.data;
+
+            // Atualiza os estados com os valores recebidos
+            setIdOrdemServico(id);
+            setStatus(status);
+            setDataInicio(dataInicio);
+            setDataFim(dataFim);
+            setTipoOs(tipoOs);
+            setValorTotal(valorTotal);
+            setObservacoes(observacoes);
+
+            setCliente({
+                nome: nomeCliente,
+                telefone: telefoneCliente,
+                email: emailCliente
+            });
+
+            setGarantia(garantia);
+
+            setVeiculo({
+                placa: placaVeiculo,
+                marca: marcaVeiculo,
+                modelo: modeloVeiculo,
+                ano: anoVeiculo,
+                cor: corVeiculo
+            });
+
+            setMecanico({
+                nome: nomeMecanico,
+                telefone: telefoneMecanico
+            });
+
+            setProdutos(produtos); // Lista de nomes dos produtos
+            setServicos(servicos); // Lista de nomes dos serviços
+
         }).catch((error) => {
-            console.log(error);
+            console.error("Erro ao buscar a ordem de serviço:", error);
         });
     }
+
+    function atualizarStatus(novoStatus) {
+        api.put(`/ordemDeServicos/${idOrdemServico}?status=${novoStatus}`)
+            .then((response) => {
+                console.log("Status atualizado com sucesso:", response.data);
+                setStatus(novoStatus);
+                toast.success("Status da ordem de serviço atualizado com sucesso!");
+            })
+            .catch((error) => {
+                console.error("Erro ao atualizar o status da ordem de serviço:", error);
+                toast.error("Erro ao atualizar o status. Tente novamente.");
+            });
+    }
+
 
     useEffect(() => {
         buscarOrdemServico();
@@ -80,19 +152,22 @@ const OrdemServicoVisualizacao = () => {
                                 <div className={style["box-header-inputs"]}>
                                     <div className={style["input-select"]}>
                                         <span>Status*</span>
-                                        <select value={status} disabled>
+                                        <select
+                                            value={ status ||novoStatus}
+                                            onChange={(e) => atualizarStatus(e.target.value)}
+                                        >
                                             <option value="">Selecione</option>
-                                            <option value="PENDENTE">PENDENTE</option>
+                                            <option value="EM ABERTO">EM ABERTO</option>
                                             <option value="CONCLUIDO">CONCLUIDO</option>
                                         </select>
                                     </div>
+
                                     <div className={style["input-select"]}>
                                         <span>Garantia*</span>
                                         <select value={garantia} disabled>
-                                            <option value="">Selecione</option>
                                             <option value="Sem Garantia">Sem Garantia</option>
-                                            <option value="1 mês">1 mês</option>
-                                            <option value="2 mêses">2 mêses</option>
+                                            <option value="3 meses">3 meses</option>
+                                            <option value="6 meses">6 meses</option>
                                         </select>
                                     </div>
                                     <h2><b>Token</b><br />{token}</h2>
@@ -120,7 +195,7 @@ const OrdemServicoVisualizacao = () => {
                                 <div className={style["box-veiculo-inputs"]}>
                                     <Input nome={"Marca*"} value={veiculo.marca} disabled={true} tamanho={"15vw"} corBackground={corInput} />
                                     <Input nome={"Modelo*"} value={veiculo.modelo} disabled={true} tamanho={"12vw"} corBackground={corInput} />
-                                    <Input nome={"Ano*"} value={veiculo.anoFabricacao} disabled={true} tamanho={"12vw"} corBackground={corInput} />
+                                    <Input nome={"Ano*"} value={veiculo.ano} disabled={true} tamanho={"12vw"} corBackground={corInput} />
                                     <Input nome={"Cor*"} value={veiculo.cor} disabled={true} tamanho={"12vw"} corBackground={corInput} />
                                 </div>
                             </div>
@@ -171,7 +246,7 @@ const OrdemServicoVisualizacao = () => {
                                     <h1>Produtos</h1>
                                 </div>
                             </div>
-                            
+
                             {produtos.length === 0 && <span className={style["input-label"]}>Nenhum produto cadastrado</span>}
                             {produtos.map((itemProduto, index) => (
                                 <div key={index} className={style["box-cliente-inputs"]}>
@@ -182,13 +257,27 @@ const OrdemServicoVisualizacao = () => {
                                             <input type="text" value={itemProduto.nome} disabled style={{ width: "18.1vw" }} />
                                         </div>
                                     </div>
-                                    <Input nome={"Valor Unidade*"} value={itemProduto.valorVenda} disabled={true} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                    <Input nome={"Quantidade Restante*"} value={itemProduto.quantidade} disabled={true} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                    <Input
+                                        nome={"Valor Unidade*"}
+                                        value={itemProduto.valor}
+                                        disabled={true}
+                                        corBackground={corInput}
+                                        tamanho={"100%"}
+                                        tamanhoFundo={"40%"}
+                                    />
+                                    <Input
+                                        nome={"Quantidade*"}
+                                        value={itemProduto.quantidade}
+                                        disabled={true}
+                                        corBackground={corInput}
+                                        tamanho={"100%"}
+                                        tamanhoFundo={"40%"}
+                                    />
                                 </div>
                             ))}
                         </div>
 
-                        <div className={style["box-servicos"]} style={servicos.length === 0 ? {marginTop: "5vh"}: {marginTop: "0vh"}}>
+                        <div className={style["box-servicos"]} style={servicos.length === 0 ? { marginTop: "5vh" } : { marginTop: "0vh" }}>
                             <div className={style["titulo-com-excluir"]}>
                                 <div className={style["titulo-desfazer"]}>
                                     <h1>Serviços</h1>
@@ -204,13 +293,27 @@ const OrdemServicoVisualizacao = () => {
                                             <input type="text" value={itemServico.nome} disabled style={{ width: "18.1vw" }} />
                                         </div>
                                     </div>
-                                    <Input nome={"Garantia*"} disabled={true} value={itemServico.garantia} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
-                                    <Input nome={"Valor*"} disabled={true} value={itemServico.valorServico} corBackground={corInput} tamanho={"100%"} tamanhoFundo={"40%"} />
+                                    <Input
+                                        nome={"Garantia*"}
+                                        disabled={true}
+                                        value={itemServico.garantia}
+                                        corBackground={corInput}
+                                        tamanho={"100%"}
+                                        tamanhoFundo={"40%"}
+                                    />
+                                    <Input
+                                        nome={"Valor*"}
+                                        disabled={true}
+                                        value={itemServico.valor}
+                                        corBackground={corInput}
+                                        tamanho={"100%"}
+                                        tamanhoFundo={"40%"}
+                                    />
                                 </div>
                             ))}
                         </div>
 
-                        <div className={style["box-observacoes"]} style={servicos.length === 0 ? {marginTop: "5vh"}: {marginTop: "0vh"}}>
+                        <div className={style["box-observacoes"]} style={servicos.length === 0 ? { marginTop: "5vh" } : { marginTop: "0vh" }}>
                             <h1>Observações</h1>
                             <textarea value={observacoes} disabled></textarea>
                         </div>

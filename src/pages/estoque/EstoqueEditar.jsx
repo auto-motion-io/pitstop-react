@@ -22,19 +22,19 @@ const EstoqueEditar = () => {
 
     const inputs = (
         <div className={style["inputs"]}>
-            <Input nome={"Nome"} tipo={"text"} value={nomeProduto} onChange={(e) => setNomeProduto(e.target.value)} tamanho={"100%"} />
-            <Input nome={"Modelo de Veículo"} tipo={"text"} value={modelo} onChange={(e) => setModelo(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Nome"} type={"text"} value={nomeProduto} onChange={(e) => setNomeProduto(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Modelo de Veículo"} type={"text"} value={modelo} onChange={(e) => setModelo(e.target.value)} tamanho={"100%"} />
             <div className={style["input-row"]}>
-                <Input nome={"Quantidade"} tipo={"number"} value={quantidade} onChange={(e) => setQuantidade(e.target.value)} tamanho={"100%"} />
-                <Input nome={"Localização"} tipo={"text"} value={localizacao} onChange={(e) => setLocalizacao(e.target.value)} tamanho={"100%"} />
+                <Input nome={"Quantidade"} type={"number"} value={quantidade} onChange={(e) => setQuantidade(e.target.value)} tamanho={"100%"} />
+                <Input nome={"Localização"} type={"text"} value={localizacao} onChange={(e) => setLocalizacao(e.target.value)} tamanho={"100%"} />
             </div>
             <div className={style["input-row"]}>
-                <Input nome={"Valor de Compra"} tipo={"text"} value={valorCompra} onChange={(e) => setvalorCompra(e.target.value)} tamanho={"100%"} />
-                <Input nome={"Valor de Venda"} tipo={"text"} value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} tamanho={"100%"} />
+                <Input nome={"Valor de Compra"} type={"text"} value={valorCompra} onChange={(e) => setvalorCompra(e.target.value)} tamanho={"100%"} />
+                <Input nome={"Valor de Venda"} type={"text"} value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} tamanho={"100%"} />
             </div>
             <div className={style["input-row"]}>
-                <Input nome={"Valor de Serviço"} tipo={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} tamanho={"100%"} />
-                <Input nome={"Garantia"} tipo={"text"} value={garantia} onChange={(e) => setGarantia(e.target.value)} tamanho={"100%"} />
+                <Input nome={"Valor de Serviço"} type={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} tamanho={"100%"} />
+                <Input nome={"Garantia"} type={"text"} value={garantia} onChange={(e) => setGarantia(e.target.value)} tamanho={"100%"} />
             </div>
         </div>
     );

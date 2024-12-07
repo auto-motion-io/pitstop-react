@@ -53,7 +53,7 @@ const EsqueciSenha = () => {
           {next ? (
             <div className={styles["box-inputs"]}>
               <Input nome={"Token*"} value={token} onChange={(e) => setToken(e.target.value)} tamanho={"100%"} tamanhoFundo={"100%"}  corBackground="#f1efe9"/>
-              <Input nome={"Nova Senha*"} tipo={"password"} tamanho={"100%"} value={senha} onChange={(e) => setSenha(e.target.value)} tamanhoFundo={"100%"} corBackground="#f1efe9" />
+              <Input nome={"Nova Senha*"} type={"password"} tamanho={"100%"} value={senha} onChange={(e) => setSenha(e.target.value)} tamanhoFundo={"100%"} corBackground="#f1efe9" />
             </div>
           ) : (
             <div className={styles["box-inputs"]}>
@@ -61,7 +61,7 @@ const EsqueciSenha = () => {
             </div>
           )}
           <div className={styles["button"]}>
-            <Botao nome={"Enviar"} onClick={(next === false ? handleNext : handleEnviar)} tipo={"submit"} cor={"#C66D2C"} tamanho={"100%"} tamanhoFonte={"1.5rem"} />
+            <Botao nome={"Enviar"} onClick={(next === false ? handleNext : handleEnviar)} type={"submit"} cor={"#C66D2C"} tamanho={"100%"} tamanhoFonte={"1.5rem"} />
           </div>
         </div>
       <div className={styles["logo"]}><img src={pitstopLogo} alt="Logo do PitStop" /></div>

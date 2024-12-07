@@ -15,10 +15,10 @@ const Servicos = () => {
 
     const inputs = (
         <div>
-            <Input nome={"Nome do Serviço*"} tipo={"text"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} tamanho={"100%"} />
-            <Input nome={"Valor*"} tipo={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} tamanho={"50%"} />
-            <Input nome={"Descrição"} tipo={"text"} value={descricao} onChange={(e) => setDescricao(e.target.value)} tamanho={"100%"} altura ={"130px"} />
-            <Input nome={"Garantia"} tipo={"text"} value={garantia} onChange={(e) => setGarantia(e.target.value)} tamanho={"100%"} altura ={"130px"} />
+            <Input nome={"Nome do Serviço*"} type={"text"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Valor*"} type={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} tamanho={"50%"} />
+            <Input nome={"Descrição"} type={"text"} value={descricao} onChange={(e) => setDescricao(e.target.value)} tamanho={"100%"} altura ={"130px"} />
+            <Input nome={"Garantia"} type={"text"} value={garantia} onChange={(e) => setGarantia(e.target.value)} tamanho={"100%"} altura ={"130px"} />
         </div>
     );
 
@@ -31,6 +31,7 @@ const Servicos = () => {
             fkOficina: sessionStorage.getItem("idOficina")
         }).then((response) => {
             toast.success('Serviço cadastrado com sucesso!');
+            window.location.reload();
         }).catch((error) => {
             console.log("Erro foi esse aqui - Serviço: ", error);
             toast.error('Erro ao cadastrar serviço!');

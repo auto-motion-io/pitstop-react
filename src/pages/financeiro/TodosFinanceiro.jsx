@@ -70,7 +70,7 @@ const TodosFinanceiro = () => {
       </div>
 
       <Alignner>
-        <BoxInfo titulo="Financeiro" resposta={["Transação", "Categoria", "Data de Lançamento", "Valor(R$)", "Data de Lançamento", "Ações"]} endpoint={"/financeiro"} />
+        <BoxInfo titulo="Financeiro" resposta={["Transação", "Categoria", "Data de Lançamento", "Valor(R$)", "Forma de Pagamento", "Ações"]} endpoint={"/financeiro"} />
         <BoxConfig titulo={"Novo"} nomeBotao={"Cadastrar"} inputs={inputs} onClick={cadastrarFinanceiro}/>
       </Alignner>
     </div>

@@ -19,10 +19,10 @@ const ServicosEditar = () => {
 
     const inputs =
         <div>
-            <Input nome={"Nome*"} tipo={"text"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} tamanho={"100%"} />
-            <Input nome={"Valor de Serviço*"} tipo={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} maxLength={15} tamanho={"80%"} />
-            <Input nome={"Descrição*"} tipo={"text"} value={descricao} onChange={(e) => setDescricao(e.target.value)} tamanho={"100%"} />
-            <Input nome={"Garantia*"} tipo={"text"} value={garantia} onChange={(e) => setGarantia(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Nome*"} type={"text"} value={nomeServico} onChange={(e) => setNomeServico(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Valor de Serviço*"} type={"text"} value={valorServico} onChange={(e) => setValorServico(e.target.value)} maxLength={15} tamanho={"80%"} />
+            <Input nome={"Descrição*"} type={"text"} value={descricao} onChange={(e) => setDescricao(e.target.value)} tamanho={"100%"} />
+            <Input nome={"Garantia*"} type={"text"} value={garantia} onChange={(e) => setGarantia(e.target.value)} tamanho={"100%"} />
         </div>
 
     async function handleEditar() {
