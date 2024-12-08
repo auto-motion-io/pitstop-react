@@ -741,7 +741,7 @@ const OrdemServico = () => {
                                         <span>Status*</span>
                                         <select value={status} onChange={(e) => setStatus(e.target.value)}>
                                             <option value="">Selecione</option>
-                                            <option value="PENDENTE">EM ABERTO</option>
+                                            <option value="EM ABERTO">EM ABERTO</option>
                                             <option value="CONCLUIDO">CONCLUIDO</option>
                                         </select>
                                     </div>
