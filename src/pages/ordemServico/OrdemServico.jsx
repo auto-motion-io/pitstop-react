@@ -636,21 +636,32 @@ const OrdemServico = () => {
 
     const mascaraPlaca = (e) => {
         let placaDigitada = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-
+    
+        // Para placas com mais de 3 caracteres, começamos a verificar o formato
         if (placaDigitada.length > 3) {
             const letras = placaDigitada.substr(0, 3);
-            const numeros = placaDigitada.substr(3).replace(/[^0-9]/g, '');
-
-            if (letras.match(/[A-Z]{3}/)) {
-                if (numeros.length <= 4) {
-                    placaDigitada = `${letras}-${numeros}`;
-                } else {
-                    placaDigitada = `${letras}-${numeros.substr(0, 4)}`;
-                }
+            const resto = placaDigitada.substr(3);
+    
+            // Verifica se é uma placa no formato antigo (AAA-1234)
+            if (resto.match(/^\d{0,4}$/)) {
+                placaDigitada = `${letras}-${resto}`;
+            }
+            // Verifica se é uma placa no formato novo Mercosul (AAA1A23)
+            else if (resto.length > 0) {
+                const numeros1 = resto.substr(0, 1);
+                const letra = resto.substr(1, 1).replace(/[^A-Z]/g, '');
+                const numeros2 = resto.substr(2).replace(/[^0-9]/g, '');
+    
+                placaDigitada = `${letras}${numeros1}${letra}${numeros2}`;
             }
         }
+    
+        // Limita o comprimento da placa
+        placaDigitada = placaDigitada.substr(0, 8);
+    
         setNovaPlaca(placaDigitada);
     };
+    
 
     useEffect(() => {
         handleCliente();
@@ -802,11 +813,11 @@ const OrdemServico = () => {
                                                     ))}
                                                 </select>
                                                 <span className={style["input-label"]}>Nova Placa*</span>
-                                                <input type="text" value={novaPlaca} className={style["input-cadastro"]} onChange={(e) => mascaraPlaca(e)} maxLength={8} style={{ "borderRadius": "5vh" }} />
+                                                <input type="text" value={novaPlaca} className={style["input-cadastro"]} onChange={(e) => mascaraPlaca(e)} maxLength={novaPlaca.includes('-') ? 8 : 7} style={{ "borderRadius": "5vh" }} />
                                                 <div className={style["modal-inputs"]}>
                                                     <Input nome={"Marca*"} value={novaMarca} onChange={(e) => setNovaMarca(e.target.value)} tamanho={"10vw"} corBackground={corInput} />
                                                     <Input nome={"Modelo*"} value={novoModelo} onChange={(e) => setNovoModelo(e.target.value)} tamanho={"10vw"} corBackground={corInput} />
-                                                    <Input nome={"Ano*"} value={novoAno} onChange={(e) => setNovoAno(e.target.value)} tamanho={"10vw"} corBackground={corInput} />
+                                                    <Input nome={"Ano*"} type={"number"} value={novoAno} onChange={(e) => setNovoAno(e.target.value)} tamanho={"10vw"} corBackground={corInput} />
                                                     <Input nome={"Cor*"} value={novaCor} onChange={(e) => setNovaCor(e.target.value)} tamanho={"10vw"} corBackground={corInput} />
                                                 </div>
                                                 <div className={style["buttons-modal"]}>
